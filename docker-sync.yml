@@ -1,0 +1,13 @@
+version: 2
+
+syncs:
+  crm-sync:
+    src: '.'
+    sync_userid: 82 # www-data
+    sync_excludes:
+      - .git
+      - .idea
+      - app
+      - var/cache
+      - var/log
+    host_disk_mount_mode: cached

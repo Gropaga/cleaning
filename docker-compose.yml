@@ -1,16 +1,6 @@
 version: '3'
 
 services:
-  services:
-    node:
-      restart: on-failure
-      image: sunfinancegroup/node:8-alpine-1.2.0
-      user: node
-      working_dir: /app
-      command: yarn watch
-      volumes:
-        - .:/app
-
   web:
     image: nginx:1.17.5-alpine
     restart: on-failure

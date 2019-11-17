@@ -3,7 +3,8 @@ version: 2
 syncs:
   crm-sync:
     src: '.'
-    sync_userid: 82 # www-data
+    sync_userid: 82 #www-data
+    sync_groupid: 82
     sync_excludes:
       - .git
       - .idea

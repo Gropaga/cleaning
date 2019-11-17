@@ -20,6 +20,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-php
+    environment:
+      COMPOSER_CACHE_DIR: '/app/.composer/cache'
     user: www-data
     links:
       - postgres
@@ -30,7 +32,7 @@ services:
     volumes:
       - app-sync:/app:nocopy
       - app_sessions_data:/var/php/sessions
-      - composer_data:/home/www-data/.composer/cache
+      - composer_data:/app/.composer/cache
     working_dir: /app
 
   postgres:
@@ -61,4 +63,6 @@ volumes:
       name: crm-sync
   pg_data:
   composer_data:
+    external:
+      name: cs_composer_data
   app_sessions_data:

@@ -32,12 +32,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "CleaningCRM\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "CleaningCRM\\Tests\\": "tests/"
         }
     },
     "replace": {

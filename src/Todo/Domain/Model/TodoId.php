@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Todo\Domain\Model;
+namespace CleaningCRM\Todo\Domain\Model;
 
-use App\Common\Model\AggregateId;
-use App\Common\Model\UuidGenerator;
+use CleaningCRM\Common\Domain\AggregateId;
+use CleaningCRM\Common\Domain\UuidGenerator;
 use Exception;
 
 class TodoId implements AggregateId

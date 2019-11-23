@@ -1,12 +1,10 @@
 <?php
 
-// src/MessageHandler/SmsNotificationHandler.php
-namespace App\MessageHandler;
+namespace CleaningCRM\MessageHandler;
 
-use App\Message\SmsNotification;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use CleaningCRM\Message\SmsNotification;
 
-class SmsNotificationHandler implements MessageHandlerInterface
+class SmsNotificationHandler
 {
     public function __invoke(SmsNotification $message)
     {

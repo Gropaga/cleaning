@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Todo\Infrastructure\Persistence;
+namespace CleaningCRM\Todo\Infrastructure\Persistence;
 
-use App\Common\Model\AggregateId;
-use App\Common\Model\DomainEvents;
-use App\Common\Model\DomainEventsHistory;
-use App\Common\Model\EventStore;
+use CleaningCRM\Common\Domain\AggregateId;
+use CleaningCRM\Common\Domain\DomainEvents;
+use CleaningCRM\Common\Domain\DomainEventsHistory;
+use CleaningCRM\Common\Domain\EventStore;
+use DateTimeImmutable;
 use Doctrine\DBAL\Driver\Connection;
 use JMS\Serializer\SerializerInterface;
 use PDO;
 
 class SQLEventStore implements EventStore
 {
-    private const TABLE_NAME = 'events';
-
     protected $connection;
     protected $serializer;
 
@@ -26,21 +25,17 @@ class SQLEventStore implements EventStore
     public function append(DomainEvents $events): void
     {
         $stmt = $this->connection->prepare(
-            sprintf(
                 <<<SQL
-INSERT INTO %s ('aggregate_id', 'event_name', 'created_at', 'payload')
+INSERT INTO event_store (aggregate_id, event_name, created_at, payload)
 VALUES (:aggregateId, :eventName, :createdAt, :payload)
 SQL
-            ,
-                self::TABLE_NAME
-            )
         );
 
         foreach ($events as $event) {
             $stmt->execute([
                 ':aggregateId' => (string) $event->getAggregateId(),
                 ':eventName' => get_class($event),
-                ':createdAt' => (new DateTimeImmutable())->format('Y-m-d H:i:s'),
+                ':createdAt' => (new DateTimeImmutable())->format('YYYY-MM-DDbHH:MI:SS.ssssss'),
                 ':payload' => $this->serializer->serialize($event, 'json'),
             ]);
         }
@@ -48,7 +43,7 @@ SQL
 
     public function get(AggregateId $aggregateId): DomainEventsHistory
     {
-        $stmt = $this->connection->prepare(sprintf('SELECT * FROM %s WHERE aggregate_id=:aggregateId', static::TABLE_NAME));
+        $stmt = $this->connection->prepare('SELECT * FROM event_store WHERE aggregate_id=:aggregateId');
         $stmt->execute([':aggregateId' => (string) $aggregateId]);
 
         $events = [];

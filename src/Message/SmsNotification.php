@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Message;
+namespace CleaningCRM\Message;
 
 class SmsNotification
 {

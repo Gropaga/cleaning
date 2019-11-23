@@ -1,6 +1,6 @@
 <?php
 
-use App\Kernel;
+use CleaningCRM\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 

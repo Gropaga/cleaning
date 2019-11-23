@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Todo\Infrastructure\Persistence;
+namespace CleaningCRM\Todo\Infrastructure\Persistence;
 
-use App\Common\Model\AggregateId;
-use App\Common\Model\EventStore as EventStorePort;
-use App\Common\Model\RecordsEvents;
-use App\Todo\Domain\Model\Todo;
-use App\Todo\Domain\Model\TodoProjection as TodoProjectionPort;
-use App\Todo\Domain\Model\TodoRepository as TodoRepositoryPort;
+use CleaningCRM\Common\Domain\AggregateId;
+use CleaningCRM\Common\Domain\EventStore as EventStorePort;
+use CleaningCRM\Common\Domain\RecordsEvents;
+use CleaningCRM\Todo\Domain\Model\Todo;
+use CleaningCRM\Todo\Domain\Model\TodoProjection as TodoProjectionPort;
+use CleaningCRM\Todo\Domain\Model\TodoRepository as TodoRepositoryPort;
 
 class TodoRepository implements TodoRepositoryPort
 {

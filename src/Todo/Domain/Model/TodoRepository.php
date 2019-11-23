@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Todo\Domain\Model;
+namespace CleaningCRM\Todo\Domain\Model;
 
 interface TodoRepository extends AggregateRepository
 {

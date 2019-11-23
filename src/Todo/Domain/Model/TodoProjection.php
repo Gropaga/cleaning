@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Todo\Domain\Model;
+namespace CleaningCRM\Todo\Domain\Model;
 
-use App\Common\Model\Projection;
-use App\Todo\Domain\Event\TodoWasCreated;
+use CleaningCRM\Common\Domain\Projection;
+use CleaningCRM\Todo\Domain\Event\TodoWasCreated;
 
 interface TodoProjection extends Projection
 {

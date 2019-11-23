@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Todo\Domain\Event;
+namespace CleaningCRM\Todo\Domain\Event;
 
-use App\Common\Model\AggregateId;
-use App\Common\Model\DomainEvent;
-use App\Todo\Domain\Model\TodoId;
+use CleaningCRM\Common\Domain\AggregateId;
+use CleaningCRM\Common\Domain\DomainEvent;
+use CleaningCRM\Todo\Domain\Model\TodoId;
 use DateTimeImmutable;
 
 class TodoWasCreated implements DomainEvent

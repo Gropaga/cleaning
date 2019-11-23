@@ -1,3 +1,5 @@
-controllers:
-    resource: ../../src/Controller/
+todo:
+    resource: '@TodoBundle/Controller'
+    prefix: /rest
     type: annotation
+    defaults: { _format: json }

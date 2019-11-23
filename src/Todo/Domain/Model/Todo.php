@@ -1,36 +1,45 @@
 <?php
 
-namespace App\Todo\Domain\Model;
+namespace CleaningCRM\Todo\Domain\Model;
 
-use App\Common\Model\AggregateRoot;
-use App\Common\Model\DomainEventsHistory;
-use App\Todo\Domain\Event\TodoWasCreated;
+use CleaningCRM\Common\Domain\AggregateRoot;
+use CleaningCRM\Common\Domain\DomainEventsHistory;
+use CleaningCRM\Todo\Domain\Event\TodoWasCreated;
 use DateTimeImmutable;
 
 class Todo extends AggregateRoot
 {
+    public const COMPLETED = true;
+    public const NOT_COMPLETED = false;
+
     private $id;
     private $description;
     private $completed;
     private $createdAt;
     private $updatedAt;
 
-    private function __construct(TodoId $id, string $description)
+    private function __construct(TodoId $id, string $description, bool $completed, DateTimeImmutable $createdAt, DateTimeImmutable $updatedAt)
     {
         $this->id = $id;
         $this->description = $description;
-        $this->completed = false;
-        $this->createdAt = $this->updatedAt = new DateTimeImmutable();
+        $this->completed = $completed;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
-    public static function create(TodoId $id, string $description)
+    public static function create(TodoId $id, string $description): self
     {
+        $date = new DateTimeImmutable();
+
         $newTodo = new Todo(
             $id,
-            $description
+            $description,
+            self::NOT_COMPLETED,
+            $date,
+            $date
         );
 
-        $newTodo->recordThat(new TodoWasCreated(
+        return $newTodo->recordThat(new TodoWasCreated(
             $newTodo->id,
             $newTodo->description,
             $newTodo->completed,

@@ -36,7 +36,7 @@ services:
     working_dir: /app
 
   postgres:
-    image: postgres:12-alpine
+    image: postgres:11-alpine
     restart: on-failure
     ports:
       - 5432

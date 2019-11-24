@@ -2,6 +2,7 @@
 
 namespace CleaningCRM\Todo\Domain\Model;
 
+use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\AggregateRoot;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
 use CleaningCRM\Todo\Domain\Event\TodoWasCreated;
@@ -50,8 +51,28 @@ class Todo extends AggregateRoot
         return $newTodo;
     }
 
+    public static function createEmptyTodoWithId(TodoId $id): self
+    {
+        $date = new DateTimeImmutable();
+
+        return new self($id, '', true, $date, $date);
+    }
+
+    public function changeDescription(string $description): self
+    {
+        $this->description = $description;
+
+        $this->recordThat(new TodoDescriptionWasChanged(
+
+        ));
+    }
+
     public static function reconstituteFromHistory(DomainEventsHistory $eventsHistory)
     {
-        // TODO: Implement reconstituteFromHistory() method.
+        $todo = self::createEmptyTodoWithId($eventsHistory->getAggregateId());
+
+        foreach ($eventsHistory as $event) {
+            $todo->apply($event);
+        }
     }
 }

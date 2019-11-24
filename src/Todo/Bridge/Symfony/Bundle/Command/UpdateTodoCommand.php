@@ -3,16 +3,16 @@
 namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\Command;
 
 use CleaningCRM\Todo\Application\Command\Todo\Create;
-use CleaningCRM\Todo\Application\Dto\NewTodoDto;
+use CleaningCRM\Todo\Application\Dto\TodoDto;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use CleaningCRM\Todo\Domain\Model\TodoId;
 
-class CreateUserCommand extends Command
+class CreateTodoCommand extends Command
 {
-    protected static $defaultName = 'app:create-user';
+    protected static $defaultName = 'app:create-todo';
 
     private $bus;
 
@@ -26,7 +26,7 @@ class CreateUserCommand extends Command
     {
         $todoId = TodoId::generate();
 
-        $newTodo = new NewTodoDto();
+        $newTodo = new TodoDto();
 
         $newTodo->description = 'New todo';
 

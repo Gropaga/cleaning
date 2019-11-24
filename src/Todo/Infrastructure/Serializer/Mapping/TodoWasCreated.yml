@@ -1,0 +1,21 @@
+CleaningCRM\Todo\Domain\Event:
+    exclusion_policy: ALL
+
+    properties:
+        todoId:
+            type: CleaningCRM\Todo\Domain\Model\TodoId
+            serialized_name: todo_id
+
+        description:
+            type: string
+
+        completed:
+            type: boolean
+
+        createdAt:
+            type: DateTimeImmutable
+            serialized_name: created_at
+
+        updatedAt:
+            type: DateTimeImmutable
+            serialized_name: updated_at

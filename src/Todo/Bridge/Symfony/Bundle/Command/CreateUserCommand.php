@@ -2,11 +2,13 @@
 
 namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\Command;
 
-use CleaningCRM\Message\SmsNotification;
+use CleaningCRM\Todo\Application\Command\Todo\Create;
+use CleaningCRM\Todo\Application\Dto\NewTodoDto;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use CleaningCRM\Todo\Domain\Model\TodoId;
 
 class CreateUserCommand extends Command
 {
@@ -22,13 +24,13 @@ class CreateUserCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln([
-            'User Creator',
-            '============',
-            '',
-        ]);
+        $todoId = TodoId::generate();
 
-        $this->bus->dispatch(new SmsNotification('Hello World!'));
+        $newTodo = new NewTodoDto();
+
+        $newTodo->description = 'New todo';
+
+        $this->bus->dispatch(new Create($todoId, $newTodo));
 
         $output->writeln('Whoa!');
 

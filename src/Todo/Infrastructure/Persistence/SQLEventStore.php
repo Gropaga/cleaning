@@ -10,6 +10,7 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Driver\Connection;
 use JMS\Serializer\SerializerInterface;
 use PDO;
+use Ramsey\Uuid\Uuid;
 
 class SQLEventStore implements EventStore
 {
@@ -26,16 +27,17 @@ class SQLEventStore implements EventStore
     {
         $stmt = $this->connection->prepare(
                 <<<SQL
-INSERT INTO event_store (aggregate_id, event_name, created_at, payload)
-VALUES (:aggregateId, :eventName, :createdAt, :payload)
+INSERT INTO event_store (id, aggregate_id, event_name, created_at, payload)
+VALUES (:id, :aggregateId, :eventName, :createdAt, :payload)
 SQL
         );
 
         foreach ($events as $event) {
             $stmt->execute([
+                ':id' => Uuid::uuid4()->toString(),
                 ':aggregateId' => (string) $event->getAggregateId(),
                 ':eventName' => get_class($event),
-                ':createdAt' => (new DateTimeImmutable())->format('YYYY-MM-DDbHH:MI:SS.ssssss'),
+                ':createdAt' => (new DateTimeImmutable())->format('m-d-Y H:i:s.u'),
                 ':payload' => $this->serializer->serialize($event, 'json'),
             ]);
         }

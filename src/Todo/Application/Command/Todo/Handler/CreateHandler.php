@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace CleaningCRM\Todo\Application\Command\Todo\Handler;
 
 use CleaningCRM\Todo\Application\Command\Todo\Create;
 use CleaningCRM\Todo\Domain\Model\Todo;
-use CleaningCRM\Todo\Infrastructure\Persistence\TodoRepository;
+use CleaningCRM\Todo\Domain\Model\TodoRepository;
 
 class CreateHandler
 {

@@ -39,13 +39,15 @@ class Todo extends AggregateRoot
             $date
         );
 
-        return $newTodo->recordThat(new TodoWasCreated(
+        $newTodo->recordThat(new TodoWasCreated(
             $newTodo->id,
             $newTodo->description,
             $newTodo->completed,
             $newTodo->createdAt,
             $newTodo->updatedAt
         ));
+
+        return $newTodo;
     }
 
     public static function reconstituteFromHistory(DomainEventsHistory $eventsHistory)

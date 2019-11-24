@@ -1,3 +1,6 @@
+parameters:
+  todo.bundle_dir: '%kernel.project_dir%/src/Todo'
+
 services:
   _defaults:
     autowire: true      # Automatically injects dependencies in your services.
@@ -5,3 +8,27 @@ services:
 
   CleaningCRM\Todo\Bridge\Symfony\Bundle\Command\CreateUserCommand:
     tags: ['console.command']
+
+  CleaningCRM\Todo\Application\Command\Todo\Handler\:
+    resource: '%todo.bundle_dir%/Application/Command/Todo/Handler'
+    tags: ['messenger.message_handler']
+
+  CleaningCRM\Todo\Infrastructure\Persistence\TodoRepository: ~
+  CleaningCRM\Todo\Domain\Model\TodoRepository: '@CleaningCRM\Todo\Infrastructure\Persistence\TodoRepository'
+
+  CleaningCRM\Todo\Infrastructure\Persistence\SQLEventStore: ~
+  CleaningCRM\Common\Domain\EventStore: '@CleaningCRM\Todo\Infrastructure\Persistence\SQLEventStore'
+
+  CleaningCRM\Todo\Infrastructure\Projection\TodoProjection: ~
+  CleaningCRM\Todo\Domain\Model\TodoProjection: '@CleaningCRM\Todo\Infrastructure\Projection\TodoProjection'
+
+  CleaningCRM\Todo\Infrastructure\Serializer\SerializerFactory:
+    arguments:
+      - '%kernel.project_dir%/var/cache/serializer'
+      - '%kernel.debug%'
+      - '%todo.bundle_dir%/Infrastructure/Serializer/Mapping'
+
+  JMS\Serializer\Serializer:
+    factory: 'CleaningCRM\Todo\Infrastructure\Serializer\SerializerFactory:create'
+
+  JMS\Serializer\SerializerInterface: '@JMS\Serializer\Serializer'

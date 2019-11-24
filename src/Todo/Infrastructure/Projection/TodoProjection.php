@@ -28,9 +28,9 @@ SQL
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
             ':description' => $event->getDescription(),
-            ':completed' => $event->getCompleted(),
-            ':createdAt' => $event->getCreatedAt(),
-            ':updatedAt' => $event->getUpdatedAt(),
+            ':completed' => $event->getCompleted() ? 'TRUE' : 'FALSE',
+            ':createdAt' => $event->getCreatedAt()->format('m-d-Y H:i:s.u'),
+            ':updatedAt' => $event->getUpdatedAt()->format('m-d-Y H:i:s.u'),
         ]);
     }
 }

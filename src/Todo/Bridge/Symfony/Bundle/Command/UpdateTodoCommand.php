@@ -2,17 +2,18 @@
 
 namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\Command;
 
-use CleaningCRM\Todo\Application\Command\Todo\Create;
+use CleaningCRM\Todo\Application\Command\Todo\Update;
 use CleaningCRM\Todo\Application\Dto\TodoDto;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
-use CleaningCRM\Todo\Domain\Model\TodoId;
+use CleaningCRM\Todo\Domain\Todo\TodoId;
 
-class CreateTodoCommand extends Command
+class UpdateTodoCommand extends Command
 {
-    protected static $defaultName = 'app:create-todo';
+    protected static $defaultName = 'app:update-todo';
 
     private $bus;
 
@@ -22,15 +23,20 @@ class CreateTodoCommand extends Command
         $this->bus = $bus;
     }
 
+    protected function configure(): void
+    {
+        $this->addArgument('id', InputArgument::REQUIRED, 'Todo Id to update');
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $todoId = TodoId::generate();
+        $todoId = TodoId::fromString($input->getArgument('id'));
 
-        $newTodo = new TodoDto();
+        $todo = new TodoDto();
 
-        $newTodo->description = 'New todo';
+        $todo->description = 'New description';
 
-        $this->bus->dispatch(new Create($todoId, $newTodo));
+        $this->bus->dispatch(new Update($todoId, $todo));
 
         $output->writeln('Whoa!');
 

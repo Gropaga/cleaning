@@ -3,8 +3,9 @@
 namespace CleaningCRM\Todo\Application\Command\Todo\Handler;
 
 use CleaningCRM\Todo\Application\Command\Todo\Create;
-use CleaningCRM\Todo\Domain\Model\Todo;
-use CleaningCRM\Todo\Domain\Model\TodoRepository;
+use CleaningCRM\Todo\Application\Command\Todo\Update;
+use CleaningCRM\Todo\Domain\Todo\Todo;
+use CleaningCRM\Todo\Domain\Todo\TodoRepository;
 
 /** @see Create */
 class UpdateHandler
@@ -16,8 +17,9 @@ class UpdateHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(Create $command)
+    public function __invoke(Update $command)
     {
+        /** @var $todo Todo */
         $todo = $this->repository->get($command->todoId());
 
         $todo->changeDescription($command->todo()->description);

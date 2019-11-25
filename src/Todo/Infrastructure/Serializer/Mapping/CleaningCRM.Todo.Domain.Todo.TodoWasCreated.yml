@@ -4,7 +4,7 @@ CleaningCRM\Todo\Domain\Todo\TodoWasCreated:
     properties:
         todoId:
             type: CleaningCRM\Todo\Domain\Todo\TodoId
-            serialized_name: huj
+            serialized_name: todo_id
 
         description:
             type: string

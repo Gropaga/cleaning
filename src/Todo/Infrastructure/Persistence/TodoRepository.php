@@ -5,9 +5,9 @@ namespace CleaningCRM\Todo\Infrastructure\Persistence;
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\EventStore as EventStorePort;
 use CleaningCRM\Common\Domain\RecordsEvents;
-use CleaningCRM\Todo\Domain\Model\Todo;
-use CleaningCRM\Todo\Domain\Model\TodoProjection as TodoProjectionPort;
-use CleaningCRM\Todo\Domain\Model\TodoRepository as TodoRepositoryPort;
+use CleaningCRM\Todo\Domain\Todo\Todo;
+use CleaningCRM\Todo\Domain\Todo\TodoProjection as TodoProjectionPort;
+use CleaningCRM\Todo\Domain\Todo\TodoRepository as TodoRepositoryPort;
 
 class TodoRepository implements TodoRepositoryPort
 {

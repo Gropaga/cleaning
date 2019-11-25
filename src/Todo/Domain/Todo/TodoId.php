@@ -1,6 +1,6 @@
 <?php
 
-namespace CleaningCRM\Todo\Domain\Model;
+namespace CleaningCRM\Todo\Domain\Todo;
 
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\UuidGenerator;

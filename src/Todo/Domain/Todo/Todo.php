@@ -1,14 +1,12 @@
 <?php
 
-namespace CleaningCRM\Todo\Domain\Model;
+namespace CleaningCRM\Todo\Domain\Todo;
 
-use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\AggregateRoot;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
-use CleaningCRM\Todo\Domain\Event\TodoWasCreated;
 use DateTimeImmutable;
 
-class Todo extends AggregateRoot
+final class Todo extends AggregateRoot
 {
     public const COMPLETED = true;
     public const NOT_COMPLETED = false;
@@ -58,21 +56,41 @@ class Todo extends AggregateRoot
         return new self($id, '', true, $date, $date);
     }
 
-    public function changeDescription(string $description): self
+    public function changeDescription(string $description): void
     {
-        $this->description = $description;
-
-        $this->recordThat(new TodoDescriptionWasChanged(
-
+        $this->applyAndRecordThat(new TodoDescriptionWasChanged(
+            $this->id,
+            $description,
+            new DateTimeImmutable()
         ));
     }
 
-    public static function reconstituteFromHistory(DomainEventsHistory $eventsHistory)
+    protected function applyTodoWasCreated(TodoWasCreated $event): void
+    {
+        $this->description = $event->getDescription();
+        $this->completed = $event->getCompleted();
+        $this->createdAt = $event->getCreatedAt();
+        $this->updatedAt = $event->getUpdatedAt();
+    }
+
+    protected function applyTodoDescriptionWasChanged(TodoDescriptionWasChanged $event): void
+    {
+        if ($event->getDescription() === $this->description) {
+            return;
+        }
+
+        $this->description = $event->getDescription();
+        $this->updatedAt = $event->getUpdatedAt();
+    }
+
+    public static function reconstituteFromHistory(DomainEventsHistory $eventsHistory): self
     {
         $todo = self::createEmptyTodoWithId($eventsHistory->getAggregateId());
 
         foreach ($eventsHistory as $event) {
             $todo->apply($event);
         }
+
+        return $todo;
     }
 }

@@ -1,0 +1,10 @@
+CleaningCRM\Todo\Domain\Todo\TodoTitleWasChanged:
+    exclusion_policy: ALL
+
+    properties:
+        todoId:
+            type: CleaningCRM\Todo\Domain\Todo\TodoId
+            serialized_name: todo_id
+
+        title:
+            type: string

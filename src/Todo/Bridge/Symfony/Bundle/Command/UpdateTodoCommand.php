@@ -4,6 +4,7 @@ namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\Command;
 
 use CleaningCRM\Todo\Application\Command\Todo\Update;
 use CleaningCRM\Todo\Application\Dto\TodoDto;
+use DateTimeImmutable;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,7 +35,9 @@ class UpdateTodoCommand extends Command
 
         $todo = new TodoDto();
 
-        $todo->description = 'New description';
+        $todo->title = 'Some title 123';
+        $todo->description = 'Some description 000';
+        $todo->date = DateTimeImmutable::createFromFormat('Y-m-d', '1987-12-06');
 
         $this->bus->dispatch(new Update($todoId, $todo));
 

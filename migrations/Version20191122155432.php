@@ -19,12 +19,14 @@ final class Version20191122155432 extends AbstractMigration
         $this->addSql(<<<SQL
     CREATE TABLE "public"."todo" (
       "id" uuid NOT NULL,
+      "title" text NOT NULL,
       "description" text,
-      "completed" boolean,
-      "created_at" timestamp,
-      "updated_at" timestamp,
+      "date" timestamp NOT NULL,
+      "completed" boolean NOT NULL,
+      "created_at" timestamp NOT NULL,
+      "updated_at" timestamp NOT NULL,
       PRIMARY KEY ("id")
-                                        );
+     );
 SQL
         );
     }

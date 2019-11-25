@@ -6,6 +6,7 @@ use CleaningCRM\Todo\Application\Command\Todo\Create;
 use CleaningCRM\Todo\Application\Command\Todo\Update;
 use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\TodoRepository;
+use DateTimeImmutable;
 
 /** @see Create */
 class UpdateHandler
@@ -23,6 +24,9 @@ class UpdateHandler
         $todo = $this->repository->get($command->todoId());
 
         $todo->changeDescription($command->todo()->description);
+        $todo->changeTitle($command->todo()->title);
+        $todo->changeDate($command->todo()->date);
+        $todo->changeUpdatedAt(new DateTimeImmutable());
 
         $this->repository->add($todo);
     }

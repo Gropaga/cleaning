@@ -5,15 +5,15 @@ namespace CleaningCRM\Todo\Domain\Todo;
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
 
-class TodoDescriptionWasChanged implements DomainEvent
+class TodoTitleWasChanged implements DomainEvent
 {
     private $todoId;
-    private $description;
+    private $title;
 
-    public function __construct(TodoId $todoId, string $description)
+    public function __construct(TodoId $todoId, string $title)
     {
         $this->todoId = $todoId;
-        $this->description = $description;
+        $this->title = $title;
     }
 
     public function getAggregateId(): AggregateId
@@ -21,8 +21,8 @@ class TodoDescriptionWasChanged implements DomainEvent
         return $this->todoId;
     }
 
-    public function getDescription(): string
+    public function getTitle(): string
     {
-        return $this->description;
+        return $this->title;
     }
 }

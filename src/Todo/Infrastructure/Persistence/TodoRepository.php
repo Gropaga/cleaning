@@ -8,14 +8,18 @@ use CleaningCRM\Common\Domain\RecordsEvents;
 use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\TodoProjection as TodoProjectionPort;
 use CleaningCRM\Todo\Domain\Todo\TodoRepository as TodoRepositoryPort;
+use Doctrine\DBAL\Connection;
+use Exception;
 
 class TodoRepository implements TodoRepositoryPort
 {
+    private $connection;
     private $eventStore;
     private $projection;
 
-    public function __construct(EventStorePort $eventStore, TodoProjectionPort $projection)
+    public function __construct(Connection $connection, EventStorePort $eventStore, TodoProjectionPort $projection)
     {
+        $this->connection = $connection;
         $this->eventStore = $eventStore;
         $this->projection = $projection;
     }
@@ -23,8 +27,11 @@ class TodoRepository implements TodoRepositoryPort
     public function add(RecordsEvents $aggregate): void
     {
         $recordedEvents = $aggregate->getRecordedEvents();
-        $this->eventStore->append($recordedEvents);
-        $this->projection->project($recordedEvents);
+
+        $this->connection->transactional(function () use ($recordedEvents) {
+            $this->eventStore->append($recordedEvents);
+            $this->projection->project($recordedEvents);
+        });
 
         $aggregate->clearRecordedEvents();
     }

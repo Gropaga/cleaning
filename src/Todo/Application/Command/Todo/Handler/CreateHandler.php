@@ -21,7 +21,9 @@ class CreateHandler
     {
         $todo = Todo::create(
             $command->todoId(),
-            $command->todo()->description
+            $command->todo()->title,
+            $command->todo()->description,
+            $command->todo()->date
         );
 
         $this->repository->add($todo);

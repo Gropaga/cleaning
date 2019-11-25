@@ -6,11 +6,17 @@ CleaningCRM\Todo\Domain\Todo\TodoWasCreated:
             type: CleaningCRM\Todo\Domain\Todo\TodoId
             serialized_name: todo_id
 
+        title:
+            type: string
+
         description:
             type: string
 
         completed:
             type: boolean
+
+        date:
+            type: DateTimeImmutable
 
         createdAt:
             type: DateTimeImmutable

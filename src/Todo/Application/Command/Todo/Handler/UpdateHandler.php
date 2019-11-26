@@ -26,7 +26,6 @@ class UpdateHandler
         $todo->changeDescription($command->todo()->description);
         $todo->changeTitle($command->todo()->title);
         $todo->changeDate($command->todo()->date);
-        $todo->changeUpdatedAt(new DateTimeImmutable());
 
         $this->repository->add($todo);
     }

@@ -8,3 +8,7 @@ CleaningCRM\Todo\Domain\Todo\TodoDescriptionWasChanged:
 
         description:
             type: string
+
+        updatedAt:
+            type: DateTimeImmutable
+            serialized_name: updated_at

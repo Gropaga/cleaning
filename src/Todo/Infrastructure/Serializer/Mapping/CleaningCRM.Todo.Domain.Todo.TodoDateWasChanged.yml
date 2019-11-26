@@ -8,3 +8,7 @@ CleaningCRM\Todo\Domain\Todo\TodoDateWasChanged:
 
         date:
             type: DateTimeImmutable
+
+        updatedAt:
+            type: DateTimeImmutable
+            serialized_name: updated_at

@@ -77,7 +77,8 @@ final class Todo extends AggregateRoot
 
         $this->applyAndRecordThat(new TodoDescriptionWasChanged(
             $this->id,
-            $description
+            $description,
+            new DateTimeImmutable()
         ));
     }
 
@@ -89,7 +90,8 @@ final class Todo extends AggregateRoot
 
         $this->applyAndRecordThat(new TodoTitleWasChanged(
             $this->id,
-            $title
+            $title,
+            new DateTimeImmutable()
         ));
     }
 
@@ -101,7 +103,8 @@ final class Todo extends AggregateRoot
 
         $this->applyAndRecordThat(new TodoDateWasChanged(
             $this->id,
-            $date
+            $date,
+            new DateTimeImmutable()
         ));
     }
 
@@ -113,19 +116,8 @@ final class Todo extends AggregateRoot
 
         $this->applyAndRecordThat(new TodoCompletedWasChanged(
             $this->id,
-            $completed
-        ));
-    }
-
-    public function changeUpdatedAt(DateTimeImmutable $updatedAt): void
-    {
-        if ($updatedAt === $this->updatedAt) {
-            return;
-        }
-
-        $this->applyAndRecordThat(new TodoUpdatedAtWasChanged(
-            $this->id,
-            $updatedAt
+            $completed,
+            new DateTimeImmutable()
         ));
     }
 
@@ -136,11 +128,6 @@ final class Todo extends AggregateRoot
         }
 
         $this->title = $event->getTitle();
-    }
-
-    protected function applyTodoUpdatedAtWasChanged(TodoUpdatedAtWasChanged $event): void
-    {
-        $this->updatedAt = $event->getUpdatedAt();
     }
 
     protected function applyTodoDateWasChanged(TodoDateWasChanged $event): void

@@ -37,7 +37,7 @@ class UpdateTodoCommand extends Command
 
         $todo->title = 'Some title 123';
         $todo->description = 'Some description 000';
-        $todo->date = DateTimeImmutable::createFromFormat('Y-m-d', '1987-12-06');
+        $todo->date = DateTimeImmutable::createFromFormat('Y-m-d', '1987-12-06')->setTime(0, 0);
 
         $this->bus->dispatch(new Update($todoId, $todo));
 

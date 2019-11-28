@@ -37,7 +37,7 @@ SQL
                 ':id' => Uuid::uuid4()->toString(),
                 ':aggregateId' => (string) $event->getAggregateId(),
                 ':eventName' => get_class($event),
-                ':createdAt' => (new DateTimeImmutable())->format('m-d-Y H:i:s.u'),
+                ':createdAt' => (new DateTimeImmutable())->format('Y-m-d H:i:s.u'),
                 ':payload' => $this->serializer->serialize($event, 'json'),
             ]);
         }

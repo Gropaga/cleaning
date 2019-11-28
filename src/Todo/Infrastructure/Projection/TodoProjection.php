@@ -35,8 +35,8 @@ SQL
             ':description' => $event->getDescription(),
             ':date' => $event->getDate()->format('m-d-Y H:i:s'),
             ':completed' => $event->getCompleted() ? 'TRUE' : 'FALSE',
-            ':createdAt' => $event->getCreatedAt()->format('m-d-Y H:i:s.u'),
-            ':updatedAt' => $event->getUpdatedAt()->format('m-d-Y H:i:s.u'),
+            ':createdAt' => $event->getCreatedAt()->format('Y-m-d H:i:s.u'),
+            ':updatedAt' => $event->getUpdatedAt()->format('Y-m-d H:i:s.u'),
         ]);
     }
 
@@ -47,7 +47,7 @@ SQL
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
             ':description' => $event->getDescription(),
-            ':updatedAt' => $event->getUpdatedAt()->format('m-d-Y H:i:s.u'),
+            ':updatedAt' => $event->getUpdatedAt()->format('Y-m-d H:i:s.u'),
         ]);
     }
 
@@ -58,7 +58,7 @@ SQL
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
             ':completed' => $event->getCompleted(),
-            ':updatedAt' => $event->getUpdatedAt()->format('m-d-Y H:i:s.u'),
+            ':updatedAt' => $event->getUpdatedAt()->format('Y-m-d H:i:s.u'),
         ]);
     }
 
@@ -69,7 +69,7 @@ SQL
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
             ':title' => $event->getTitle(),
-            ':updatedAt' => $event->getUpdatedAt()->format('m-d-Y H:i:s.u'),
+            ':updatedAt' => $event->getUpdatedAt()->format('Y-m-d H:i:s.u'),
         ]);
     }
 
@@ -80,7 +80,7 @@ SQL
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
             ':date' => $event->getDate()->format('Y-m-d H:i:s'),
-            ':updatedAt' => $event->getUpdatedAt()->format('m-d-Y H:i:s.u'),
+            ':updatedAt' => $event->getUpdatedAt()->format('Y-m-d H:i:s.u'),
         ]);
     }
 }

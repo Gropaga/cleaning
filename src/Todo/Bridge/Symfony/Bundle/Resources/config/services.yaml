@@ -14,14 +14,28 @@ services:
     resource: '%todo.bundle_dir%/Application/Command/Todo/Handler'
     tags: ['messenger.message_handler']
 
+  CleaningCRM\Todo\Application\Query\Todo\Handler\:
+    resource: '%todo.bundle_dir%/Application/Query/Todo/Handler'
+    tags: ['messenger.message_handler']
+
+  CleaningCRM\Todo\Bridge\Symfony\Bundle\Controller\:
+    resource: '%todo.bundle_dir%/Bridge/Symfony/Bundle/Controller'
+    tags: ['controller.service_arguments']
+
   CleaningCRM\Todo\Infrastructure\Persistence\TodoRepository: ~
   CleaningCRM\Todo\Domain\Todo\TodoRepository: '@CleaningCRM\Todo\Infrastructure\Persistence\TodoRepository'
+
+  CleaningCRM\Todo\Infrastructure\Persistence\TodoQueryRepository: ~
+  CleaningCRM\Todo\Domain\Todo\TodoQueryRepository: '@CleaningCRM\Todo\Infrastructure\Persistence\TodoQueryRepository'
+
 
   CleaningCRM\Todo\Infrastructure\Persistence\SQLEventStore: ~
   CleaningCRM\Common\Domain\EventStore: '@CleaningCRM\Todo\Infrastructure\Persistence\SQLEventStore'
 
   CleaningCRM\Todo\Infrastructure\Projection\TodoProjection: ~
   CleaningCRM\Todo\Domain\Todo\TodoProjection: '@CleaningCRM\Todo\Infrastructure\Projection\TodoProjection'
+
+
 
   CleaningCRM\Todo\Infrastructure\Serializer\SerializerFactory:
     arguments:
@@ -33,3 +47,5 @@ services:
     factory: 'CleaningCRM\Todo\Infrastructure\Serializer\SerializerFactory:create'
 
   JMS\Serializer\SerializerInterface: '@JMS\Serializer\Serializer'
+
+  CleaningCRM\Todo\Infrastructure\Persistence\TodoReadModelMapper: ~

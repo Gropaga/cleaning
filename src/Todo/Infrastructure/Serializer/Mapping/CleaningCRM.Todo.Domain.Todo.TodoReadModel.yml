@@ -1,0 +1,23 @@
+CleaningCRM\Todo\Domain\Todo\TodoReadModel:
+  exclusion_policy: ALL
+  properties:
+    id:
+      type: CleaningCRM\Todo\Domain\Todo\TodoId
+      serialized_name: todo_id
+
+    title:
+      type: string
+
+    description:
+      type: string
+
+    completed:
+      type: bool
+
+    createdAt:
+      type: DateTimeImmutable
+      serialized_name: created_at
+
+    updatedAt:
+      type: DateTimeImmutable
+      serialized_name: updated_at

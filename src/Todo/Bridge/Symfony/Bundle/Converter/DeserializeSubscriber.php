@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class Subscriber implements EventSubscriberInterface
+class DeserializeSubscriber implements EventSubscriberInterface
 {
     private const CONTENT_TYPE = 'json';
 

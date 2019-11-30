@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Todo\Infrastructure\Persistence;
 
+use CleaningCRM\Todo\Domain\Todo\TodoCountReadModel;
 use CleaningCRM\Todo\Domain\Todo\TodoQueryRepository as TodoQueryRepositoryPort;
 use CleaningCRM\Todo\Domain\Todo\TodoReadModel;
+use DateTimeImmutable;
 use Doctrine\DBAL\Driver\Connection;
 use Doctrine\DBAL\ParameterType;
 use PDO;
@@ -52,9 +54,31 @@ class TodoQueryRepository implements TodoQueryRepositoryPort
         return $todos;
     }
 
-    public function count(): int
+    public function fetchByDate(DateTimeImmutable $startDate, DateTimeImmutable $endDate): array
     {
-        return (int) $this->connection->fetchColumn('SELECT COUNT(id) AS total from todo');
+        $stmt = $this->connection->prepare('SELECT * FROM todo WHERE date BETWEEN :start AND :end');
+        $stmt->execute(
+            [
+                ':start' => $startDate->setTime(0,0)->format('Y-m-d H:i:s'),
+                ':end' => $endDate->setTime(23,59, 59)->format('Y-m-d H:i:s'),
+            ]
+        );
+
+        $todos = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $todos[] = $this->mapper->map($row);
+        }
+
+        $stmt->closeCursor();
+
+        return $todos;
     }
 
+    public function count(): TodoCountReadModel
+    {
+        return new TodoCountReadModel(
+            $this->connection->fetchColumn('SELECT COUNT(id) AS total from todo')
+        );
+    }
 }

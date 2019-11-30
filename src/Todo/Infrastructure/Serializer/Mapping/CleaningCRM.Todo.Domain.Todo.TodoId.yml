@@ -3,4 +3,4 @@ CleaningCRM\Todo\Domain\Todo\TodoId:
   properties:
     todoId:
       type: string
-      serialized_name: todo_id
+      serialized_name: id

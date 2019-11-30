@@ -1,0 +1,12 @@
+CleaningCRM\Todo\Application\Dto\TodoDto:
+  exclusion_policy: ALL
+
+  properties:
+    title:
+      type: string
+
+    description:
+      type: string
+
+    date:
+      type: DateTimeImmutable<'Y-m-d'>

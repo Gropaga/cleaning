@@ -35,7 +35,7 @@ final class Todo extends AggregateRoot
         $this->updatedAt = $updatedAt;
     }
 
-    public static function create(TodoId $id, string $title, string $description, DateTimeImmutable $date): self
+    public static function create(TodoId $id, string $title, string $description, bool $completed, DateTimeImmutable $date): self
     {
         $createdAt = $updatedAt = new DateTimeImmutable();
 
@@ -43,7 +43,7 @@ final class Todo extends AggregateRoot
             $id,
             $title,
             $description,
-            false,
+            $completed,
             $date,
             $createdAt,
             $updatedAt
@@ -108,7 +108,7 @@ final class Todo extends AggregateRoot
         ));
     }
 
-    public function setCompleted(bool $completed): void
+    public function changeCompleted(bool $completed): void
     {
         if ($completed === $this->completed) {
             return;

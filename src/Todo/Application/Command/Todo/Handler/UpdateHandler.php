@@ -26,6 +26,7 @@ class UpdateHandler
         $todo->changeDescription($command->todo()->description);
         $todo->changeTitle($command->todo()->title);
         $todo->changeDate($command->todo()->date);
+        $todo->changeCompleted($command->todo()->completed);
 
         $this->repository->add($todo);
     }

@@ -8,5 +8,8 @@ CleaningCRM\Todo\Application\Dto\TodoDto:
     description:
       type: string
 
+    completed:
+      type: bool
+
     date:
       type: DateTimeImmutable<'Y-m-d'>

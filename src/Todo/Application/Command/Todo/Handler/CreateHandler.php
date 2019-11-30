@@ -23,6 +23,7 @@ class CreateHandler
             $command->todoId(),
             $command->todo()->title,
             $command->todo()->description,
+            $command->todo()->completed,
             $command->todo()->date
         );
 

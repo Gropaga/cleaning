@@ -11,12 +11,8 @@ final class TodoDto implements ArrayAccess
 {
     use AsArrayTrait;
 
-    /** @var string */
     public $title;
-
-    /** @var string */
     public $description;
-
-    /** @var string */
     public $date;
+    public $completed;
 }

@@ -15,6 +15,7 @@ final class Todo extends AggregateRoot
     private $date;
     private $createdAt;
     private $updatedAt;
+    private $deletedAt;
 
     private function __construct(
         TodoId $id,
@@ -23,7 +24,8 @@ final class Todo extends AggregateRoot
         bool $completed,
         DateTimeImmutable $date,
         DateTimeImmutable $createdAt,
-        DateTimeImmutable $updatedAt
+        DateTimeImmutable $updatedAt,
+        ?DateTimeImmutable $deleteAt
     )
     {
         $this->id = $id;
@@ -33,9 +35,10 @@ final class Todo extends AggregateRoot
         $this->completed = $completed;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
+        $this->deletedAt = $deleteAt;
     }
 
-    public static function create(TodoId $id, string $title, string $description, bool $completed, DateTimeImmutable $date): self
+    public static function create(TodoId $id, string $title, string $description, bool $completed, DateTimeImmutable $date, DateTimeImmutable $deletedAt): self
     {
         $createdAt = $updatedAt = new DateTimeImmutable();
 
@@ -46,7 +49,8 @@ final class Todo extends AggregateRoot
             $completed,
             $date,
             $createdAt,
-            $updatedAt
+            $updatedAt,
+            $deletedAt
         );
 
         $newTodo->recordThat(new TodoWasCreated(
@@ -66,7 +70,7 @@ final class Todo extends AggregateRoot
     {
         $date = new DateTimeImmutable();
 
-        return new self($id, '', '',true, $date, $date, $date);
+        return new self($id, '', '',true, $date, $date, $date, null);
     }
 
     public function changeDescription(string $description): void
@@ -121,6 +125,19 @@ final class Todo extends AggregateRoot
         ));
     }
 
+    public function changeDeletedAt(DateTimeImmutable $deletedAt): void
+    {
+        if ($deletedAt === $this->deletedAt) {
+            return;
+        }
+
+        $this->applyAndRecordThat(new TodoDeletedAtWasChanged(
+            $this->id,
+            $deletedAt,
+            new DateTimeImmutable()
+        ));
+    }
+
     protected function applyTodoTitleWasChanged(TodoTitleWasChanged $event): void
     {
         if ($event->getTitle() === $this->title) {
@@ -128,6 +145,15 @@ final class Todo extends AggregateRoot
         }
 
         $this->title = $event->getTitle();
+    }
+
+    protected function applyTodoDeletedAtWasChanged(TodoDeletedAtWasChanged $event): void
+    {
+        if ($event->getDeletedAt() === $this->deletedAt) {
+            return;
+        }
+
+        $this->title = $event->getDeletedAt();
     }
 
     protected function applyTodoDateWasChanged(TodoDateWasChanged $event): void

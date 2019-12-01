@@ -5,6 +5,7 @@ namespace CleaningCRM\Todo\Infrastructure\Projection;
 use CleaningCRM\Common\Domain\AbstractProjection;
 use CleaningCRM\Todo\Domain\Todo\TodoCompletedWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoDateWasChanged;
+use CleaningCRM\Todo\Domain\Todo\TodoDeletedAtWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoDescriptionWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoTitleWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoWasCreated;
@@ -80,6 +81,17 @@ SQL
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
             ':date' => $event->getDate()->format('Y-m-d H:i:s'),
+            ':updatedAt' => $event->getUpdatedAt()->format('Y-m-d H:i:s.u'),
+        ]);
+    }
+
+    public function projectWhenTodoDeletedAtWasChanged(TodoDeletedAtWasChanged $event)
+    {
+        $stmt = $this->connection->prepare('UPDATE todo SET deleted_at = :deleted_at, updated_at = :updatedAt WHERE id = :id');
+
+        $stmt->execute([
+            ':id' => (string) $event->getAggregateId(),
+            ':deleted_at' => $event->getDeletedAt()->format('Y-m-d H:i:s'),
             ':updatedAt' => $event->getUpdatedAt()->format('Y-m-d H:i:s.u'),
         ]);
     }

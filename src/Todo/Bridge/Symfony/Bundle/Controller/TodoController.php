@@ -3,6 +3,7 @@
 namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\Controller;
 
 use CleaningCRM\Todo\Application\Command\Todo\Create;
+use CleaningCRM\Todo\Application\Command\Todo\Delete;
 use CleaningCRM\Todo\Application\Command\Todo\Update;
 use CleaningCRM\Todo\Application\Dto\TodoDto;
 use CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter\Deserialize;
@@ -94,6 +95,25 @@ class TodoController
 
         $this->handle(
             new Update($id, $todo)
+        );
+
+        return Response::create(
+            $this->serializer->serialize(
+                $id,
+                'json'
+            )
+        );
+    }
+
+    /**
+     *
+     * @Route("/delete/{id}", methods={"DELETE"})
+     *
+     */
+    public function delete(string $id): Response
+    {
+        $this->handle(
+            new Delete($id)
         );
 
         return Response::create(

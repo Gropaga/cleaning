@@ -25,7 +25,7 @@ class TodoQueryRepository implements TodoQueryRepositoryPort
 
     public function get(string $id): TodoReadModel
     {
-        $stmt = $this->connection->prepare('SELECT * FROM todo WHERE id=:id');
+        $stmt = $this->connection->prepare('SELECT * FROM todo WHERE id=:id AND deleted_at IS NULL');
         $stmt->execute([':id' => $id]);
 
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -37,7 +37,7 @@ class TodoQueryRepository implements TodoQueryRepositoryPort
     {
         $offset = ($page - 1) * $perPage;
 
-        $stmt = $this->connection->prepare('SELECT * FROM todo LIMIT :perPage OFFSET :offset');
+        $stmt = $this->connection->prepare('SELECT * FROM todo WHERE deleted_at IS NULL LIMIT :perPage OFFSET :offset');
 
         $stmt->bindValue(':perPage', $perPage, ParameterType::INTEGER);
         $stmt->bindValue(':offset', $offset, ParameterType::INTEGER);
@@ -56,7 +56,7 @@ class TodoQueryRepository implements TodoQueryRepositoryPort
 
     public function fetchByDate(DateTimeImmutable $startDate, DateTimeImmutable $endDate): array
     {
-        $stmt = $this->connection->prepare('SELECT * FROM todo WHERE date BETWEEN :start AND :end');
+        $stmt = $this->connection->prepare('SELECT * FROM todo WHERE date BETWEEN :start AND :end AND deleted_at IS NULL');
         $stmt->execute(
             [
                 ':start' => $startDate->setTime(0,0)->format('Y-m-d H:i:s'),
@@ -78,7 +78,7 @@ class TodoQueryRepository implements TodoQueryRepositoryPort
     public function count(): TodoCountReadModel
     {
         return new TodoCountReadModel(
-            $this->connection->fetchColumn('SELECT COUNT(id) AS total from todo')
+            $this->connection->fetchColumn('SELECT COUNT(id) AS total FROM todo WHERE deleted_at IS NULL')
         );
     }
 }

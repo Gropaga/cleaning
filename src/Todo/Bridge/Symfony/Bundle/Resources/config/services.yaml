@@ -47,6 +47,6 @@ services:
 
   CleaningCRM\Todo\Infrastructure\Persistence\TodoReadModelMapper: ~
 
-  CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter\Subscriber:
-    class: CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter\Subscriber
+  CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter\DeserializeSubscriber:
+    class: CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter\DeserializeSubscriber
     tags: ['kernel.event_subscriber']

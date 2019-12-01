@@ -25,3 +25,7 @@ CleaningCRM\Todo\Domain\Todo\TodoWasCreated:
         updatedAt:
             type: DateTimeImmutable
             serialized_name: updated_at
+
+        deletedAt:
+            type: DateTimeImmutable
+            serialized_name: deleted_at

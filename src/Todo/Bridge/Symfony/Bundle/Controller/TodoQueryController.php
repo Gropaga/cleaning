@@ -67,7 +67,10 @@ class TodoQueryController
     public function count(): Response
     {
         return Response::create(
-            ' '
+            $this->serializer->serialize(
+                $this->handle(new TodoCountQuery()),
+                'json'
+            )
         );
     }
 

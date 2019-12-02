@@ -10,13 +10,11 @@ class TodoTitleWasChanged implements DomainEvent
 {
     private $todoId;
     private $title;
-    private $updatedAt;
 
-    public function __construct(TodoId $todoId, string $title, DateTimeImmutable $updatedAt)
+    public function __construct(TodoId $todoId, string $title)
     {
         $this->todoId = $todoId;
         $this->title = $title;
-        $this->updatedAt = $updatedAt;
     }
 
     public function getAggregateId(): AggregateId
@@ -27,10 +25,5 @@ class TodoTitleWasChanged implements DomainEvent
     public function getTitle(): string
     {
         return $this->title;
-    }
-
-    public function getUpdatedAt(): DateTimeImmutable
-    {
-        return $this->updatedAt;
     }
 }

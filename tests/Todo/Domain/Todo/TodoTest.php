@@ -170,30 +170,21 @@ final class TodoTest extends TestCase
                     'Title 1234',
                     'Description 5678',
                     true,
-                    new DateTimeImmutable(),
-                    DateTimeImmutable::createFromFormat('Y-m-d', '2018-02-11')->setTime(0,0),
-                    DateTimeImmutable::createFromFormat('Y-m-d', '2018-02-11')->setTime(0,0)
+                    new DateTimeImmutable()
                 ),
-                new TodoTitleWasChanged($todoId, 'New Title', new DateTimeImmutable()),
-                new TodoDescriptionWasChanged($todoId, 'New Description', new DateTimeImmutable()),
-                new TodoCompletedWasChanged($todoId, false, new DateTimeImmutable()),
-                new TodoDateWasChanged($todoId, DateTimeImmutable::createFromFormat('Y-m-d', '2019-01-01')->setTime(0,0), DateTimeImmutable::createFromFormat('Y-m-d', '2018-01-01')->setTime(0,0))
+                new TodoTitleWasChanged($todoId, 'New Title'),
+                new TodoDescriptionWasChanged($todoId, 'New Description'),
+                new TodoCompletedWasChanged($todoId, false),
+                new TodoDateWasChanged($todoId, DateTimeImmutable::createFromFormat('Y-m-d', '2019-01-01')->setTime(0,0))
             ]
         );
 
         $todo = Todo::reconstituteFromHistory($eventsHistory);
 
-        $this->assertEquals(DateTimeImmutable::createFromFormat('Y-m-d', '2018-02-11')->setTime(0,0)->format('Y-m-d H:i:s'), $todo->getCreatedAt()->format('Y-m-d H:i:s'));
         $this->assertEquals('New Title', $todo->getTitle());
         $this->assertEquals('New Description', $todo->getDescription());
         $this->assertEquals(false, $todo->isCompleted());
         $this->assertEquals(DateTimeImmutable::createFromFormat('Y-m-d', '2019-01-01')->setTime(0,0)->format('Y-m-d H:i:s'), $todo->getDate()->format('Y-m-d H:i:s'));
-        $this->assertEquals(DateTimeImmutable::createFromFormat('Y-m-d', '2018-01-01')->setTime(0,0)->format('Y-m-d H:i:s'), $todo->getUpdatedAt()->format('Y-m-d H:i:s'));
-    }
-
-    public function updatedAtDate()
-    {
-        
     }
 
     private function assertEvent(DomainEvents $recodedEvents, $eventClass): bool

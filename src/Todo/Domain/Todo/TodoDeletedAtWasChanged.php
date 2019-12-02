@@ -10,13 +10,11 @@ class TodoDeletedAtWasChanged implements DomainEvent
 {
     private $todoId;
     private $deletedAt;
-    private $updatedAt;
 
-    public function __construct(TodoId $todoId, DateTimeImmutable $deletedAt, DateTimeImmutable $updatedAt)
+    public function __construct(TodoId $todoId, DateTimeImmutable $deletedAt)
     {
         $this->todoId = $todoId;
         $this->deletedAt = $deletedAt;
-        $this->updatedAt = $updatedAt;
     }
 
     public function getAggregateId(): AggregateId
@@ -27,10 +25,5 @@ class TodoDeletedAtWasChanged implements DomainEvent
     public function getDeletedAt(): DateTimeImmutable
     {
         return $this->deletedAt;
-    }
-
-    public function getUpdatedAt(): DateTimeImmutable
-    {
-        return $this->updatedAt;
     }
 }

@@ -18,14 +18,6 @@ CleaningCRM\Todo\Domain\Todo\TodoWasCreated:
         date:
             type: DateTimeImmutable
 
-        createdAt:
-            type: DateTimeImmutable
-            serialized_name: created_at
-
-        updatedAt:
-            type: DateTimeImmutable
-            serialized_name: updated_at
-
         deletedAt:
             type: DateTimeImmutable
             serialized_name: deleted_at

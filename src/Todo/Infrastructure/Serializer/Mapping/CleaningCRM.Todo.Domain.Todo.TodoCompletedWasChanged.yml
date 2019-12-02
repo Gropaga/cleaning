@@ -8,7 +8,3 @@ CleaningCRM\Todo\Domain\Todo\TodoCompletedWasChanged:
 
         completed:
             type: bool
-
-        updatedAt:
-            type: DateTimeImmutable
-            serialized_name: updated_at

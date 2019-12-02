@@ -23,8 +23,6 @@ final class Version20191122155432 extends AbstractMigration
       "description" text,
       "date" timestamp NOT NULL,
       "completed" boolean NOT NULL,
-      "created_at" timestamp NOT NULL,
-      "updated_at" timestamp NOT NULL,
       PRIMARY KEY ("id")
      );
 SQL

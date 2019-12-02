@@ -13,17 +13,13 @@ class TodoWasCreated implements DomainEvent
     private $description;
     private $date;
     private $completed;
-    private $createdAt;
-    private $updatedAt;
 
     public function __construct(
         TodoId $todoId,
         string $title,
         string $description,
         bool $completed,
-        DateTimeImmutable $date,
-        DateTimeImmutable $createdAt,
-        DateTimeImmutable $updatedAt
+        DateTimeImmutable $date
     )
     {
         $this->todoId = $todoId;
@@ -31,8 +27,6 @@ class TodoWasCreated implements DomainEvent
         $this->description = $description;
         $this->completed = $completed;
         $this->date = $date;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
     }
 
     public function getAggregateId(): AggregateId
@@ -63,15 +57,5 @@ class TodoWasCreated implements DomainEvent
     public function getDate(): DateTimeImmutable
     {
         return $this->date;
-    }
-
-    public function getCreatedAt(): DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function getUpdatedAt(): DateTimeImmutable
-    {
-        return $this->updatedAt;
     }
 }

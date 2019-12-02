@@ -13,8 +13,6 @@ final class Todo extends AggregateRoot
     private $description;
     private $completed;
     private $date;
-    private $createdAt;
-    private $updatedAt;
     private $deletedAt;
 
     private function __construct(
@@ -23,8 +21,6 @@ final class Todo extends AggregateRoot
         string $description,
         bool $completed,
         DateTimeImmutable $date,
-        DateTimeImmutable $createdAt,
-        DateTimeImmutable $updatedAt,
         ?DateTimeImmutable $deleteAt
     )
     {
@@ -33,8 +29,6 @@ final class Todo extends AggregateRoot
         $this->date = $date;
         $this->description = $description;
         $this->completed = $completed;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
         $this->deletedAt = $deleteAt;
     }
 
@@ -63,16 +57,6 @@ final class Todo extends AggregateRoot
         return $this->date;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function getUpdatedAt(): DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
     public function getDeletedAt(): ?DateTimeImmutable
     {
         return $this->deletedAt;
@@ -80,16 +64,12 @@ final class Todo extends AggregateRoot
 
     public static function create(TodoId $id, string $title, string $description, bool $completed, DateTimeImmutable $date, ?DateTimeImmutable $deletedAt = null): self
     {
-        $createdAt = $updatedAt = new DateTimeImmutable();
-
         $newTodo = new Todo(
             $id,
             $title,
             $description,
             $completed,
             $date,
-            $createdAt,
-            $updatedAt,
             $deletedAt
         );
 
@@ -98,9 +78,7 @@ final class Todo extends AggregateRoot
             $newTodo->title,
             $newTodo->description,
             $newTodo->completed,
-            $newTodo->date,
-            $newTodo->createdAt,
-            $newTodo->updatedAt
+            $newTodo->date
         ));
 
         return $newTodo;
@@ -110,7 +88,7 @@ final class Todo extends AggregateRoot
     {
         $date = new DateTimeImmutable();
 
-        return new self($id, '', '',true, $date, $date, $date, null);
+        return new self($id, '', '',true, $date, null);
     }
 
     public function changeDescription(string $description): void
@@ -121,8 +99,7 @@ final class Todo extends AggregateRoot
 
         $this->applyAndRecordThat(new TodoDescriptionWasChanged(
             $this->id,
-            $description,
-            new DateTimeImmutable()
+            $description
         ));
     }
 
@@ -134,8 +111,7 @@ final class Todo extends AggregateRoot
 
         $this->applyAndRecordThat(new TodoTitleWasChanged(
             $this->id,
-            $title,
-            new DateTimeImmutable()
+            $title
         ));
     }
 
@@ -147,8 +123,7 @@ final class Todo extends AggregateRoot
 
         $this->applyAndRecordThat(new TodoDateWasChanged(
             $this->id,
-            $date,
-            new DateTimeImmutable()
+            $date
         ));
     }
 
@@ -160,8 +135,7 @@ final class Todo extends AggregateRoot
 
         $this->applyAndRecordThat(new TodoCompletedWasChanged(
             $this->id,
-            $completed,
-            new DateTimeImmutable()
+            $completed
         ));
     }
 
@@ -172,7 +146,6 @@ final class Todo extends AggregateRoot
         }
 
         $this->completed = $event->getCompleted();
-        $this->updatedAt = $event->getUpdatedAt();
     }
 
     public function changeDeletedAt(?DateTimeImmutable $deletedAt): void
@@ -183,8 +156,7 @@ final class Todo extends AggregateRoot
 
         $this->applyAndRecordThat(new TodoDeletedAtWasChanged(
             $this->id,
-            $deletedAt,
-            new DateTimeImmutable()
+            $deletedAt
         ));
     }
 
@@ -195,7 +167,6 @@ final class Todo extends AggregateRoot
         }
 
         $this->title = $event->getTitle();
-        $this->updatedAt = $event->getUpdatedAt();
     }
 
     protected function applyTodoDeletedAtWasChanged(TodoDeletedAtWasChanged $event): void
@@ -205,7 +176,6 @@ final class Todo extends AggregateRoot
         }
 
         $this->deletedAt = $event->getDeletedAt();
-        $this->updatedAt = $event->getUpdatedAt();
     }
 
     protected function applyTodoDateWasChanged(TodoDateWasChanged $event): void
@@ -215,7 +185,6 @@ final class Todo extends AggregateRoot
         }
 
         $this->date = $event->getDate();
-        $this->updatedAt = $event->getUpdatedAt();
     }
 
     protected function applyTodoDescriptionWasChanged(TodoDescriptionWasChanged $event): void
@@ -225,7 +194,6 @@ final class Todo extends AggregateRoot
         }
 
         $this->description = $event->getDescription();
-        $this->updatedAt = $event->getUpdatedAt();
     }
 
     protected function applyTodoWasCreated(TodoWasCreated $event): void
@@ -233,8 +201,6 @@ final class Todo extends AggregateRoot
         $this->title = $event->getTitle();
         $this->description = $event->getDescription();
         $this->completed = $event->getCompleted();
-        $this->createdAt = $event->getCreatedAt();
-        $this->updatedAt = $event->getUpdatedAt();
     }
 
     public static function reconstituteFromHistory(DomainEventsHistory $eventsHistory): self

@@ -14,6 +14,10 @@ up:
 	$(DOCKER_COMPOSE) up --remove-orphans -d
 .PHONY: up
 
+test-unit:
+	$(RUN_PHP) bin/phpunit
+.PHONY: test-unit
+
 db-migrate:
 	$(RUN_PHP) bin/console doctrine:migration:migrate -n
 .PHONY: db-migrate

@@ -23,7 +23,7 @@ class TodoQueryRepository implements TodoQueryRepositoryPort
         $this->mapper = $mapper;
     }
 
-    public function get(string $id): TodoReadModel
+    public function byId(string $id): TodoReadModel
     {
         $stmt = $this->connection->prepare('SELECT * FROM todo WHERE id=:id AND deleted_at IS NULL');
         $stmt->execute([':id' => $id]);
@@ -33,7 +33,7 @@ class TodoQueryRepository implements TodoQueryRepositoryPort
         return $this->mapper->map($data);
     }
 
-    public function fetchAll(int $page, int $perPage): array
+    public function all(int $page, int $perPage): array
     {
         $offset = ($page - 1) * $perPage;
 
@@ -54,7 +54,7 @@ class TodoQueryRepository implements TodoQueryRepositoryPort
         return $todos;
     }
 
-    public function fetchByDate(DateTimeImmutable $startDate, DateTimeImmutable $endDate): array
+    public function byDate(DateTimeImmutable $startDate, DateTimeImmutable $endDate): array
     {
         $stmt = $this->connection->prepare('SELECT * FROM todo WHERE date BETWEEN :start AND :end AND deleted_at IS NULL');
         $stmt->execute(

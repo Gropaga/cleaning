@@ -6,6 +6,7 @@ namespace CleaningCRM\Todo\Application\Dto;
 
 use ArrayAccess;
 use CleaningCRM\Common\Application\AsArrayTrait;
+use DateTimeImmutable;
 
 final class TodoDto implements ArrayAccess
 {
@@ -17,7 +18,7 @@ final class TodoDto implements ArrayAccess
     /** @var string */
     public $description;
 
-    /** @var string */
+    /** @var DateTimeImmutable */
     public $date;
 
     /** @var bool */

@@ -6,7 +6,6 @@ use CleaningCRM\Todo\Application\Command\Todo\Create;
 use CleaningCRM\Todo\Application\Command\Todo\Update;
 use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\TodoRepository;
-use DateTimeImmutable;
 
 /** @see Create */
 class UpdateHandler

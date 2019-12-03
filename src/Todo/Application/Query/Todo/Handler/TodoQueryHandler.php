@@ -11,6 +11,6 @@ class TodoQueryHandler extends QueryHandler
 {
     public function __invoke(TodoQuery $query): TodoReadModel
     {
-        return $this->repository->get($query->getId());
+        return $this->repository->byId($query->getId());
     }
 }

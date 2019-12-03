@@ -10,7 +10,7 @@ final class TodoByDateQueryHandler extends QueryHandler
 {
     public function __invoke(TodoByDateQuery $query): array
     {
-        return $this->repository->fetchByDate(
+        return $this->repository->byDate(
             $query->getStart(),
             $query->getEnd()
         );

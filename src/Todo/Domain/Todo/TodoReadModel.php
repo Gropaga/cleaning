@@ -21,9 +21,7 @@ class TodoReadModel
         string $title,
         string $description,
         DateTimeImmutable $date,
-        bool $completed,
-        DateTimeImmutable $createdAt,
-        DateTimeImmutable $updatedAt
+        bool $completed
     )
     {
         $this->id = (string) $id;
@@ -31,8 +29,6 @@ class TodoReadModel
         $this->description = $description;
         $this->date = $date;
         $this->completed = $completed;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
     }
 
     public function getId(): string
@@ -58,15 +54,5 @@ class TodoReadModel
     public function getCompleted(): bool
     {
         return $this->completed;
-    }
-
-    public function getCreatedAt(): DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function getUpdatedAt(): DateTimeImmutable
-    {
-        return $this->updatedAt;
     }
 }

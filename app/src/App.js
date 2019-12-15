@@ -1,5 +1,6 @@
 import React from "react";
-import {Clock, BarChart2, File, FileText, Home, Layers, PlusCircle, ShoppingCart, Users} from "react-feather";import {
+import {Clock, BarChart2, File, FileText, Layers, PlusCircle, ShoppingCart, Users} from "react-feather";
+import {
     BrowserRouter as Router,
     Switch,
     Route,
@@ -7,6 +8,7 @@ import {Clock, BarChart2, File, FileText, Home, Layers, PlusCircle, ShoppingCart
 } from "react-router-dom";
 
 import Todo from "./components/Todo";
+import Toast from "./components/Message/Toast"
 
 function App() {
     return (
@@ -100,11 +102,14 @@ function App() {
                             </div>
                         </nav>
 
-                        <Switch>
-                            <Route path="/todo">
-                                <Todo/>
-                            </Route>
-                        </Switch>
+                        <main key="one" role="main" className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                            <Toast />
+                            <Switch>
+                                <Route path="/todo">
+                                    <Todo/>
+                                </Route>
+                            </Switch>
+                        </main>
                     </div>
                 </div>
             </div>

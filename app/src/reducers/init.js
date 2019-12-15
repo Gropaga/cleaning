@@ -1,0 +1,13 @@
+export const TODO_LIST = "TODO_LIST";
+
+const initialState = {
+    fetching: {},
+    messages: {},
+    [TODO_LIST]: false,
+};
+
+const initReducer = (state = { ...initialState }) => {
+    return state
+};
+
+export default initReducer

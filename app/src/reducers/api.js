@@ -16,11 +16,9 @@ export const FETCH_START = 'FETCH_START';
 export const FETCH_END = 'FETCH_END';
 
 const apiReducer = function(state = {}, action) {
-    alert(111111);
     console.log("action type => ", action.type);
     switch (action.type) {
         case API:
-            alert(55555);
             if (action.payload === FETCH_TODO) {
                 return {
                     ...state,
@@ -54,31 +52,13 @@ const apiReducer = function(state = {}, action) {
             }
             break;
         case API_ERROR:
-
-            console.log('API ERROR RESULT IS', {
-                ...state,
-                messages: {
-                    ...state.messages,
-                    [uuid()]: {
-                        type: MESSAGE_ERROR,
-                        message: action.error
-                    }
-                },
-                fetching: {
-                    ...state.fetching,
-                    FETCH_TODO: FETCH_END,
-                }
-            });
-
-            debugger;
-
             return {
                 ...state,
                 messages: {
                     ...state.messages,
                     [uuid()]: {
                         type: MESSAGE_ERROR,
-                        message: action.error
+                        ...action.payload
                     }
                 },
                 fetching: {

@@ -24,5 +24,7 @@ export const displayTodo = data => ({
 
 export const removeMessage = id => ({
     type: REMOVE_MESSAGE,
-    payload: id
+    payload: {
+        id
+    }
 });

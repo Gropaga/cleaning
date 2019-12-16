@@ -22,10 +22,12 @@ export const accessDenied = url => ({
     }
 });
 
-export const apiError = (label, error) => ({
+export const apiError = (label, message, url, data) => ({
     type: API_ERROR,
     payload: {
         label,
-        error,
+        message,
+        url,
+        data
     },
 });

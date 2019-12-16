@@ -41,8 +41,7 @@ const apiMiddleware = ({ dispatch }) => next => action => {
             dispatch(onSuccess(data));
         })
         .catch(error => {
-            console.log(apiError(error));
-            dispatch(apiError(error));
+            dispatch(apiError(label, error.message, error.config.url, JSON.stringify(error.response)));
             dispatch(onFailure(error));
 
             if (error.response && error.response.status === 403) {

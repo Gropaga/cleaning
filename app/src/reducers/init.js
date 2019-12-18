@@ -2,7 +2,7 @@ export const TODO_LIST = "TODO_LIST";
 
 const initialState = {
     fetching: {},
-    messages: {},
+    messages: [],
     [TODO_LIST]: false,
 };
 

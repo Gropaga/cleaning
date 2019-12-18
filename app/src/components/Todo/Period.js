@@ -4,8 +4,6 @@ import NewTodo from "./NewTodo";
 
 export default function Period() {
     const [isNewTodoVisible, setIsNewTodoVisible] = useState(false);
-
-
     return (
         <div>
             <div
@@ -27,9 +25,7 @@ export default function Period() {
 
             <NewTodo display={isNewTodoVisible}/>
 
-            <div className="border-bottom">
-
-            </div>
+            <div className="border-bottom" />
         </div>
     )
 }

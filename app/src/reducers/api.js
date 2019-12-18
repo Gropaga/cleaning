@@ -4,71 +4,56 @@ import {
     API,
     API_START,
     API_END,
-    DISPLAY_TODO,
-    FETCH_TODO,
     API_ERROR
 } from "../actions/types";
 import {MESSAGE_ERROR} from "../components/Message/Toast";
 
-export const FETCH_EMPTY = 'FETCH_EMPTY';
 export const FETCH_INIT = 'FETCH_INIT';
 export const FETCH_START = 'FETCH_START';
 export const FETCH_END = 'FETCH_END';
+export const FETCH_ERROR = 'FETCH_ERROR';
 
 const apiReducer = function(state = {}, action) {
-    console.log("action type => ", action.type);
     switch (action.type) {
         case API:
-            if (action.payload === FETCH_TODO) {
-                return {
-                    ...state,
-                    fetching: {
-                        ...state.fetching,
-                        FETCH_TODO: FETCH_INIT,
-                    }
-                };
-            }
-            break;
+            return {
+                ...state,
+                fetching: {
+                    ...state.fetching,
+                    [action.payload.label]: FETCH_INIT,
+                }
+            };
         case API_START:
-            if (action.payload === FETCH_TODO) {
-                return {
-                    ...state,
-                    fetching: {
-                        ...state.fetching,
-                        FETCH_TODO: FETCH_START,
-                    }
-                };
-            }
-            break;
+            return {
+                ...state,
+                fetching: {
+                    ...state.fetching,
+                    [action.payload.label]: FETCH_START,
+                }
+            };
         case API_END:
-            if (action.payload === FETCH_TODO) {
-                return {
-                    ...state,
-                    fetching: {
-                        ...state.fetching,
-                        FETCH_TODO: FETCH_END,
-                    }
-                };
-            }
-            break;
+            return {
+                ...state,
+                fetching: {
+                    ...state.fetching,
+                    [action.payload.label]: FETCH_END,
+                }
+            };
         case API_ERROR:
             return {
                 ...state,
-                messages: {
+                messages: [
                     ...state.messages,
-                    [uuid()]: {
+                    {
+                        ...action.payload,
+                        id: uuid(),
                         type: MESSAGE_ERROR,
-                        ...action.payload
                     }
-                },
+                ],
                 fetching: {
                     ...state.fetching,
-                    FETCH_TODO: FETCH_END,
+                    [action.payload.label]: FETCH_ERROR,
                 }
-            };
-        case DISPLAY_TODO:
-            return {
-                data: action.payload
             };
         default:
             return state;

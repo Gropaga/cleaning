@@ -1,9 +1,4 @@
-import { API_START, API_END, ACCESS_DENIED, API_ERROR, DISPLAY_ERROR } from "../actions/types";
-
-export const displayError = (data) => ({
-    type: DISPLAY_ERROR,
-    payload: data,
-});
+import { API_START, API_END, ACCESS_DENIED, API_ERROR } from "../actions/types";
 
 export const apiStart = label => ({
     type: API_START,
@@ -22,12 +17,11 @@ export const accessDenied = url => ({
     }
 });
 
-export const apiError = (label, message, url, data) => ({
+export const apiError = (label, heading, body) => ({
     type: API_ERROR,
     payload: {
         label,
-        message,
-        url,
-        data
+        heading,
+        body
     },
 });

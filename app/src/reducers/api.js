@@ -4,7 +4,8 @@ import {
     API,
     API_START,
     API_END,
-    API_ERROR
+    API_ERROR,
+    API_SUCCESS
 } from "../actions/types";
 import {MESSAGE_ERROR} from "../components/Message/Toast";
 
@@ -53,6 +54,14 @@ const apiReducer = function(state = {}, action) {
                 fetching: {
                     ...state.fetching,
                     [action.payload.label]: FETCH_ERROR,
+                }
+            };
+        case API_SUCCESS:
+            return {
+                ...state,
+                [action.payload.label]: {
+                    ...[action.payload.label],
+                    ...action.payload.data
                 }
             };
         default:

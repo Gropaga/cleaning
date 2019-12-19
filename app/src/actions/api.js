@@ -1,4 +1,4 @@
-import { API_START, API_END, ACCESS_DENIED, API_ERROR } from "../actions/types";
+import {ACCESS_DENIED, API_END, API_ERROR, API_START, API_SUCCESS} from "../actions/types";
 
 export const apiStart = label => ({
     type: API_START,
@@ -14,6 +14,14 @@ export const accessDenied = url => ({
     type: ACCESS_DENIED,
     payload: {
         url
+    }
+});
+
+export const apiSuccess = (label, data) => ({
+    type: API_SUCCESS,
+    payload: {
+        label,
+        data
     }
 });
 

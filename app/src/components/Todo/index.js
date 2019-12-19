@@ -7,6 +7,7 @@ import FetchData from "../../hooks/fetchData";
 import {TODO_LIST} from "../../reducers/init";
 import {FETCH_ERROR} from "../../reducers/api";
 import { RefreshCw } from "react-feather"
+import Calendar from "./Calendar";
 
 function Todo() {
     const todoList = useSelector(state => state[TODO_LIST]);
@@ -22,11 +23,13 @@ function Todo() {
         </button>
     }
 
+    console.log(todoList);
+
     if (typeof todoList === 'boolean' && todoList === false) {
         return <LargeSpinner/>
     }
 
-    return <Period/>
+    return <Calendar/>
 }
 
 export default Todo;

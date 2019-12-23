@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import Period from "./Period";
 import LargeSpinner from "../Common/LargeSpinner";
 import {apiTodo} from "../../actions/common";
 import FetchData from "../../hooks/fetchData";
@@ -22,8 +21,6 @@ function Todo() {
             <RefreshCw /> Reload
         </button>
     }
-
-    console.log(todoList);
 
     if (typeof todoList === 'boolean' && todoList === false) {
         return <LargeSpinner/>

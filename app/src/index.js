@@ -1,7 +1,7 @@
 import './style/custom.scss';
 import { applyMiddleware, compose, createStore } from 'redux'
-import thunkMiddleware from 'redux-thunk'
 import apiMiddleware from './middleware/api'
+import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history'
 import { routerMiddleware, connectRouter } from 'connected-react-router'
 import { Provider } from 'react-redux'
@@ -10,7 +10,6 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker';
 import rootReducer from './reducers'
-import consoleLogger from './middleware/consoleLogger'
 
 const history = createBrowserHistory();
 
@@ -21,6 +20,7 @@ const store = createStore(
         applyMiddleware(
             // consoleLogger,
             apiMiddleware,
+            thunk,
             routerMiddleware(history),
         ),
     ),

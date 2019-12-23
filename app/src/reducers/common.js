@@ -1,17 +1,32 @@
-import {
-
-} from '../actions/common';
-import {DISPLAY_TODO, REMOVE_MESSAGE} from "../actions/types";
+import {SUCCESS_TODO, REMOVE_MESSAGE, SHOW_NEW_TODO} from "../actions/common";
+import {TODO_LIST} from "./init";
 
 export default (state = {}, {type, ...action}) => {
     switch (type) {
-        case DISPLAY_TODO:
+        case SUCCESS_TODO:
+            const data = action.payload.data.reduce((acc, item) => {
+                acc[item.id] = item;
+                return acc;
+            }, {});
+
             return {
-                data: action.payload
+                ...state,
+                TODO_LIST: {
+                    ...state[TODO_LIST],
+                    ...data
+                }
+            };
+        case SHOW_NEW_TODO:
+            return {
+                ...state,
+                newTodo: {
+                    show: true,
+                    start: action.payload.start,
+                    end: action.payload.end,
+                }
             };
         case REMOVE_MESSAGE:
             const messages = state.messages.filter(({id}) => {
-                console.log(id);
                 return id !== action.payload.id;
             });
 

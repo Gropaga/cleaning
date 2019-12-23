@@ -1,28 +1,51 @@
 import React from 'react'
-import {Calendar, momentLocalizer, Views} from 'react-big-calendar'
-import events from './events'
+import {Calendar as ReactBigCalendar, momentLocalizer} from 'react-big-calendar'
 import moment from "moment";
+import {useDispatch, useSelector} from "react-redux";
+import {TODO_LIST} from "../../reducers/init";
+import {apiTodo, showNewTodo} from "../../actions/common";
+import NewTodo from "./NewTodo";
 
-let allViews = Object.keys(Views).map(k => Views[k]);
+let Calendar = () => {
+    const dispatch = useDispatch();
+    const events = useSelector(state => state[TODO_LIST]);
 
-let Basic = () => {
-    const localizer = momentLocalizer(moment);
-
-    console.log('events', events);
+    moment.updateLocale('en', {
+        week: {
+            dow: 1, // Monday is the first day of the week.
+        }
+    });
 
     return (
-        <Calendar
-            events={events}
-            views={allViews}
-            step={60}
-            showMultiDayTimes
-            defaultDate={new Date(2015, 3, 1)}
-            localizer={localizer}
-        />
+        <>
+            <NewTodo />,
+            <ReactBigCalendar
+                events={
+                    Object.entries(events).map(([_, {id, title, description, date}]) => {
+                        return {
+                            id: id,
+                            title: title,
+                            desc: description,
+                            start: moment(date).toDate(),
+                            end: moment(date).add(1, 'hour').toDate()
+                        }
+                    })
+                }
+                selectable
+                step={60}
+                showMultiDayTimes
+                onView={(event) => console.log(event)}
+                onRangeChange={({start, end}) => dispatch(
+                    apiTodo(
+                        moment(start).format('YYYY-MM-DD'),
+                        moment(end).format('YYYY-MM-DD')
+                    )
+                )}
+                onSelectSlot={({start, end}) => dispatch(showNewTodo(start, end))}
+                localizer={momentLocalizer(moment)}
+            />
+        </>
     );
 };
 
-
-
-
-export default Basic
+export default Calendar

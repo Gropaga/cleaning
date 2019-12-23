@@ -4,6 +4,11 @@ const initialState = {
     fetching: {},
     messages: [],
     [TODO_LIST]: false,
+    newTodo: {
+        show: false,
+        start: false,
+        end: false,
+    }
 };
 
 const initReducer = (state = { ...initialState }) => {

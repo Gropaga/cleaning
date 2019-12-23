@@ -1,5 +1,5 @@
 import axios from "axios";
-import {API} from "../actions/types";
+import {API} from "../actions/api";
 import {accessDenied, apiEnd, apiError, apiStart, apiSuccess} from "../actions/api";
 
 const apiMiddleware = ({dispatch}) => next => action => {
@@ -13,18 +13,19 @@ const apiMiddleware = ({dispatch}) => next => action => {
         data,
         accessToken,
         onSuccess,
-        onFailure,
+        // onFailure,
         label,
         headers
     } = action.payload;
 
     const dataOrParams = ["GET", "DELETE"].includes(method) ? "params" : "data";
 
-
     // axios default configs
     axios.defaults.baseURL = process.env.REACT_APP_BASE_URL || "";
     axios.defaults.headers.common["Content-Type"] = "application/json";
     axios.defaults.headers.common["Authorization"] = `Bearer${accessToken}`;
+
+    console.log(action.payload);
 
     if (label) {
         dispatch(apiStart(label));
@@ -38,7 +39,7 @@ const apiMiddleware = ({dispatch}) => next => action => {
             [dataOrParams]: data
         })
         .then(({data}) => {
-            dispatch(apiSuccess(label, data));
+            dispatch(onSuccess(data));
         })
         .catch(error => {
             if (error.response && error.response.status === 403) {

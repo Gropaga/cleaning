@@ -6,7 +6,7 @@ import {
     API_END,
     API_ERROR,
     API_SUCCESS
-} from "../actions/types";
+} from "../actions/api";
 import {MESSAGE_ERROR} from "../components/Message/Toast";
 
 export const FETCH_INIT = 'FETCH_INIT';
@@ -22,7 +22,7 @@ const apiReducer = function(state = {}, action) {
                 fetching: {
                     ...state.fetching,
                     [action.payload.label]: FETCH_INIT,
-                }
+                },
             };
         case API_START:
             return {
@@ -30,8 +30,8 @@ const apiReducer = function(state = {}, action) {
                 fetching: {
                     ...state.fetching,
                     [action.payload.label]: FETCH_START,
-                }
-            };
+                },
+    };
         case API_END:
             return {
                 ...state,
@@ -54,14 +54,6 @@ const apiReducer = function(state = {}, action) {
                 fetching: {
                     ...state.fetching,
                     [action.payload.label]: FETCH_ERROR,
-                }
-            };
-        case API_SUCCESS:
-            return {
-                ...state,
-                [action.payload.label]: {
-                    ...[action.payload.label],
-                    ...action.payload.data
                 }
             };
         default:

@@ -3,8 +3,10 @@ import {Calendar as ReactBigCalendar, momentLocalizer} from 'react-big-calendar'
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {TODO_LIST} from "../../reducers/init";
-import {apiTodo, showNewTodo} from "../../actions/common";
+import {apiTodo} from "../../actions/common";
 import NewTodo from "./NewTodo";
+import {showNewTodo} from "../../actions/newTodo";
+import DatePicker from "react-datepicker";
 
 let Calendar = () => {
     const dispatch = useDispatch();

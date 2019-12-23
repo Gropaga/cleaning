@@ -4,7 +4,6 @@ import {TODO_LIST} from "../reducers/init";
 
 export const REMOVE_MESSAGE = 'REMOVE_MESSAGE';
 export const SUCCESS_TODO = 'SUCCESS_TODO';
-export const SHOW_NEW_TODO = 'SHOW_NEW_TODO';
 
 export const apiTodo = (
     start = moment().subtract(1, 'month').format('YYYY-MM-DD'),
@@ -21,14 +20,6 @@ export const apiTodo = (
         }
     }
 };
-
-export const showNewTodo = (start, end) => ({
-    type: SHOW_NEW_TODO,
-    payload: {
-        start,
-        end
-    }
-});
 
 export const successTodo = data => ({
     type: SUCCESS_TODO,

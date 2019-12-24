@@ -23,7 +23,8 @@ class CreateHandlerTest extends TestCase
         $repo->expects($this->once())->method('add');
 
         $todoDto = new TodoDto();
-        $todoDto->date = new DateTimeImmutable();
+        $todoDto->start = new DateTimeImmutable();
+        $todoDto->end = new DateTimeImmutable();
         $todoDto->completed = true;
         $todoDto->title = 'Titleeee';
         $todoDto->description = 'Megadescription';

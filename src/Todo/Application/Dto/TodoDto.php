@@ -19,7 +19,10 @@ final class TodoDto implements ArrayAccess
     public $description;
 
     /** @var DateTimeImmutable */
-    public $date;
+    public $start;
+
+    /** @var DateTimeImmutable */
+    public $end;
 
     /** @var bool */
     public $completed;

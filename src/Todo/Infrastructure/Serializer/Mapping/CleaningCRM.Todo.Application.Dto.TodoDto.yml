@@ -11,5 +11,8 @@ CleaningCRM\Todo\Application\Dto\TodoDto:
     completed:
       type: bool
 
-    date:
-      type: DateTimeImmutable<'Y-m-d'>
+    start:
+      type: DateTimeImmutable<'Y-m-d\TH:i:s.uT'>
+
+    end:
+      type: DateTimeImmutable<'Y-m-d\TH:i:s.uT'>

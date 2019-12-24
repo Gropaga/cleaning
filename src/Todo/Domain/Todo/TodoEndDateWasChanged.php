@@ -6,15 +6,15 @@ use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
 use DateTimeImmutable;
 
-class TodoDateWasChanged implements DomainEvent
+class TodoEndDateWasChanged implements DomainEvent
 {
     private $todoId;
-    private $date;
+    private $end;
 
-    public function __construct(TodoId $todoId, DateTimeImmutable $date)
+    public function __construct(TodoId $todoId, DateTimeImmutable $end)
     {
         $this->todoId = $todoId;
-        $this->date = $date;
+        $this->end = $end;
     }
 
     public function getAggregateId(): AggregateId
@@ -22,8 +22,8 @@ class TodoDateWasChanged implements DomainEvent
         return $this->todoId;
     }
 
-    public function getDate(): DateTimeImmutable
+    public function getEndDate(): DateTimeImmutable
     {
-        return $this->date;
+        return $this->end;
     }
 }

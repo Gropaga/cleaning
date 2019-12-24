@@ -11,7 +11,8 @@ class TodoWasCreated implements DomainEvent
     private $todoId;
     private $title;
     private $description;
-    private $date;
+    private $start;
+    private $end;
     private $completed;
 
     public function __construct(
@@ -19,14 +20,16 @@ class TodoWasCreated implements DomainEvent
         string $title,
         string $description,
         bool $completed,
-        DateTimeImmutable $date
+        DateTimeImmutable $start,
+        DateTimeImmutable $end
     )
     {
         $this->todoId = $todoId;
         $this->title = $title;
         $this->description = $description;
         $this->completed = $completed;
-        $this->date = $date;
+        $this->start = $start;
+        $this->end = $end;
     }
 
     public function getAggregateId(): AggregateId
@@ -54,8 +57,13 @@ class TodoWasCreated implements DomainEvent
         return $this->todoId;
     }
 
-    public function getDate(): DateTimeImmutable
+    public function getStartDate(): DateTimeImmutable
     {
-        return $this->date;
+        return $this->start;
+    }
+
+    public function getEndDate(): DateTimeImmutable
+    {
+        return $this->end;
     }
 }

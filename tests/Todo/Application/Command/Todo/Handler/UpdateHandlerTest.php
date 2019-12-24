@@ -10,6 +10,7 @@ use CleaningCRM\Todo\Application\Dto\TodoDto;
 use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\TodoId;
 use CleaningCRM\Todo\Domain\Todo\TodoRepository;
+use DateInterval;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
@@ -22,10 +23,12 @@ class UpdateHandlerTest extends TestCase
     {
         $todo = Todo::createEmptyTodoWithId(TodoId::generate());
 
-        $date = DateTimeImmutable::createFromFormat('Y-m-d', '2000-10-10')->setTime(0, 0);
+        $start = DateTimeImmutable::createFromFormat('Y-m-d', '2000-10-10')->setTime(0, 0);
+        $end = $start->add(new DateInterval('PT1H'));
 
         $todoDto = new TodoDto();
-        $todoDto->date = $date;
+        $todoDto->start = $start;
+        $todoDto->end = $end;
         $todoDto->completed = true;
         $todoDto->title = 'New Title';
         $todoDto->description = 'New Description';
@@ -47,6 +50,7 @@ class UpdateHandlerTest extends TestCase
         $this->assertEquals('New Title', $todo->getTitle());
         $this->assertEquals('New Description', $todo->getDescription());
         $this->assertTrue($todo->isCompleted());
-        $this->assertEquals($date, $todo->getDate());
+        $this->assertEquals($start, $todo->getStartDate());
+        $this->assertEquals($end, $todo->getEndDate());
     }
 }

@@ -4,7 +4,8 @@ namespace CleaningCRM\Todo\Infrastructure\Projection;
 
 use CleaningCRM\Common\Domain\AbstractProjection;
 use CleaningCRM\Todo\Domain\Todo\TodoCompletedWasChanged;
-use CleaningCRM\Todo\Domain\Todo\TodoDateWasChanged;
+use CleaningCRM\Todo\Domain\Todo\TodoEndDateWasChanged;
+use CleaningCRM\Todo\Domain\Todo\TodoStartDateWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoDeletedAtWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoDescriptionWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoTitleWasChanged;
@@ -25,8 +26,8 @@ class TodoProjection extends AbstractProjection implements TodoProjectionPort
     {
         $stmt = $this->connection->prepare(
             <<<SQL
-INSERT INTO todo (id, title, description, completed, date) 
-             VALUES (:id, :title, :description, :completed, :date)
+INSERT INTO todo (id, title, description, completed, start, "end")
+             VALUES (:id, :title, :description, :completed, :start, :end)
 SQL
         );
 
@@ -34,7 +35,8 @@ SQL
             ':id' => (string) $event->getAggregateId(),
             ':title' => $event->getTitle(),
             ':description' => $event->getDescription(),
-            ':date' => $event->getDate()->format('m-d-Y H:i:s'),
+            ':start' => $event->getStartDate()->format('m-d-Y H:i:s'),
+            ':end' => $event->getEndDate()->format('m-d-Y H:i:s'),
             ':completed' => $event->getCompleted() ? 'TRUE' : 'FALSE',
         ]);
     }
@@ -69,13 +71,23 @@ SQL
         ]);
     }
 
-    public function projectWhenTodoDateWasChanged(TodoDateWasChanged $event)
+    public function projectWhenTodoStartDateWasChanged(TodoStartDateWasChanged $event)
     {
-        $stmt = $this->connection->prepare('UPDATE todo SET date = :date WHERE id = :id');
+        $stmt = $this->connection->prepare('UPDATE todo SET start = :date WHERE id = :id');
 
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':date' => $event->getDate()->format('Y-m-d H:i:s')
+            ':start' => $event->getStartDate()->format('Y-m-d H:i:s')
+        ]);
+    }
+
+    public function projectWhenTodoEndDateWasChanged(TodoEndDateWasChanged $event)
+    {
+        $stmt = $this->connection->prepare('UPDATE todo SET "end" = :date WHERE id = :id');
+
+        $stmt->execute([
+            ':id' => (string) $event->getAggregateId(),
+            ':end' => $event->getEndDate()->format('Y-m-d H:i:s')
         ]);
     }
 

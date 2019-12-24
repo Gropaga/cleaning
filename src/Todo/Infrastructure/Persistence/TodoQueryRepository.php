@@ -56,7 +56,7 @@ class TodoQueryRepository implements TodoQueryRepositoryPort
 
     public function byDate(DateTimeImmutable $startDate, DateTimeImmutable $endDate): array
     {
-        $stmt = $this->connection->prepare('SELECT * FROM todo WHERE date BETWEEN :start AND :end AND deleted_at IS NULL');
+        $stmt = $this->connection->prepare('SELECT * FROM todo WHERE start BETWEEN :start AND :end AND deleted_at IS NULL');
         $stmt->execute(
             [
                 ':start' => $startDate->setTime(0,0)->format('Y-m-d H:i:s'),

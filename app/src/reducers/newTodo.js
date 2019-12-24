@@ -1,4 +1,5 @@
 import {
+    ADD_NEW_TODO,
     DESCRIPTION_CHANGE_NEW_TODO,
     END_DATE_CHANGE_NEW_TODO,
     HIDE_NEW_TODO,
@@ -6,6 +7,7 @@ import {
     START_DATE_CHANGE_NEW_TODO,
     TITLE_CHANGE_NEW_TODO
 } from "../actions/newTodo";
+import {TODO_LIST} from "./init";
 
 export default (state = {}, {type, ...action}) => {
     switch (type) {
@@ -20,10 +22,23 @@ export default (state = {}, {type, ...action}) => {
                     description: ''
                 }
             };
+        case ADD_NEW_TODO:
+            return {
+                ...state,
+                TODO_LIST: {
+                    ...state[TODO_LIST],
+                    [action.payload.id]: action.payload
+                },
+                newTodo: {
+                    ...state.newTodo,
+                    show: false
+                }
+            };
         case HIDE_NEW_TODO:
             return {
                 ...state,
                 newTodo: {
+                    ...state.newTodo,
                     show: false,
                 }
             };

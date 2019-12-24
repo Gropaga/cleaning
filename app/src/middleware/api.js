@@ -10,7 +10,7 @@ const apiMiddleware = ({dispatch}) => next => action => {
     const {
         url,
         method,
-        data,
+        request,
         accessToken,
         onSuccess,
         // onFailure,
@@ -36,10 +36,10 @@ const apiMiddleware = ({dispatch}) => next => action => {
             url,
             method,
             headers,
-            [dataOrParams]: data
+            [dataOrParams]: request
         })
         .then(({data}) => {
-            dispatch(onSuccess(data));
+            dispatch(onSuccess(request, data));
         })
         .catch(error => {
             if (error.response && error.response.status === 403) {
@@ -47,7 +47,7 @@ const apiMiddleware = ({dispatch}) => next => action => {
             } else if (error.response) {
                 dispatch(apiError(label, 'Network error', JSON.stringify({
                         url: error.request.url,
-                        data: error.response.data,
+                        request: error.response.request,
                         status: error.response.status,
                         headers: error.response.headers,
                     }))

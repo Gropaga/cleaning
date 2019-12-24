@@ -8,8 +8,8 @@ const initialState = {
         show: false,
         start: false,
         end: false,
-        title: false,
-        description: false,
+        title: '',
+        description: '',
     }
 };
 

@@ -11,23 +11,24 @@ class TodoReadModel
     private $id;
     private $title;
     private $description;
-    private $date;
+    private $start;
+    private $end;
     private $completed;
-    private $createdAt;
-    private $updatedAt;
 
     public function __construct(
         TodoId $id,
         string $title,
         string $description,
-        DateTimeImmutable $date,
+        DateTimeImmutable $start,
+        DateTimeImmutable $end,
         bool $completed
     )
     {
         $this->id = (string) $id;
         $this->title = $title;
         $this->description = $description;
-        $this->date = $date;
+        $this->start = $start;
+        $this->end = $end;
         $this->completed = $completed;
     }
 
@@ -46,9 +47,14 @@ class TodoReadModel
         return $this->description;
     }
 
-    public function getDate(): DateTimeImmutable
+    public function getStartDate(): DateTimeImmutable
     {
-        return $this->date;
+        return $this->start;
+    }
+
+    public function getEndDate(): DateTimeImmutable
+    {
+        return $this->end;
     }
 
     public function getCompleted(): bool

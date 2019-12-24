@@ -15,16 +15,16 @@ export const apiTodo = (
             url: 'rest/todo/by-date',
             method: "GET",
             label: TODO_LIST,
-            data: {start, end},
+            request: {start, end},
             onSuccess: successTodo
         }
     }
 };
 
-export const successTodo = data => ({
+export const successTodo = (_, response) => ({
     type: SUCCESS_TODO,
     payload: {
-        data
+        data: response
     }
 });
 

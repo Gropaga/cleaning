@@ -16,7 +16,8 @@ class TodoReadModelMapper
             TodoId::fromString($data['id']),
             $data['title'],
             $data['description'],
-            DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $data['date']),
+            DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $data['start']),
+            DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $data['end']),
             $data['completed']
         );
     }

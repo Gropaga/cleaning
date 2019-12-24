@@ -6,6 +6,7 @@ use CleaningCRM\Common\Domain\AggregateRoot;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
 use DateInterval;
 use DateTimeImmutable;
+use DomainException;
 
 final class Todo extends AggregateRoot
 {
@@ -27,6 +28,10 @@ final class Todo extends AggregateRoot
         ?DateTimeImmutable $deleteAt
     )
     {
+        if ($start > $end) {
+            throw new DomainException($start->format('Y-m-d H:i:s') . ' should be before ' . $this->getEndDate()->format('Y-m-d H:i:s'));
+        }
+
         $this->id = $id;
         $this->title = $title;
         $this->start = $start;
@@ -133,6 +138,10 @@ final class Todo extends AggregateRoot
             return;
         }
 
+        if ($start > $this->end) {
+            throw new DomainException($start->format('Y-m-d H:i:s') . ' should be before ' . $this->getEndDate()->format('Y-m-d H:i:s'));
+        }
+
         $this->applyAndRecordThat(new TodoStartDateWasChanged(
             $this->id,
             $start
@@ -143,6 +152,10 @@ final class Todo extends AggregateRoot
     {
         if ($end->format('Y-m-d H:i:s') === $this->end->format('Y-m-d H:i:s')) {
             return;
+        }
+
+        if ($this->start > $end) {
+            throw new DomainException($this->start->format('Y-m-d H:i:s') . ' should be before ' . $end->format('Y-m-d H:i:s'));
         }
 
         $this->applyAndRecordThat(new TodoEndDateWasChanged(

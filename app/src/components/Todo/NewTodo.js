@@ -4,16 +4,20 @@ import {useDispatch, useSelector} from "react-redux";
 import {Button, Modal} from "react-bootstrap";
 import DatePicker from "react-datepicker"
 import {
-    hideNewTodo, newTodoDescriptionChange,
+    hideNewTodo, NEW_TODO, newTodoDescriptionChange,
     newTodoEndDateChange,
     newTodoStartDateChange,
     newTodoTitleChange,
     saveNewTodo
 } from "../../actions/newTodo";
+import {FETCH_INIT, FETCH_START} from "../../reducers/api";
 
 const NewTodo = function () {
     const {show, start, end, title, description} = useSelector(state => state.newTodo);
+    const apiState = useSelector(state => state.fetching[NEW_TODO]);
     const dispatch = useDispatch();
+
+    const isLoading = () => [FETCH_INIT, FETCH_START].includes(apiState);
 
     const onClose = () => {
         dispatch(hideNewTodo())
@@ -68,7 +72,7 @@ const NewTodo = function () {
                                 showTimeInput
                                 selected={end}
                                 onChange={onEndDateChange}
-                                dateFormat="MM/dd/yyyy hh:mm"
+                                dateFormat="MM/dd/yyyy HH:mm"
                             />
                         </div>
                     </div>
@@ -82,7 +86,7 @@ const NewTodo = function () {
                 <Button variant="secondary" size="sm" onClick={onClose}>
                     <X height='15' width='15'/> Close
                 </Button>
-                <Button variant="primary" size="sm" onClick={onSave}>
+                <Button variant="primary" size="sm" onClick={onSave} disabled={isLoading()}>
                     <FilePlus height='15' width='15'/> Save Changes
                 </Button>
             </Modal.Footer>

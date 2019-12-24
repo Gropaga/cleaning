@@ -6,7 +6,6 @@ import {TODO_LIST} from "../../reducers/init";
 import {apiTodo} from "../../actions/common";
 import NewTodo from "./NewTodo";
 import {showNewTodo} from "../../actions/newTodo";
-import DatePicker from "react-datepicker";
 
 let Calendar = () => {
     const dispatch = useDispatch();
@@ -23,13 +22,13 @@ let Calendar = () => {
             <NewTodo />,
             <ReactBigCalendar
                 events={
-                    Object.entries(events).map(([_, {id, title, description, date}]) => {
+                    Object.entries(events).map(([_, {id, title, description, start, end}]) => {
                         return {
                             id: id,
                             title: title,
                             desc: description,
-                            start: moment(date).toDate(),
-                            end: moment(date).add(1, 'hour').toDate()
+                            start: moment(start).toDate(),
+                            end: moment(end).toDate()
                         }
                     })
                 }

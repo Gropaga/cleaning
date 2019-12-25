@@ -2,12 +2,12 @@ import {API} from "./api";
 import moment from "moment";
 
 export const NEW_TODO = "NEW_TODO";
-export const UPDATE_TODO = "UPDATE_TODO";
 
 export const ADD_NEW_TODO = 'ADD_NEW_TODO';
 export const SHOW_NEW_TODO = 'SHOW_NEW_TODO';
 export const SHOW_EDIT_TODO = 'SHOW_EDIT_TODO';
 export const HIDE_NEW_TODO = 'HIDE_NEW_TODO';
+export const DELETE_NEW_TODO_SUCCESS = 'DELETE_NEW_TODO_SUCCESS';
 export const TITLE_CHANGE_NEW_TODO = 'TITLE_CHANGE_NEW_TODO';
 export const DESCRIPTION_CHANGE_NEW_TODO = 'DESCRIPTION_CHANGE_NEW_TODO';
 export const INTERVAL_CHANGE_NEW_TODO = 'INTERVAL_CHANGE_NEW_TODO';
@@ -35,7 +35,7 @@ export const showEditTodo = id => {
     }
 };
 
-export const addNewTodo = ({interval, title, description}, {id}) => {
+export const addNewTodo = ({interval, title, description, completed}) => ({id}) => {
     return {
         type: ADD_NEW_TODO,
         payload: {
@@ -46,7 +46,7 @@ export const addNewTodo = ({interval, title, description}, {id}) => {
             },
             title,
             description,
-            completed: false
+            completed
         }
     }
 };
@@ -60,7 +60,26 @@ export const hideNewTodo = () => {
     }
 };
 
-export const saveNewTodo = (request) => {
+export const deleteNewTodoSuccess =  deletedId => _ => {
+    return {
+        type: DELETE_NEW_TODO_SUCCESS,
+        payload: deletedId
+    }
+};
+
+export const deleteTodo = deletedId => {
+    return {
+        type: API,
+        payload: {
+            url: 'rest/todo/delete/' + deletedId,
+            method: "DELETE",
+            label: NEW_TODO,
+            onSuccess: deleteNewTodoSuccess(deletedId)
+        }
+    }
+};
+
+export const saveNewTodo = request => {
     if (typeof request.id === 'undefined') {
         return {
             type: API,
@@ -69,7 +88,7 @@ export const saveNewTodo = (request) => {
                 method: "POST",
                 label: NEW_TODO,
                 request,
-                onSuccess: addNewTodo
+                onSuccess: addNewTodo(request)
             }
         }
     }
@@ -81,14 +100,14 @@ export const saveNewTodo = (request) => {
         payload: {
             url: 'rest/todo/update/' + request.id,
             method: "PATCH",
-            label: UPDATE_TODO,
+            label: NEW_TODO,
             request: {
                 title,
                 description,
                 interval,
                 completed
             },
-            onSuccess: addNewTodo
+            onSuccess: addNewTodo(request)
         }
     }
 };

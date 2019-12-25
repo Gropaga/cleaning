@@ -22,6 +22,10 @@ db-migrate:
 	$(RUN_PHP) bin/console doctrine:migration:migrate -n
 .PHONY: db-migrate
 
+clear-cache:
+	$(RUN_PHP) bin/console cache:clear
+.PHONY: cache-clear
+
 composer-install:
 	$(RUN_PHP) composer install
 .PHONY: composer-install

@@ -21,7 +21,7 @@ export const apiTodo = (
     }
 };
 
-export const successTodo = (_, response) => ({
+export const successTodo = response => ({
     type: SUCCESS_TODO,
     payload: {
         data: response

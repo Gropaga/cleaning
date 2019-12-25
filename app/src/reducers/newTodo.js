@@ -1,6 +1,6 @@
 import {
     ADD_NEW_TODO,
-    COMPLETED_CHANGE_NEW_TODO,
+    COMPLETED_CHANGE_NEW_TODO, DELETE_NEW_TODO_SUCCESS,
     DESCRIPTION_CHANGE_NEW_TODO,
     HIDE_NEW_TODO,
     INTERVAL_CHANGE_NEW_TODO,
@@ -24,6 +24,22 @@ export default (state = {}, {type, ...action}) => {
                     title: '',
                     description: '',
                     completed: false,
+                }
+            };
+        case DELETE_NEW_TODO_SUCCESS:
+            const filteredTodoList = Object.entries(state[TODO_LIST]).reduce((acc, [id, value]) => {
+                if (id !== action.payload) {
+                    acc[id] = value;
+                }
+                return acc;
+            }, {});
+
+            return {
+                ...state,
+                TODO_LIST: filteredTodoList,
+                newTodo: {
+                    ...state.newTodo,
+                    show: false,
                 }
             };
         case SHOW_EDIT_TODO:

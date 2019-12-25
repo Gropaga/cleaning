@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Button, FormCheck, Modal} from "react-bootstrap";
 import DatePicker from "react-datepicker"
 import {
+    deleteTodo,
     hideNewTodo,
     NEW_TODO,
     newTodoCompletedChange,
@@ -26,6 +27,10 @@ const NewTodo = function () {
 
     const onClose = () => {
         dispatch(hideNewTodo())
+    };
+
+    const onDelete = () => {
+        dispatch(deleteTodo(id));
     };
 
     const onSave = () => {
@@ -87,7 +92,16 @@ const NewTodo = function () {
     return (
         <Modal show={show} centered onHide={onClose}>
             <Modal.Header closeButton>
-                <Modal.Title>New Todo</Modal.Title>
+                <Modal.Title>
+                    {typeof id === 'undefined'
+                    ? 'New Todo'
+                    : (
+                        <>
+                            <span className="mr-2">Edit todo</span>
+                            <Button variant="outline-danger" disabled={isLoading()} onClick={onDelete} size='sm'>Remove</Button>
+                        </>
+                    )}
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <form>

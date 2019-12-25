@@ -25,8 +25,6 @@ const apiMiddleware = ({dispatch}) => next => action => {
     axios.defaults.headers.common["Content-Type"] = "application/json";
     axios.defaults.headers.common["Authorization"] = `Bearer${accessToken}`;
 
-    console.log(action.payload);
-
     if (label) {
         dispatch(apiStart(label));
     }
@@ -39,7 +37,7 @@ const apiMiddleware = ({dispatch}) => next => action => {
             [dataOrParams]: request
         })
         .then(({data}) => {
-            dispatch(onSuccess(request, data));
+            dispatch(onSuccess(data));
         })
         .catch(error => {
             if (error.response && error.response.status === 403) {

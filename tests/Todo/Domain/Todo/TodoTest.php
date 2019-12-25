@@ -6,15 +6,16 @@ namespace CleaningCRM\Tests\Todo\Domain\Todo;
 
 use CleaningCRM\Common\Domain\DomainEvents;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
+use CleaningCRM\Common\Domain\Interval;
 use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\TodoCompletedWasChanged;
-use CleaningCRM\Todo\Domain\Todo\TodoEndDateWasChanged;
-use CleaningCRM\Todo\Domain\Todo\TodoStartDateWasChanged;
+use CleaningCRM\Todo\Domain\Todo\TodoIntervalWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoDeletedAtWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoDescriptionWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoId;
 use CleaningCRM\Todo\Domain\Todo\TodoTitleWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoWasCreated;
+use DateInterval;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
@@ -30,14 +31,14 @@ final class TodoTest extends TestCase
     {
         $start = (new DateTimeImmutable())->setTime(0, 0);
         $end = (new DateTimeImmutable())->setTime(2, 0);
+        $interval = Interval::create($start, $end);
         $deletedAt = (new DateTimeImmutable())->setTime(12, 0);
 
         $todo = Todo::create(
             TodoId::generate(),
             'Title 1234',
             'Description 5678',
-            $start,
-            $end,
+            $interval,
             true,
             $deletedAt
         );
@@ -49,10 +50,8 @@ final class TodoTest extends TestCase
         $this->assertEquals('Title 1234', $todo->getTitle());
         $this->assertEquals('Description 5678', $todo->getDescription());
         $this->assertEquals(true, $todo->isCompleted());
-        $this->assertEquals($start, $todo->getStartDate());
-        $this->assertEquals($end, $todo->getEndDate());
+        $this->assertEquals($interval, $todo->getInterval());
         $this->assertEquals($deletedAt, $todo->getDeletedAt());
-
     }
 
     public function eventProvider()
@@ -101,31 +100,23 @@ final class TodoTest extends TestCase
                 self::NO_DOMAIN_EFFECT
             ],
             [
-                'changeStartDate',
-                TodoStartDateWasChanged::class,
-                DateTimeImmutable::createFromFormat('Y-m-d', '1980-01-01'),
-                'getStartDate',
+                'changeInterval',
+                TodoIntervalWasChanged::class,
+                Interval::create(
+                    DateTimeImmutable::createFromFormat('Y-m-d', '1980-02-01')->setTime(0, 0),
+                    DateTimeImmutable::createFromFormat('Y-m-d', '1980-02-02')->setTime(0, 0)
+                ),
+                'getInterval',
                 self::HAS_DOMAIN_EFFECT
             ],
             [
-                'changeStartDate',
-                TodoStartDateWasChanged::class,
-                DateTimeImmutable::createFromFormat('Y-m-d', '1990-02-02')->setTime(0, 0),
-                'getStartDate',
-                self::NO_DOMAIN_EFFECT
-            ],
-            [
-                'changeEndDate',
-                TodoEndDateWasChanged::class,
-                DateTimeImmutable::createFromFormat('Y-m-d', '1980-01-01'),
-                'getEndDate',
-                self::HAS_DOMAIN_EFFECT
-            ],
-            [
-                'changeEndDate',
-                TodoEndDateWasChanged::class,
-                DateTimeImmutable::createFromFormat('Y-m-d', '1990-02-02')->setTime(2, 0),
-                'getEndDate',
+                'changeInterval',
+                TodoIntervalWasChanged::class,
+                Interval::create(
+                    DateTimeImmutable::createFromFormat('Y-m-d', '1980-01-01')->setTime(0, 0),
+                    DateTimeImmutable::createFromFormat('Y-m-d', '1980-01-02')->setTime(0, 0)
+                ),
+                'getInterval',
                 self::NO_DOMAIN_EFFECT
             ],
             [
@@ -155,8 +146,10 @@ final class TodoTest extends TestCase
             TodoId::generate(),
             'Title 1234',
             'Description 5678',
-            DateTimeImmutable::createFromFormat('Y-m-d', '1990-02-02')->setTime(0, 0),
-            DateTimeImmutable::createFromFormat('Y-m-d', '1990-02-02')->setTime(2, 0),
+            Interval::create(
+                DateTimeImmutable::createFromFormat('Y-m-d', '1980-01-01')->setTime(0, 0),
+                DateTimeImmutable::createFromFormat('Y-m-d', '1980-01-02')->setTime(0, 0)
+            ),
             true
         );
 
@@ -184,6 +177,16 @@ final class TodoTest extends TestCase
         $start = (new DateTimeImmutable())->setTime(1,1,1);
         $end = (new DateTimeImmutable())->setTime(2,2,2);
 
+        $interval = Interval::create(
+            $start,
+            $end
+        );
+
+        $newInterval = Interval::create(
+            $start->add(new DateInterval('P1D')),
+            $end->add(new DateInterval('P1D'))
+        );
+
         $eventsHistory = new DomainEventsHistory(
             $todoId,
             [
@@ -192,14 +195,12 @@ final class TodoTest extends TestCase
                     'Title 1234',
                     'Description 5678',
                     true,
-                    $start,
-                    $end
+                    $interval
                 ),
                 new TodoTitleWasChanged($todoId, 'New Title'),
                 new TodoDescriptionWasChanged($todoId, 'New Description'),
                 new TodoCompletedWasChanged($todoId, false),
-                new TodoStartDateWasChanged($todoId, DateTimeImmutable::createFromFormat('Y-m-d', '2019-01-01')->setTime(0,0)),
-                new TodoEndDateWasChanged($todoId, DateTimeImmutable::createFromFormat('Y-m-d', '2019-01-02')->setTime(2,2))
+                new TodoIntervalWasChanged($todoId, $newInterval),
             ]
         );
 
@@ -208,8 +209,7 @@ final class TodoTest extends TestCase
         $this->assertEquals('New Title', $todo->getTitle());
         $this->assertEquals('New Description', $todo->getDescription());
         $this->assertEquals(false, $todo->isCompleted());
-        $this->assertEquals(DateTimeImmutable::createFromFormat('Y-m-d', '2019-01-01')->setTime(0,0)->format('Y-m-d H:i:s'), $todo->getStartDate()->format('Y-m-d H:i:s'));
-        $this->assertEquals(DateTimeImmutable::createFromFormat('Y-m-d', '2019-01-02')->setTime(2,2)->format('Y-m-d H:i:s'), $todo->getEndDate()->format('Y-m-d H:i:s'));
+        $this->assertTrue($newInterval->equal($todo->getInterval()));
     }
 
     private function assertEvent(DomainEvents $recodedEvents, $eventClass): bool

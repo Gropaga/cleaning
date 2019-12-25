@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {TODO_LIST} from "../../reducers/init";
 import {apiTodo} from "../../actions/common";
 import NewTodo from "./NewTodo";
-import {showNewTodo} from "../../actions/newTodo";
+import {showEditTodo, showNewTodo} from "../../actions/newTodo";
 
 let Calendar = () => {
     const dispatch = useDispatch();
@@ -22,20 +22,19 @@ let Calendar = () => {
             <NewTodo />,
             <ReactBigCalendar
                 events={
-                    Object.entries(events).map(([_, {id, title, description, start, end}]) => {
+                    Object.entries(events).map(([_, {id, title, description, interval}]) => {
                         return {
                             id: id,
                             title: title,
                             desc: description,
-                            start: moment(start).toDate(),
-                            end: moment(end).toDate()
+                            start: interval.start,
+                            end: interval.end
                         }
                     })
                 }
                 selectable
                 step={60}
                 showMultiDayTimes
-                onView={(event) => console.log(event)}
                 onRangeChange={({start, end}) => dispatch(
                     apiTodo(
                         moment(start).format('YYYY-MM-DD'),
@@ -43,6 +42,7 @@ let Calendar = () => {
                     )
                 )}
                 onSelectSlot={({start, end}) => dispatch(showNewTodo(start, end))}
+                onSelectEvent={event => dispatch(showEditTodo(event.id))}
                 localizer={momentLocalizer(moment)}
             />
         </>

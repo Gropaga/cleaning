@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Tests\Todo\Application\Command\Todo\Handler;
 
+use CleaningCRM\Common\Domain\Interval;
 use CleaningCRM\Todo\Application\Command\Todo\Handler\UpdateHandler;
 use CleaningCRM\Todo\Application\Command\Todo\Update;
 use CleaningCRM\Todo\Application\Dto\TodoDto;
@@ -26,9 +27,10 @@ class UpdateHandlerTest extends TestCase
         $start = DateTimeImmutable::createFromFormat('Y-m-d', '2000-10-10')->setTime(0, 0);
         $end = $start->add(new DateInterval('PT1H'));
 
+        $interval = Interval::create($start, $end);
+
         $todoDto = new TodoDto();
-        $todoDto->start = $start;
-        $todoDto->end = $end;
+        $todoDto->interval = $interval;
         $todoDto->completed = true;
         $todoDto->title = 'New Title';
         $todoDto->description = 'New Description';
@@ -50,7 +52,6 @@ class UpdateHandlerTest extends TestCase
         $this->assertEquals('New Title', $todo->getTitle());
         $this->assertEquals('New Description', $todo->getDescription());
         $this->assertTrue($todo->isCompleted());
-        $this->assertEquals($start, $todo->getStartDate());
-        $this->assertEquals($end, $todo->getEndDate());
+        $this->assertEquals($interval, $todo->getInterval());
     }
 }

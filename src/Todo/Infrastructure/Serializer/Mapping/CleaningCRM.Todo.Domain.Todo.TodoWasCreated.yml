@@ -15,8 +15,8 @@ CleaningCRM\Todo\Domain\Todo\TodoWasCreated:
         completed:
             type: boolean
 
-        date:
-            type: DateTimeImmutable
+        interval:
+            type: CleaningCRM\Common\Domain\Interval
 
         deletedAt:
             type: DateTimeImmutable

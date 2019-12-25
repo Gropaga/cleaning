@@ -6,10 +6,13 @@ const initialState = {
     [TODO_LIST]: false,
     newTodo: {
         show: false,
-        start: false,
-        end: false,
+        interval: {
+            start: false,
+            end: false,
+        },
         title: '',
         description: '',
+        completed: false
     }
 };
 

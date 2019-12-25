@@ -4,31 +4,28 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Todo\Domain\Todo;
 
-use DateTimeImmutable;
+use CleaningCRM\Common\Domain\Interval;
 
 class TodoReadModel
 {
     private $id;
     private $title;
     private $description;
-    private $start;
-    private $end;
+    private $interval;
     private $completed;
 
     public function __construct(
         TodoId $id,
         string $title,
         string $description,
-        DateTimeImmutable $start,
-        DateTimeImmutable $end,
+        Interval $interval,
         bool $completed
     )
     {
         $this->id = (string) $id;
         $this->title = $title;
         $this->description = $description;
-        $this->start = $start;
-        $this->end = $end;
+        $this->interval = $interval;
         $this->completed = $completed;
     }
 
@@ -47,14 +44,9 @@ class TodoReadModel
         return $this->description;
     }
 
-    public function getStartDate(): DateTimeImmutable
+    public function getInterval(): Interval
     {
-        return $this->start;
-    }
-
-    public function getEndDate(): DateTimeImmutable
-    {
-        return $this->end;
+        return $this->interval;
     }
 
     public function getCompleted(): bool

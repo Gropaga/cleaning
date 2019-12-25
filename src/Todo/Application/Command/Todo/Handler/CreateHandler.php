@@ -23,9 +23,8 @@ class CreateHandler
             $command->todoId(),
             $command->todo()->title,
             $command->todo()->description,
-            $command->todo()->start,
-            $command->todo()->end,
-            $command->todo()->completed ?? false
+            $command->todo()->interval,
+            $command->todo()->completed
         );
 
         $this->repository->add($todo);

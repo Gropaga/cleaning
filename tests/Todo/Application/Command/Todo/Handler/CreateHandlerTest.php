@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Tests\Todo\Application\Command\Todo\Handler;
 
+use CleaningCRM\Common\Domain\Interval;
 use CleaningCRM\Todo\Application\Command\Todo\Create;
 use CleaningCRM\Todo\Application\Command\Todo\Handler\CreateHandler;
 use CleaningCRM\Todo\Application\Dto\TodoDto;
@@ -23,8 +24,7 @@ class CreateHandlerTest extends TestCase
         $repo->expects($this->once())->method('add');
 
         $todoDto = new TodoDto();
-        $todoDto->start = new DateTimeImmutable();
-        $todoDto->end = new DateTimeImmutable();
+        $todoDto->interval = Interval::create(new DateTimeImmutable(), new DateTimeImmutable());
         $todoDto->completed = true;
         $todoDto->title = 'Titleeee';
         $todoDto->description = 'Megadescription';

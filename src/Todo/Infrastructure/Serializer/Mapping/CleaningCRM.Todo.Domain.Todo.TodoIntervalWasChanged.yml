@@ -1,4 +1,4 @@
-CleaningCRM\Todo\Domain\Todo\TodoEndDateWasChanged:
+CleaningCRM\Todo\Domain\Todo\TodoIntervalWasChanged:
     exclusion_policy: ALL
 
     properties:
@@ -6,5 +6,5 @@ CleaningCRM\Todo\Domain\Todo\TodoEndDateWasChanged:
             type: CleaningCRM\Todo\Domain\Todo\TodoId
             serialized_name: todo_id
 
-        end:
-            type: DateTimeImmutable
+        interval:
+            type: CleaningCRM\Common\Domain\Interval

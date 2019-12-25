@@ -4,9 +4,9 @@ namespace CleaningCRM\Todo\Domain\Todo;
 
 use CleaningCRM\Common\Domain\AggregateRoot;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
+use CleaningCRM\Common\Domain\Interval;
 use DateInterval;
 use DateTimeImmutable;
-use DomainException;
 
 final class Todo extends AggregateRoot
 {
@@ -14,8 +14,7 @@ final class Todo extends AggregateRoot
     private $title;
     private $description;
     private $completed;
-    private $start;
-    private $end;
+    private $interval;
     private $deletedAt;
 
     private function __construct(
@@ -23,19 +22,13 @@ final class Todo extends AggregateRoot
         string $title,
         string $description,
         bool $completed,
-        DateTimeImmutable $start,
-        DateTimeImmutable $end,
+        Interval $interval,
         ?DateTimeImmutable $deleteAt
     )
     {
-        if ($start > $end) {
-            throw new DomainException($start->format('Y-m-d H:i:s') . ' should be before ' . $this->getEndDate()->format('Y-m-d H:i:s'));
-        }
-
         $this->id = $id;
         $this->title = $title;
-        $this->start = $start;
-        $this->end = $end;
+        $this->interval = $interval;
         $this->description = $description;
         $this->completed = $completed;
         $this->deletedAt = $deleteAt;
@@ -61,30 +54,19 @@ final class Todo extends AggregateRoot
         return $this->completed;
     }
 
-    public function getStartDate(): DateTimeImmutable
+    public function getInterval(): Interval
     {
-        return $this->start;
+        return $this->interval;
     }
 
-    public function getEndDate(): DateTimeImmutable
-    {
-        return $this->end;
-    }
-
-    public function getDeletedAt(): ?DateTimeImmutable
-    {
-        return $this->deletedAt;
-    }
-
-    public static function create(TodoId $id, string $title, string $description, DateTimeImmutable $start,  DateTimeImmutable $end, ?bool $completed = false, ?DateTimeImmutable $deletedAt = null): self
+    public static function create(TodoId $id, string $title, string $description, Interval $interval, ?bool $completed = false, ?DateTimeImmutable $deletedAt = null): self
     {
         $newTodo = new Todo(
             $id,
             $title,
             $description,
             $completed,
-            $start,
-            $end,
+            $interval,
             $deletedAt
         );
 
@@ -93,8 +75,7 @@ final class Todo extends AggregateRoot
             $newTodo->title,
             $newTodo->description,
             $newTodo->completed,
-            $newTodo->start,
-            $newTodo->end
+            $newTodo->interval
         ));
 
         return $newTodo;
@@ -105,7 +86,9 @@ final class Todo extends AggregateRoot
         $start = new DateTimeImmutable();
         $end = $start->add(new DateInterval('PT1H'));
 
-        return new self($id, '', '',true, $start, $end, null);
+        $interval = Interval::create($start, $end);
+
+        return new self($id, '', '',true, $interval, null);
     }
 
     public function changeDescription(string $description): void
@@ -132,35 +115,15 @@ final class Todo extends AggregateRoot
         ));
     }
 
-    public function changeStartDate(DateTimeImmutable $start): void
+    public function changeInterval(Interval $interval): void
     {
-        if ($start->format('Y-m-d H:i:s') === $this->start->format('Y-m-d H:i:s')) {
+        if ($interval->equal($this->interval)) {
             return;
         }
 
-        if ($start > $this->end) {
-            throw new DomainException($start->format('Y-m-d H:i:s') . ' should be before ' . $this->getEndDate()->format('Y-m-d H:i:s'));
-        }
-
-        $this->applyAndRecordThat(new TodoStartDateWasChanged(
+        $this->applyAndRecordThat(new TodoIntervalWasChanged(
             $this->id,
-            $start
-        ));
-    }
-
-    public function changeEndDate(DateTimeImmutable $end): void
-    {
-        if ($end->format('Y-m-d H:i:s') === $this->end->format('Y-m-d H:i:s')) {
-            return;
-        }
-
-        if ($this->start > $end) {
-            throw new DomainException($this->start->format('Y-m-d H:i:s') . ' should be before ' . $end->format('Y-m-d H:i:s'));
-        }
-
-        $this->applyAndRecordThat(new TodoEndDateWasChanged(
-            $this->id,
-            $end
+            $interval
         ));
     }
 
@@ -215,22 +178,13 @@ final class Todo extends AggregateRoot
         $this->deletedAt = $event->getDeletedAt();
     }
 
-    protected function applyTodoStartDateWasChanged(TodoStartDateWasChanged $event): void
+    protected function applyTodoIntervalWasChanged(TodoIntervalWasChanged $event): void
     {
-        if ($event->getStartDate()->format('Y-m-d H:i:s') === $this->start->format('Y-m-d H:i:s')) {
+        if ($event->getInterval()->equal($this->interval)) {
             return;
         }
 
-        $this->start = $event->getStartDate();
-    }
-
-    protected function applyTodoEndDateWasChanged(TodoEndDateWasChanged $event): void
-    {
-        if ($event->getEndDate()->format('Y-m-d H:i:s') === $this->end->format('Y-m-d H:i:s')) {
-            return;
-        }
-
-        $this->end = $event->getEndDate();
+        $this->interval = $event->getInterval();
     }
 
     protected function applyTodoDescriptionWasChanged(TodoDescriptionWasChanged $event): void
@@ -258,5 +212,10 @@ final class Todo extends AggregateRoot
         }
 
         return $todo;
+    }
+
+    public function getDeletedAt(): ?DateTimeImmutable
+    {
+        return $this->deletedAt;
     }
 }

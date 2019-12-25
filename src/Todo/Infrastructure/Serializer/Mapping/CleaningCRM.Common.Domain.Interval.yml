@@ -1,0 +1,9 @@
+CleaningCRM\Common\Domain\Interval:
+  exclusion_policy: ALL
+
+  properties:
+    start:
+      type: DateTimeImmutable<'Y-m-d\TH:i:s'>
+
+    end:
+      type: DateTimeImmutable<'Y-m-d\TH:i:s'>

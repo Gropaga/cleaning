@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Todo\Infrastructure\Persistence;
 
+use CleaningCRM\Common\Domain\Interval;
 use CleaningCRM\Todo\Domain\Todo\TodoId;
 use CleaningCRM\Todo\Domain\Todo\TodoReadModel;
 use DateTimeImmutable;
@@ -16,8 +17,10 @@ class TodoReadModelMapper
             TodoId::fromString($data['id']),
             $data['title'],
             $data['description'],
-            DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $data['start']),
-            DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $data['end']),
+            Interval::create(
+                DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $data['start']),
+                DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $data['end'])
+            ),
             $data['completed']
         );
     }

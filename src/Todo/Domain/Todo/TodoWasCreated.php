@@ -4,15 +4,14 @@ namespace CleaningCRM\Todo\Domain\Todo;
 
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
-use DateTimeImmutable;
+use CleaningCRM\Common\Domain\Interval;
 
 class TodoWasCreated implements DomainEvent
 {
     private $todoId;
     private $title;
     private $description;
-    private $start;
-    private $end;
+    private $interval;
     private $completed;
 
     public function __construct(
@@ -20,16 +19,14 @@ class TodoWasCreated implements DomainEvent
         string $title,
         string $description,
         bool $completed,
-        DateTimeImmutable $start,
-        DateTimeImmutable $end
+        Interval $interval
     )
     {
         $this->todoId = $todoId;
         $this->title = $title;
         $this->description = $description;
         $this->completed = $completed;
-        $this->start = $start;
-        $this->end = $end;
+        $this->interval = $interval;
     }
 
     public function getAggregateId(): AggregateId
@@ -57,13 +54,8 @@ class TodoWasCreated implements DomainEvent
         return $this->todoId;
     }
 
-    public function getStartDate(): DateTimeImmutable
+    public function getInterval(): Interval
     {
-        return $this->start;
-    }
-
-    public function getEndDate(): DateTimeImmutable
-    {
-        return $this->end;
+        return $this->interval;
     }
 }

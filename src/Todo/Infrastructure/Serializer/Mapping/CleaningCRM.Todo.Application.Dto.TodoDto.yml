@@ -11,8 +11,5 @@ CleaningCRM\Todo\Application\Dto\TodoDto:
     completed:
       type: bool
 
-    start:
-      type: DateTimeImmutable<'Y-m-d\TH:i:s.uT'>
-
-    end:
-      type: DateTimeImmutable<'Y-m-d\TH:i:s.uT'>
+    interval:
+      type: CleaningCRM\Common\Domain\Interval

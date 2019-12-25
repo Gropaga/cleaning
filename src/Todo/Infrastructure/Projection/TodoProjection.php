@@ -4,8 +4,7 @@ namespace CleaningCRM\Todo\Infrastructure\Projection;
 
 use CleaningCRM\Common\Domain\AbstractProjection;
 use CleaningCRM\Todo\Domain\Todo\TodoCompletedWasChanged;
-use CleaningCRM\Todo\Domain\Todo\TodoEndDateWasChanged;
-use CleaningCRM\Todo\Domain\Todo\TodoStartDateWasChanged;
+use CleaningCRM\Todo\Domain\Todo\TodoIntervalWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoDeletedAtWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoDescriptionWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoTitleWasChanged;
@@ -35,8 +34,8 @@ SQL
             ':id' => (string) $event->getAggregateId(),
             ':title' => $event->getTitle(),
             ':description' => $event->getDescription(),
-            ':start' => $event->getStartDate()->format('m-d-Y H:i:s'),
-            ':end' => $event->getEndDate()->format('m-d-Y H:i:s'),
+            ':start' => $event->getInterval()->start()->format('m-d-Y H:i:s'),
+            ':end' => $event->getInterval()->end()->format('m-d-Y H:i:s'),
             ':completed' => $event->getCompleted() ? 'TRUE' : 'FALSE',
         ]);
     }
@@ -57,7 +56,7 @@ SQL
 
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':completed' => $event->getCompleted(),
+            ':completed' => $event->getCompleted() ? 'TRUE' : 'FALSE',
         ]);
     }
 
@@ -71,23 +70,14 @@ SQL
         ]);
     }
 
-    public function projectWhenTodoStartDateWasChanged(TodoStartDateWasChanged $event)
+    public function projectWhenTodoIntervalWasChanged(TodoIntervalWasChanged $event)
     {
-        $stmt = $this->connection->prepare('UPDATE todo SET start = :date WHERE id = :id');
+        $stmt = $this->connection->prepare('UPDATE todo SET start = :start, "end" = :end WHERE id = :id');
 
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':start' => $event->getStartDate()->format('Y-m-d H:i:s')
-        ]);
-    }
-
-    public function projectWhenTodoEndDateWasChanged(TodoEndDateWasChanged $event)
-    {
-        $stmt = $this->connection->prepare('UPDATE todo SET "end" = :date WHERE id = :id');
-
-        $stmt->execute([
-            ':id' => (string) $event->getAggregateId(),
-            ':end' => $event->getEndDate()->format('Y-m-d H:i:s')
+            ':start' => $event->getInterval()->start()->format('Y-m-d H:i:s'),
+            ':end' => $event->getInterval()->end()->format('Y-m-d H:i:s')
         ]);
     }
 

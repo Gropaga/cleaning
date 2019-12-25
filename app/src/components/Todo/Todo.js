@@ -5,20 +5,20 @@ import {Button, FormCheck, Modal} from "react-bootstrap";
 import DatePicker from "react-datepicker"
 import {
     deleteTodo,
-    hideNewTodo,
-    NEW_TODO,
-    newTodoCompletedChange,
-    newTodoDescriptionChange,
-    newTodoIntervalChange,
-    newTodoTitleChange,
-    saveNewTodo
-} from "../../actions/newTodo";
+    hideTodo,
+    LABEL_TODO,
+    todoCompletedChange,
+    todoDescriptionChange,
+    todoIntervalChange,
+    todoTitleChange,
+    saveTodo
+} from "../../actions/todo";
 import {FETCH_INIT, FETCH_START} from "../../reducers/api";
 import moment from "moment";
 
-const NewTodo = function () {
-    const {id, show, interval, title, description, completed} = useSelector(state => state.newTodo);
-    const apiState = useSelector(state => state.fetching[NEW_TODO]);
+const Todo = function () {
+    const {id, show, interval, title, description, completed} = useSelector(state => state.todo);
+    const apiState = useSelector(state => state.fetching[LABEL_TODO]);
     const dispatch = useDispatch();
 
     const {start, end} = interval;
@@ -26,7 +26,7 @@ const NewTodo = function () {
     const isLoading = () => [FETCH_INIT, FETCH_START].includes(apiState);
 
     const onClose = () => {
-        dispatch(hideNewTodo())
+        dispatch(hideTodo())
     };
 
     const onDelete = () => {
@@ -35,7 +35,7 @@ const NewTodo = function () {
 
     const onSave = () => {
         dispatch(
-            saveNewTodo(
+            saveTodo(
                 {
                     id,
                     interval: {
@@ -51,42 +51,42 @@ const NewTodo = function () {
     };
 
     const onCompletedChange = event => {
-        dispatch(newTodoCompletedChange(event.target.checked));
+        dispatch(todoCompletedChange(event.target.checked));
     };
 
     const onTitleChange = event => {
-        dispatch(newTodoTitleChange(event.target.value))
+        dispatch(todoTitleChange(event.target.value))
     };
 
     const onStartDateChange = start => {
         if (start.getTime() > end.getTime()) {
-            dispatch(newTodoIntervalChange(
+            dispatch(todoIntervalChange(
                 {
                     start,
                     end: moment(start).add(15, 'minutes').toDate()
                 }
             ));
         } else {
-            dispatch(newTodoIntervalChange({start, end}));
+            dispatch(todoIntervalChange({start, end}));
         }
 
     };
 
     const onEndDateChange = end => {
         if (start.getTime() > end.getTime()) {
-            dispatch(newTodoIntervalChange(
+            dispatch(todoIntervalChange(
                 {
                     start: moment(end).subtract(15, 'minutes').toDate(),
                     end,
                 }
             ));
         } else {
-            dispatch(newTodoIntervalChange({start, end}));
+            dispatch(todoIntervalChange({start, end}));
         }
     };
 
     const onDescriptionChange = event => {
-        dispatch(newTodoDescriptionChange(event.target.value))
+        dispatch(todoDescriptionChange(event.target.value))
     };
 
     return (
@@ -158,4 +158,4 @@ const NewTodo = function () {
     );
 };
 
-export default NewTodo
+export default Todo

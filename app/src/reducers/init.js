@@ -4,7 +4,7 @@ const initialState = {
     fetching: {},
     messages: [],
     [TODO_LIST]: false,
-    newTodo: {
+    todo: {
         show: false,
         interval: {
             start: false,

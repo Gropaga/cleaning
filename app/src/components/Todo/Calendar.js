@@ -4,8 +4,8 @@ import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {TODO_LIST} from "../../reducers/init";
 import {apiTodo} from "../../actions/common";
-import NewTodo from "./NewTodo";
-import {showEditTodo, showNewTodo} from "../../actions/newTodo";
+import Todo from "./Todo";
+import {showEditTodo, showTodo} from "../../actions/todo";
 
 let Calendar = () => {
     const dispatch = useDispatch();
@@ -19,7 +19,7 @@ let Calendar = () => {
 
     return (
         <>
-            <NewTodo />,
+            <Todo />,
             <ReactBigCalendar
                 events={
                     Object.entries(events).map(([_, {id, title, description, interval}]) => {
@@ -41,7 +41,7 @@ let Calendar = () => {
                         moment(end).format('YYYY-MM-DD')
                     )
                 )}
-                onSelectSlot={({start, end}) => dispatch(showNewTodo(start, end))}
+                onSelectSlot={({start, end}) => dispatch(showTodo(start, end))}
                 onSelectEvent={event => dispatch(showEditTodo(event.id))}
                 localizer={momentLocalizer(moment)}
             />

@@ -1,7 +1,7 @@
 import commonReducer from "./common";
 import initReducer from "./init";
 import apiReducer from "./api";
-import newTodoReducer from "./newTodo";
+import todoReducer from "./todo";
 
 const combineReducers = function (reducers) {
     return (state, action) => {
@@ -18,6 +18,6 @@ const combineReducers = function (reducers) {
 export default combineReducers([
     initReducer,
     commonReducer,
-    newTodoReducer,
+    todoReducer,
     apiReducer
 ]);

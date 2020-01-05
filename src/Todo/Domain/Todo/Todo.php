@@ -23,7 +23,7 @@ final class Todo extends AggregateRoot
         string $description,
         bool $completed,
         Interval $interval,
-        ?DateTimeImmutable $deleteAt
+        ?DateTimeImmutable $deleteAt = null
     )
     {
         $this->id = $id;
@@ -59,6 +59,11 @@ final class Todo extends AggregateRoot
         return $this->interval;
     }
 
+    public function getDeletedAt(): ?DateTimeImmutable
+    {
+        return $this->deletedAt;
+    }
+
     public static function create(TodoId $id, string $title, string $description, Interval $interval, ?bool $completed = false, ?DateTimeImmutable $deletedAt = null): self
     {
         $newTodo = new Todo(
@@ -66,8 +71,7 @@ final class Todo extends AggregateRoot
             $title,
             $description,
             $completed,
-            $interval,
-            $deletedAt
+            $interval
         );
 
         $newTodo->recordThat(new TodoWasCreated(
@@ -117,7 +121,7 @@ final class Todo extends AggregateRoot
 
     public function changeInterval(Interval $interval): void
     {
-        if ($interval->equal($this->interval)) {
+        if ($interval->equals($this->interval)) {
             return;
         }
 
@@ -148,15 +152,11 @@ final class Todo extends AggregateRoot
         $this->completed = $event->getCompleted();
     }
 
-    public function changeDeletedAt(?DateTimeImmutable $deletedAt): void
+    public function delete(): void
     {
-        if ($deletedAt === $this->deletedAt) {
-            return;
-        }
-
         $this->applyAndRecordThat(new TodoDeletedAtWasChanged(
             $this->id,
-            $deletedAt
+            new DateTimeImmutable()
         ));
     }
 
@@ -180,7 +180,7 @@ final class Todo extends AggregateRoot
 
     protected function applyTodoIntervalWasChanged(TodoIntervalWasChanged $event): void
     {
-        if ($event->getInterval()->equal($this->interval)) {
+        if ($event->getInterval()->equals($this->interval)) {
             return;
         }
 
@@ -212,10 +212,5 @@ final class Todo extends AggregateRoot
         }
 
         return $todo;
-    }
-
-    public function getDeletedAt(): ?DateTimeImmutable
-    {
-        return $this->deletedAt;
     }
 }

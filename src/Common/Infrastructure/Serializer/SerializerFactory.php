@@ -1,6 +1,6 @@
 <?php
 
-namespace CleaningCRM\Todo\Infrastructure\Serializer;
+namespace CleaningCRM\Common\Infrastructure\Serializer;
 
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;

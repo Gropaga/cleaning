@@ -36,7 +36,7 @@ class Interval {
         return new self($start, $end);
     }
 
-    public function equal(Interval $interval): bool
+    public function equals(Interval $interval): bool
     {
         return $this->start->format('Y-m-d H:i:s') === $interval->start->format('Y-m-d H:i:s') &&
             $this->end->format('Y-m-d H:i:s') === $interval->end->format('Y-m-d H:i:s');

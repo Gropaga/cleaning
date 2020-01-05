@@ -9,7 +9,6 @@ use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\TodoProjection as TodoProjectionPort;
 use CleaningCRM\Todo\Domain\Todo\TodoRepository as TodoRepositoryPort;
 use Doctrine\DBAL\Connection;
-use Exception;
 
 class TodoRepository implements TodoRepositoryPort
 {

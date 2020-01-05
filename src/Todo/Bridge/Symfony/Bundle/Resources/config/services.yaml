@@ -1,5 +1,6 @@
 parameters:
   todo.bundle_dir: '%kernel.project_dir%/src/Todo'
+  common.bundle_dir: '%kernel.project_dir%/src/Common'
 
 services:
   _defaults:
@@ -34,14 +35,14 @@ services:
   CleaningCRM\Todo\Infrastructure\Projection\TodoProjection: ~
   CleaningCRM\Todo\Domain\Todo\TodoProjection: '@CleaningCRM\Todo\Infrastructure\Projection\TodoProjection'
 
-  CleaningCRM\Todo\Infrastructure\Serializer\SerializerFactory:
+  CleaningCRM\Common\Infrastructure\Serializer\SerializerFactory:
     arguments:
       - '%kernel.project_dir%/var/cache/serializer'
       - '%kernel.debug%'
-      - '%todo.bundle_dir%/Infrastructure/Serializer/Mapping'
+      - '%common.bundle_dir%/Infrastructure/Serializer/Mapping'
 
   JMS\Serializer\Serializer:
-    factory: 'CleaningCRM\Todo\Infrastructure\Serializer\SerializerFactory:create'
+    factory: 'CleaningCRM\Common\Infrastructure\Serializer\SerializerFactory:create'
 
   JMS\Serializer\SerializerInterface: '@JMS\Serializer\Serializer'
 

@@ -22,7 +22,7 @@ class DeleteHandler
         /** @var $todo Todo */
         $todo = $this->repository->get($command->todoId());
 
-        $todo->changeDeletedAt(new DateTimeImmutable());
+        $todo->delete();
 
         $this->repository->add($todo);
     }

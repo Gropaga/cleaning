@@ -51,7 +51,7 @@ final class TodoTest extends TestCase
         $this->assertEquals('Description 5678', $todo->getDescription());
         $this->assertEquals(true, $todo->isCompleted());
         $this->assertEquals($interval, $todo->getInterval());
-        $this->assertEquals($deletedAt, $todo->getDeletedAt());
+        $this->assertEquals(null, $todo->getDeletedAt());
     }
 
     public function eventProvider()
@@ -119,20 +119,6 @@ final class TodoTest extends TestCase
                 'getInterval',
                 self::NO_DOMAIN_EFFECT
             ],
-            [
-                'changeDeletedAt',
-                TodoDeletedAtWasChanged::class,
-                DateTimeImmutable::createFromFormat('Y-m-d', '2000-01-01'),
-                'getDeletedAt',
-                self::HAS_DOMAIN_EFFECT
-            ],
-            [
-                'changeDeletedAt',
-                TodoDeletedAtWasChanged::class,
-                null,
-                'getDeletedAt',
-                self::NO_DOMAIN_EFFECT
-            ],
         ];
     }
 
@@ -165,6 +151,52 @@ final class TodoTest extends TestCase
         } else {
             $this->assertEquals(1, $todo->getRecordedEvents()->getIterator()->count());
         }
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldBeDeleted()
+    {
+        $todoId = TodoId::generate();
+
+        $start = (new DateTimeImmutable())->setTime(1,1,1);
+        $end = (new DateTimeImmutable())->setTime(2,2,2);
+
+        $interval = Interval::create(
+            $start,
+            $end
+        );
+
+        $newInterval = Interval::create(
+            $start->add(new DateInterval('P1D')),
+            $end->add(new DateInterval('P1D'))
+        );
+
+        $eventsHistory = new DomainEventsHistory(
+            $todoId,
+            [
+                new TodoWasCreated(
+                    $todoId,
+                    'Title 1234',
+                    'Description 5678',
+                    true,
+                    $interval
+                ),
+                new TodoTitleWasChanged($todoId, 'New Title'),
+                new TodoDescriptionWasChanged($todoId, 'New Description'),
+                new TodoCompletedWasChanged($todoId, false),
+                new TodoIntervalWasChanged($todoId, $newInterval),
+            ]
+        );
+
+        $todo = Todo::reconstituteFromHistory($eventsHistory);
+
+
+        $this->assertEquals(null, $todo->getDeletedAt());
+        $todo->delete();
+        $this->assertInstanceOf(DateTimeImmutable::class, $todo->getDeletedAt());
+
     }
 
     /**
@@ -209,7 +241,7 @@ final class TodoTest extends TestCase
         $this->assertEquals('New Title', $todo->getTitle());
         $this->assertEquals('New Description', $todo->getDescription());
         $this->assertEquals(false, $todo->isCompleted());
-        $this->assertTrue($newInterval->equal($todo->getInterval()));
+        $this->assertTrue($newInterval->equals($todo->getInterval()));
     }
 
     private function assertEvent(DomainEvents $recodedEvents, $eventClass): bool

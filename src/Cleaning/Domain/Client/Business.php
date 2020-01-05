@@ -8,6 +8,7 @@ use CleaningCRM\Common\Domain\Contact;
 
 class Business
 {
+    private $name;
     private $address;
     private $owner;
     private $vatNumber;
@@ -15,12 +16,14 @@ class Business
     private $bankAccount;
 
     private function __construct(
+        string $name,
         Address $address,
         Contact $owner,
         string $vatNumber,
         string $regNumber,
         string $bankAccount)
     {
+        $this->name = $name;
         $this->address = $address;
         $this->owner = $owner;
         $this->vatNumber = $vatNumber;
@@ -34,12 +37,18 @@ class Business
     public static function createEmpty(): Business
     {
         return new Business(
+            '',
             Address::createEmpty(),
             Contact::createEmpty(),
             '',
             '',
             ''
         );
+    }
+
+    public function name(): string
+    {
+        return $this->name;
     }
 
     public function address(): Address
@@ -69,7 +78,8 @@ class Business
 
     public function equals(Business $business): bool
     {
-        return $business->address->equals($this->address) &&
+        return $business->name === $this->name &&
+            $business->address->equals($this->address) &&
             $business->owner->equals($this->owner) &&
             $business->vatNumber === $this->vatNumber &&
             $business->regNumber === $this->regNumber &&

@@ -2,6 +2,7 @@
 
 namespace CleaningCRM\Todo\Infrastructure\Persistence;
 
+use CleaningCRM\Common\Domain\DomainEvent;
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvents;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
@@ -10,7 +11,6 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Driver\Connection;
 use JMS\Serializer\SerializerInterface;
 use PDO;
-use Ramsey\Uuid\Uuid;
 
 class SQLEventStore implements EventStore
 {
@@ -32,9 +32,10 @@ VALUES (:id, :aggregateId, :eventName, :createdAt, :payload)
 SQL
         );
 
+        /** @var DomainEvent $event */
         foreach ($events as $event) {
             $stmt->execute([
-                ':id' => Uuid::uuid4()->toString(),
+                ':id' => $event->getEventId(),
                 ':aggregateId' => (string) $event->getAggregateId(),
                 ':eventName' => get_class($event),
                 ':createdAt' => (new DateTimeImmutable())->format('Y-m-d H:i:s.u'),

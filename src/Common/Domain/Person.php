@@ -2,44 +2,69 @@
 
 namespace CleaningCRM\Common\Domain;
 
+use Assert\AssertionFailedException;
+
 class Person
 {
-    private $name;
-    private $surname;
+    private $id;
+    private $person;
+    private $phone;
+    private $email;
+    private $address;
 
-    private function __construct(string $name, string $surname)
+    public function __construct(AggregateId $id, Name $person, Phone $phone, Email $email, Address $address)
     {
-        $this->name = $name;
-        $this->surname = $surname;
+        $this->id = $id;
+        $this->person = $person;
+        $this->phone = $phone;
+        $this->email = $email;
+        $this->address = $address;
     }
 
-    public static function createEmpty(): Person
+    /**
+     * @throws AssertionFailedException
+     */
+    public static function createEmpty(): self
     {
-        return new Person('', '');
+        return new self(
+            AggregateId::generate(),
+            Name::createEmpty(),
+            Phone::createEmpty(),
+            new Email('blank@email.com'),
+            Address::createEmpty()
+        );
     }
 
-    public static function create(string $name, string $surname): Person
+    public function id(): AggregateId
     {
-        return new Person($name, $surname);
+        return $this->id;
     }
 
-    public function name(): string
+    public function person(): Name
     {
-        return $this->name;
+        return $this->person;
     }
 
-    public function surname(): string
+    public function phone(): Phone
     {
-        return $this->surname;
+        return $this->phone;
     }
 
-    public function fullName(): string
+    public function email(): Email
     {
-        return $this->name . ' ' . $this->surname;
+        return $this->email;
     }
 
-    public function equals(Person $person): bool
+    public function address(): Address
     {
-        return $person->fullName() === $this->fullName();
+        return $this->address;
+    }
+
+    public function equals(Person $contact): bool
+    {
+        return $this->person->equals($contact->person()) &&
+            $this->phone->equals($contact->phone()) &&
+            $this->email->equals($contact->email()) &&
+            $this->address->equals($contact->address());
     }
 }

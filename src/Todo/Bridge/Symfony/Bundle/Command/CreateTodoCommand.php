@@ -2,8 +2,13 @@
 
 namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\Command;
 
+use CleaningCRM\Common\Domain\EventPublisher;
+use CleaningCRM\Common\Domain\Interval;
 use CleaningCRM\Todo\Application\Command\Todo\Create;
 use CleaningCRM\Todo\Application\Dto\TodoDto;
+use CleaningCRM\Todo\Bridge\Symfony\Bundle\IntegrationEvents\PublishEvents;
+use CleaningCRM\Todo\Domain\Todo\Todo;
+use CleaningCRM\Todo\Domain\Todo\TodoRepository;
 use DateTimeImmutable;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,25 +20,30 @@ class CreateTodoCommand extends Command
 {
     protected static $defaultName = 'app:create-todo';
 
-    private $bus;
+    private $repository;
+    private $publishEvents;
 
-    public function __construct(MessageBusInterface $bus)
+    public function __construct(TodoRepository $repository, EventPublisher $publishEvents)
     {
         parent::__construct();
-        $this->bus = $bus;
+        $this->repository = $repository;
+        $this->publishEvents = $publishEvents;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $todoId = TodoId::generate();
+        $todo = Todo::create(
+            TodoId::generate(),
+            'Title goes here',
+            'Some description is here',
+            Interval::create(
+                DateTimeImmutable::createFromFormat('Y-m-d', '2000-01-11'),
+                DateTimeImmutable::createFromFormat('Y-m-d', '2000-01-11')
+            ),
+            false
+        );
 
-        $newTodo = new TodoDto();
-
-        $newTodo->title = 'Title goes here';
-        $newTodo->description = 'Some description is here';
-        $newTodo->date = DateTimeImmutable::createFromFormat('Y-m-d', '2000-01-11');
-
-        $this->bus->dispatch(new Create($todoId, $newTodo));
+        $this->publishEvents->add($todo);
 
         $output->writeln('Whoa!');
 

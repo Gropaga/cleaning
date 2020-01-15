@@ -35,6 +35,11 @@ services:
   CleaningCRM\Todo\Infrastructure\Projection\TodoProjection: ~
   CleaningCRM\Todo\Domain\Todo\TodoProjection: '@CleaningCRM\Todo\Infrastructure\Projection\TodoProjection'
 
+  CleaningCRM\Todo\Infrastructure\EventPublisher\AggregateEventPublisher:
+    shared: false
+
+  CleaningCRM\Common\Domain\EventPublisher: '@CleaningCRM\Todo\Infrastructure\EventPublisher\AggregateEventPublisher'
+
   CleaningCRM\Common\Infrastructure\Serializer\SerializerFactory:
     arguments:
       - '%kernel.project_dir%/var/cache/serializer'
@@ -51,3 +56,7 @@ services:
   CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter\DeserializeSubscriber:
     class: CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter\DeserializeSubscriber
     tags: ['kernel.event_subscriber']
+
+  CleaningCRM\Todo\Bridge\Symfony\Bundle\IntegrationEvents\PublishEvents:
+    class: CleaningCRM\Todo\Bridge\Symfony\Bundle\IntegrationEvents\PublishEvents
+    tags: ['kernel.response', 'console.terminate']

@@ -2,27 +2,31 @@
 
 namespace CleaningCRM\Todo\Domain\Todo;
 
-use CleaningCRM\Cleaning\Domain\Client\Business;
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
+use CleaningCRM\Cleaning\Domain\Client\EventId;
 use CleaningCRM\Common\Domain\AggregateId;
-use CleaningCRM\Common\Domain\Contact;
 use CleaningCRM\Common\Domain\DomainEvent;
 
 class ClientWasCreated implements DomainEvent
 {
     private $id;
-    private $contact;
-    private $business;
+    private $eventId;
+    private $contacts;
 
     public function __construct(
         ClientId $id,
-        Contact $contact,
-        Business $business
+        EventId $eventId,
+        array $contacts
     )
     {
         $this->id = $id;
-        $this->contact = $contact;
-        $this->business = $business;
+        $this->eventId = $eventId;
+        $this->contacts = $contacts;
+    }
+
+    public function getEventId(): AggregateId
+    {
+        return $this->eventId;
     }
 
     public function getAggregateId(): AggregateId
@@ -30,13 +34,8 @@ class ClientWasCreated implements DomainEvent
         return $this->id;
     }
 
-    public function getContact(): Contact
+    public function getContacts(): array
     {
-        return $this->contact;
-    }
-
-    public function getBusiness(): Business
-    {
-        return $this->business;
+        return $this->contacts;
     }
 }

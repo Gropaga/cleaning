@@ -2,12 +2,13 @@
 
 namespace CleaningCRM\Common\Domain;
 
-abstract class AggregateRoot implements RecordsEvents
+abstract class AggregateRoot implements RecordsEvents, NotifyEvents
 {
     /**
      * @var array|DomainEvent[]
      */
     private $recordedEvents = [];
+    private $notifyEvents = [];
 
     public function getRecordedEvents(): DomainEvents
     {
@@ -24,10 +25,25 @@ abstract class AggregateRoot implements RecordsEvents
         $this->recordedEvents[] = $event;
     }
 
+    protected function notifyThat(DomainEvent $event)
+    {
+        $this->notifyEvents[] = $event;
+    }
+
     protected function apply(DomainEvent $event)
     {
         $method = 'apply'.ClassNameHelper::getShortClassName(get_class($event));
         $this->$method($event);
+    }
+
+    public function getNotifyEvents(): DomainEvents
+    {
+        return new DomainEvents($this->recordedEvents);
+    }
+
+    public function clearNotifyEvents()
+    {
+        $this->notifyEvents = [];
     }
 
     protected function applyAndRecordThat(DomainEvent $event)

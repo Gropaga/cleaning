@@ -9,12 +9,19 @@ use CleaningCRM\Common\Domain\Interval;
 class TodoIntervalWasChanged implements DomainEvent
 {
     private $todoId;
+    private $eventId;
     private $interval;
 
-    public function __construct(TodoId $todoId, Interval $interval)
+    public function __construct(TodoId $todoId, AggregateId $eventId, Interval $interval)
     {
         $this->todoId = $todoId;
+        $this->eventId = $eventId;
         $this->interval = $interval;
+    }
+
+    public function getEventId(): AggregateId
+    {
+        return $this->eventId;
     }
 
     public function getAggregateId(): AggregateId

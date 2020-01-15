@@ -4,6 +4,7 @@ namespace CleaningCRM\Todo\Domain\Todo;
 
 use CleaningCRM\Common\Domain\AggregateRoot;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
+use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\Interval;
 use DateInterval;
 use DateTimeImmutable;
@@ -74,13 +75,17 @@ final class Todo extends AggregateRoot
             $interval
         );
 
-        $newTodo->recordThat(new TodoWasCreated(
+        $event = new TodoWasCreated(
+            EventId::generate(),
             $newTodo->id,
             $newTodo->title,
             $newTodo->description,
             $newTodo->completed,
             $newTodo->interval
-        ));
+        );
+
+        $newTodo->recordThat($event);
+        $newTodo->notifyThat($event);
 
         return $newTodo;
     }

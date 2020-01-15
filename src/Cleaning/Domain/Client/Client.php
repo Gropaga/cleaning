@@ -3,8 +3,11 @@
 namespace CleaningCRM\Cleaning\Domain\Client;
 
 use Assert\AssertionFailedException;
+use CleaningCRM\Cleaning\Domain\Contact\ContactId;
+use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\AggregateRoot;
-use CleaningCRM\Common\Domain\Contact;
+use CleaningCRM\Common\Domain\Name;
+use CleaningCRM\Common\Domain\Person;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
 use CleaningCRM\Todo\Domain\Todo\ClientWasCreated;
 use DateTimeImmutable;
@@ -12,20 +15,32 @@ use DateTimeImmutable;
 final class Client extends AggregateRoot
 {
     private $id;
-    private $contact;
-    private $business;
+    private $name;
+    private $contacts;
+    private $address;
+    private $vatNumber;
+    private $regNumber;
+    private $bankAccount;
     private $deletedAt;
 
     private function __construct(
         ClientId $id,
-        Contact $contact,
-        Business $business,
+        string $name,
+        array $contacts,
+        Address $address,
+        string $vatNumber,
+        string $regNumber,
+        string $bankAccount,
         ?DateTimeImmutable $deletedAt = null
     )
     {
         $this->id = $id;
-        $this->contact = $contact;
-        $this->business = $business;
+        $this->name = $name;
+        $this->contacts = $contacts;
+        $this->address = $address;
+        $this->vatNumber = $vatNumber;
+        $this->regNumber = $regNumber;
+        $this->bankAccount = $bankAccount;
         $this->deletedAt = $deletedAt;
     }
 
@@ -34,10 +49,23 @@ final class Client extends AggregateRoot
      */
     public static function createEmptyClientWithId(ClientId $id): self
     {
-        return new self($id, Contact::createEmpty(), Business::createEmpty());
+        return new self(
+            $id,
+            '',
+            [],
+            Address::createEmpty(),
+            '',
+            '',
+            ''
+        );
     }
 
-    public function updateContact(Contact $contact): void
+    public function addContacts(array $contacts): void
+    {
+
+    }
+
+    public function addContact(ContactId $contact): void
     {
         if ($contact->equals($this->contact)) {
             return;
@@ -45,6 +73,7 @@ final class Client extends AggregateRoot
 
         $this->applyAndRecordThat(new ContactWasChanged(
             $this->id,
+            EventId::generate(),
             $contact
         ));
     }
@@ -63,18 +92,18 @@ final class Client extends AggregateRoot
 
     public function delete(): void
     {
-        $this->applyAndRecordThat(new ClientDeletedAtWasChanged(
+        $this->applyAndRecordThat(new ClientWasDeleted(
             $this->id,
             new DateTimeImmutable()
         ));
     }
 
-    public function getId(): ClientId
+    public function getId(): BusinessId
     {
         return $this->id;
     }
 
-    public function getContact(): Contact
+    public function getContact(): Person
     {
         return $this->contact;
     }
@@ -89,7 +118,7 @@ final class Client extends AggregateRoot
         return $this->deletedAt;
     }
 
-    public static function create(ClientId $id, Contact $contact, Business $business, ?DateTimeImmutable $deletedAt = null): self
+    public static function create(BusinessId $id, Person $contact, Business $business, ?DateTimeImmutable $deletedAt = null): self
     {
         $newClient = new Client(
             $id,

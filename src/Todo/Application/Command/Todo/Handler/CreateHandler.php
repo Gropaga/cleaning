@@ -2,6 +2,7 @@
 
 namespace CleaningCRM\Todo\Application\Command\Todo\Handler;
 
+use CleaningCRM\Common\Domain\EventPublisher;
 use CleaningCRM\Todo\Application\Command\Todo\Create;
 use CleaningCRM\Todo\Domain;
 use CleaningCRM\Todo\Domain\Todo\Todo;
@@ -11,10 +12,12 @@ use CleaningCRM\Todo\Domain\Todo\TodoRepository;
 class CreateHandler
 {
     private $repository;
+    private $publisher;
 
-    public function __construct(TodoRepository $repository)
+    public function __construct(TodoRepository $repository, EventPublisher $publisher)
     {
         $this->repository = $repository;
+        $this->publisher = $publisher;
     }
 
     public function __invoke(Create $command)
@@ -28,5 +31,6 @@ class CreateHandler
         );
 
         $this->repository->add($todo);
+        $this->publisher->add($todo);
     }
 }

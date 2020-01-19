@@ -12,7 +12,7 @@ class ContactWasChanged implements DomainEvent
     private $eventId;
     private $contact;
 
-    public function __construct(ClientId $id, AggregateId $eventId, Person $contact)
+    public function __construct(ClientId $id, EventId $eventId, Person $contact)
     {
         $this->id = $id;
         $this->eventId = $eventId;

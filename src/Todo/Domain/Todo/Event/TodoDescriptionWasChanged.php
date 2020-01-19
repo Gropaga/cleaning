@@ -1,15 +1,15 @@
 <?php
 
-namespace CleaningCRM\Todo\Domain\Todo;
+namespace CleaningCRM\Todo\Domain\Todo\Event;
 
-use CleaningCRM\Cleaning\Domain\Client\EventId;
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
+use CleaningCRM\Common\Domain\EventId;
+use CleaningCRM\Todo\Domain\Todo\TodoId;
 
 class TodoDescriptionWasChanged implements DomainEvent
 {
     private $eventId;
-
     private $todoId;
     private $description;
 

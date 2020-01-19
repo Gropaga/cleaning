@@ -1,4 +1,4 @@
-CleaningCRM\Todo\Domain\Todo\TodoTitleWasChanged:
+CleaningCRM\Todo\Domain\Todo\Event\TodoDescriptionWasChanged:
     exclusion_policy: ALL
 
     properties:
@@ -6,5 +6,5 @@ CleaningCRM\Todo\Domain\Todo\TodoTitleWasChanged:
             type: CleaningCRM\Todo\Domain\Todo\TodoId
             serialized_name: todo_id
 
-        title:
+        description:
             type: string

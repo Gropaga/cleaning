@@ -3,12 +3,12 @@
 namespace CleaningCRM\Todo\Infrastructure\Projection;
 
 use CleaningCRM\Common\Domain\AbstractProjection;
-use CleaningCRM\Todo\Domain\Todo\TodoCompletedWasChanged;
-use CleaningCRM\Todo\Domain\Todo\TodoIntervalWasChanged;
-use CleaningCRM\Todo\Domain\Todo\TodoDeletedAtWasChanged;
-use CleaningCRM\Todo\Domain\Todo\TodoDescriptionWasChanged;
-use CleaningCRM\Todo\Domain\Todo\TodoTitleWasChanged;
-use CleaningCRM\Todo\Domain\Todo\TodoWasCreated;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoCompletedWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoIntervalWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoDeletedAtWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoDescriptionWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoTitleWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoWasCreated;
 use Doctrine\DBAL\Connection;
 use CleaningCRM\Todo\Domain\Todo\TodoProjection as TodoProjectionPort;
 

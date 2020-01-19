@@ -1,10 +1,12 @@
 <?php
 
-namespace CleaningCRM\Todo\Domain\Todo;
+namespace CleaningCRM\Todo\Domain\Todo\Event;
 
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
+use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\Interval;
+use CleaningCRM\Todo\Domain\Todo\TodoId;
 
 class TodoIntervalWasChanged implements DomainEvent
 {
@@ -12,7 +14,7 @@ class TodoIntervalWasChanged implements DomainEvent
     private $eventId;
     private $interval;
 
-    public function __construct(TodoId $todoId, AggregateId $eventId, Interval $interval)
+    public function __construct(EventId $eventId, TodoId $todoId, Interval $interval)
     {
         $this->todoId = $todoId;
         $this->eventId = $eventId;

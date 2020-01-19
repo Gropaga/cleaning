@@ -1,4 +1,4 @@
-CleaningCRM\Todo\Domain\Todo\TodoDeletedAtWasChanged:
+CleaningCRM\Todo\Domain\Todo\Event\TodoDeletedAtWasChanged:
     exclusion_policy: ALL
 
     properties:

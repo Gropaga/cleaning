@@ -13,11 +13,13 @@ services:
 
   CleaningCRM\Todo\Application\Command\Todo\Handler\:
     resource: '%todo.bundle_dir%/Application/Command/Todo/Handler'
-    tags: ['messenger.message_handler']
+    tags:
+      - { name: messenger.message_handler, bus: command.bus }
 
   CleaningCRM\Todo\Application\Query\Todo\Handler\:
     resource: '%todo.bundle_dir%/Application/Query/Todo/Handler'
-    tags: ['messenger.message_handler']
+    tags:
+      - { name: messenger.message_handler, bus: query.bus }
 
   CleaningCRM\Todo\Bridge\Symfony\Bundle\Controller\:
     resource: '%todo.bundle_dir%/Bridge/Symfony/Bundle/Controller'
@@ -36,7 +38,7 @@ services:
   CleaningCRM\Todo\Domain\Todo\TodoProjection: '@CleaningCRM\Todo\Infrastructure\Projection\TodoProjection'
 
   CleaningCRM\Todo\Infrastructure\EventPublisher\AggregateEventPublisher:
-    shared: false
+    shared: true
 
   CleaningCRM\Common\Domain\EventPublisher: '@CleaningCRM\Todo\Infrastructure\EventPublisher\AggregateEventPublisher'
 

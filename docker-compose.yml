@@ -54,6 +54,20 @@ services:
       POSTGRES_USER: dev
       POSTGRES_PASSWORD: dev
 
+  rabbit:
+    image: rabbitmq:3-management
+    hostname: rabbit
+    networks:
+      default:
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "ERLANGCOOKIE"
+      RABBITMQ_DEFAULT_USER: "dev"
+      RABBITMQ_DEFAULT_PASS: "dev"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
 networks:
   default:
 

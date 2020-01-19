@@ -38,7 +38,7 @@ abstract class AggregateRoot implements RecordsEvents, NotifyEvents
 
     public function getNotifyEvents(): DomainEvents
     {
-        return new DomainEvents($this->recordedEvents);
+        return new DomainEvents($this->notifyEvents);
     }
 
     public function clearNotifyEvents()

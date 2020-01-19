@@ -1,4 +1,4 @@
-CleaningCRM\Todo\Domain\Todo\TodoCompletedWasChanged:
+CleaningCRM\Todo\Domain\Todo\Event\TodoIntervalWasChanged:
     exclusion_policy: ALL
 
     properties:
@@ -6,5 +6,5 @@ CleaningCRM\Todo\Domain\Todo\TodoCompletedWasChanged:
             type: CleaningCRM\Todo\Domain\Todo\TodoId
             serialized_name: todo_id
 
-        completed:
-            type: bool
+        interval:
+            type: CleaningCRM\Common\Domain\Interval

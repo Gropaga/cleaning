@@ -8,23 +8,25 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class AggregateEventPublisher implements EventPublisher
 {
-    private $messageBus;
+    private $eventBus;
     private $events = [];
 
-    public function __construct(MessageBusInterface $messageBus)
+    public function __construct(MessageBusInterface $eventBus)
     {
-        $this->messageBus = $messageBus;
+        $this->eventBus = $eventBus;
     }
 
     public function add(NotifyEvents $aggregate): void
     {
         $this->events = $aggregate->getNotifyEvents();
+        $aggregate->clearNotifyEvents();
     }
 
     public function publish(): void
     {
         foreach ($this->events as $event) {
-            $this->messageBus->dispatch($event);
+            dump($event);
+            $this->eventBus->dispatch($event);
         }
     }
 }

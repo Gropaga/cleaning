@@ -6,6 +6,12 @@ use CleaningCRM\Common\Domain\AggregateRoot;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
 use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\Interval;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoCompletedWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoDeletedAtWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoDescriptionWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoIntervalWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoTitleWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoWasCreated;
 use DateInterval;
 use DateTimeImmutable;
 
@@ -75,7 +81,7 @@ final class Todo extends AggregateRoot
             $interval
         );
 
-        $event = new TodoWasCreated(
+        $todoWasCreated = new TodoWasCreated(
             EventId::generate(),
             $newTodo->id,
             $newTodo->title,
@@ -84,8 +90,8 @@ final class Todo extends AggregateRoot
             $newTodo->interval
         );
 
-        $newTodo->recordThat($event);
-        $newTodo->notifyThat($event);
+        $newTodo->recordThat($todoWasCreated);
+        $newTodo->notifyThat($todoWasCreated);
 
         return $newTodo;
     }
@@ -106,10 +112,14 @@ final class Todo extends AggregateRoot
             return;
         }
 
-        $this->applyAndRecordThat(new TodoDescriptionWasChanged(
+        $todoDescriptionWasChanged = new TodoDescriptionWasChanged(
+            EventId::generate(),
             $this->id,
             $description
-        ));
+        );
+
+        $this->applyAndRecordThat($todoDescriptionWasChanged);
+        $this->notifyThat($todoDescriptionWasChanged);
     }
 
     public function changeTitle(string $title): void
@@ -118,10 +128,14 @@ final class Todo extends AggregateRoot
             return;
         }
 
-        $this->applyAndRecordThat(new TodoTitleWasChanged(
+        $todoTitleWasChanged = new TodoTitleWasChanged(
+            EventId::generate(),
             $this->id,
             $title
-        ));
+        );
+
+        $this->applyAndRecordThat($todoTitleWasChanged);
+        $this->notifyThat($todoTitleWasChanged);
     }
 
     public function changeInterval(Interval $interval): void
@@ -130,10 +144,14 @@ final class Todo extends AggregateRoot
             return;
         }
 
-        $this->applyAndRecordThat(new TodoIntervalWasChanged(
+        $todoIntervalWasChanged = new TodoIntervalWasChanged(
+            EventId::generate(),
             $this->id,
             $interval
-        ));
+        );
+
+        $this->applyAndRecordThat($todoIntervalWasChanged);
+        $this->notifyThat($todoIntervalWasChanged);
     }
 
     public function changeCompleted(bool $completed): void
@@ -142,10 +160,26 @@ final class Todo extends AggregateRoot
             return;
         }
 
-        $this->applyAndRecordThat(new TodoCompletedWasChanged(
+        $todoCompletedWasChanged = new TodoCompletedWasChanged(
+            EventId::generate(),
             $this->id,
             $completed
-        ));
+        );
+
+        $this->applyAndRecordThat($todoCompletedWasChanged);
+        $this->notifyThat($todoCompletedWasChanged);
+    }
+
+    public function delete(): void
+    {
+        $todoDeletedAtWasChanged = new TodoDeletedAtWasChanged(
+            EventId::generate(),
+            $this->id,
+            new DateTimeImmutable()
+        );
+
+        $this->applyAndRecordThat($todoDeletedAtWasChanged);
+        $this->notifyThat($todoDeletedAtWasChanged);
     }
 
     public function applyTodoCompletedWasChanged(TodoCompletedWasChanged $event): void
@@ -155,14 +189,6 @@ final class Todo extends AggregateRoot
         }
 
         $this->completed = $event->getCompleted();
-    }
-
-    public function delete(): void
-    {
-        $this->applyAndRecordThat(new TodoDeletedAtWasChanged(
-            $this->id,
-            new DateTimeImmutable()
-        ));
     }
 
     protected function applyTodoTitleWasChanged(TodoTitleWasChanged $event): void
@@ -210,7 +236,11 @@ final class Todo extends AggregateRoot
 
     public static function reconstituteFromHistory(DomainEventsHistory $eventsHistory): self
     {
-        $todo = self::createEmptyTodoWithId($eventsHistory->getAggregateId());
+        $todo = self::createEmptyTodoWithId(
+            TodoId::fromString(
+                (string) $eventsHistory->getAggregateId()
+            )
+        );
 
         foreach ($eventsHistory as $event) {
             $todo->apply($event);

@@ -1,4 +1,4 @@
-CleaningCRM\Todo\Domain\Todo\TodoWasCreated:
+CleaningCRM\Todo\Domain\Todo\Event\TodoWasCreated:
     exclusion_policy: ALL
 
     properties:

@@ -1,11 +1,12 @@
 <?php
 
-namespace CleaningCRM\Todo\Domain\Todo;
+namespace CleaningCRM\Todo\Domain\Todo\Event;
 
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
 use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\Interval;
+use CleaningCRM\Todo\Domain\Todo\TodoId;
 
 class TodoWasCreated implements DomainEvent
 {

@@ -6,14 +6,14 @@ namespace CleaningCRM\Tests\Todo\Domain\Todo;
 
 use CleaningCRM\Common\Domain\DomainEvents;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
+use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\Interval;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoTitleWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoCompletedWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoIntervalWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\TodoDeletedAtWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoDescriptionWasChanged;
 use CleaningCRM\Todo\Domain\Todo\TodoId;
-use CleaningCRM\Todo\Domain\Todo\Event\TodoDescriptionWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoWasCreated;
 use DateInterval;
 use DateTimeImmutable;
@@ -177,16 +177,17 @@ final class TodoTest extends TestCase
             $todoId,
             [
                 new TodoWasCreated(
+                    EventId::generate(),
                     $todoId,
                     'Title 1234',
                     'Description 5678',
                     true,
                     $interval
                 ),
-                new TodoTitleWasChanged($todoId, 'New Title'),
-                new TodoDescriptionWasChanged($todoId, 'New Description'),
-                new TodoCompletedWasChanged($todoId, false),
-                new TodoIntervalWasChanged($todoId, $newInterval),
+                new TodoTitleWasChanged(EventId::generate(), $todoId, 'New Title'),
+                new TodoDescriptionWasChanged(EventId::generate(), $todoId, 'New Description'),
+                new TodoCompletedWasChanged(EventId::generate(), $todoId, false),
+                new TodoIntervalWasChanged(EventId::generate(), $todoId, $newInterval),
             ]
         );
 
@@ -223,16 +224,17 @@ final class TodoTest extends TestCase
             $todoId,
             [
                 new TodoWasCreated(
+                    EventId::generate(),
                     $todoId,
                     'Title 1234',
                     'Description 5678',
                     true,
                     $interval
                 ),
-                new TodoTitleWasChanged($todoId, 'New Title'),
-                new TodoDescriptionWasChanged($todoId, 'New Description'),
-                new TodoCompletedWasChanged($todoId, false),
-                new TodoIntervalWasChanged($todoId, $newInterval),
+                new TodoTitleWasChanged(EventId::generate(), $todoId, 'New Title'),
+                new TodoDescriptionWasChanged(EventId::generate(), $todoId, 'New Description'),
+                new TodoCompletedWasChanged(EventId::generate(), $todoId, false),
+                new TodoIntervalWasChanged(EventId::generate(), $todoId, $newInterval),
             ]
         );
 

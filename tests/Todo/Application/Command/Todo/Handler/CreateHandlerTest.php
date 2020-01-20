@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Tests\Todo\Application\Command\Todo\Handler;
 
+use CleaningCRM\Common\Domain\EventPublisher;
 use CleaningCRM\Common\Domain\Interval;
 use CleaningCRM\Todo\Application\Command\Todo\Create;
 use CleaningCRM\Todo\Application\Command\Todo\Handler\CreateHandler;
@@ -23,6 +24,9 @@ class CreateHandlerTest extends TestCase
         $repo = $this->getMockBuilder(TodoRepository::class)->getMock();
         $repo->expects($this->once())->method('add');
 
+        $publisher = $this->getMockBuilder(EventPublisher::class)->getMock();
+        $publisher->expects($this->once())->method('add');
+
         $todoDto = new TodoDto();
         $todoDto->interval = Interval::create(new DateTimeImmutable(), new DateTimeImmutable());
         $todoDto->completed = true;
@@ -34,6 +38,6 @@ class CreateHandlerTest extends TestCase
             $todoDto
         );
 
-        call_user_func(new CreateHandler($repo), $command);
+        call_user_func(new CreateHandler($repo, $publisher), $command);
     }
 }

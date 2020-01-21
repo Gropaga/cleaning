@@ -6,7 +6,6 @@ use Assert\AssertionFailedException;
 use CleaningCRM\Cleaning\Domain\Contact\ContactId;
 use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\AggregateRoot;
-use CleaningCRM\Common\Domain\Name;
 use CleaningCRM\Common\Domain\Person;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
 use CleaningCRM\Todo\Domain\Todo\ClientWasCreated;
@@ -15,135 +14,113 @@ use DateTimeImmutable;
 final class Client extends AggregateRoot
 {
     private $id;
-    private $name;
+    private $companyName;
     private $contacts;
     private $address;
     private $vatNumber;
     private $regNumber;
     private $bankAccount;
-    private $deletedAt;
+    private $liquidatedAt;
 
     private function __construct(
         ClientId $id,
-        string $name,
+        string $companyName,
         array $contacts,
         Address $address,
         string $vatNumber,
         string $regNumber,
         string $bankAccount,
-        ?DateTimeImmutable $deletedAt = null
+        ?DateTimeImmutable $liquidatedAt = null
     )
     {
         $this->id = $id;
-        $this->name = $name;
+        $this->companyName = $companyName;
         $this->contacts = $contacts;
         $this->address = $address;
         $this->vatNumber = $vatNumber;
         $this->regNumber = $regNumber;
         $this->bankAccount = $bankAccount;
-        $this->deletedAt = $deletedAt;
+        $this->liquidatedAt = $liquidatedAt;
     }
 
-    /**
-     * @throws AssertionFailedException
-     */
-    public static function createEmptyClientWithId(ClientId $id): self
-    {
-        return new self(
-            $id,
-            '',
-            [],
-            Address::createEmpty(),
-            '',
-            '',
-            ''
-        );
-    }
-
-    public function addContacts(array $contacts): void
-    {
-
-    }
-
-    public function addContact(ContactId $contact): void
-    {
-        if ($contact->equals($this->contact)) {
-            return;
-        }
-
-        $this->applyAndRecordThat(new ContactWasChanged(
-            $this->id,
-            EventId::generate(),
-            $contact
-        ));
-    }
-
-    public function updateBusiness(Business $business): void
-    {
-        if ($business->equals($this->business)) {
-            return;
-        }
-
-        $this->applyAndRecordThat(new BusinessWasChanged(
-            $this->id,
-            $business
-        ));
-    }
-
-    public function delete(): void
-    {
-        $this->applyAndRecordThat(new ClientWasDeleted(
-            $this->id,
-            new DateTimeImmutable()
-        ));
-    }
-
-    public function getId(): BusinessId
+    public function getId(): ClientId
     {
         return $this->id;
     }
 
-    public function getContact(): Person
+    public function getCompanyName(): string
     {
-        return $this->contact;
+        return $this->companyName;
     }
 
-    public function getBusiness(): Business
+    public function getContacts(): array
     {
-        return $this->business;
+        return $this->contacts;
     }
 
-    public function getDeleteAt(): ?DateTimeImmutable
+    public function getAddress(): Address
     {
-        return $this->deletedAt;
+        return $this->address;
     }
 
-    public static function create(BusinessId $id, Person $contact, Business $business, ?DateTimeImmutable $deletedAt = null): self
+    public function getVatNumber(): string
+    {
+        return $this->vatNumber;
+    }
+
+    public function getRegNumber(): string
+    {
+        return $this->regNumber;
+    }
+
+    public function getBankAccount(): string
+    {
+        return $this->bankAccount;
+    }
+
+    public function getLiquidatedAt(): ?DateTimeImmutable
+    {
+        return $this->liquidatedAt;
+    }
+
+    public static function create(
+        ClientId $id,
+        string $companyName,
+        array $contacts,
+        Address $address,
+        string $vatNumber,
+        string $regNumber,
+        string $bankAccount,
+        DateTimeImmutable $liquidatedAt
+    ): self
     {
         $newClient = new Client(
             $id,
-            $contact,
-            $business,
-            $deletedAt
+            $companyName,
+            $contacts,
+            $address,
+            $vatNumber,
+            $regNumber,
+            $bankAccount,
+            $liquidatedAt
         );
 
-        $newClient->recordThat(new ClientWasCreated(
+        $todoWasCreated = new ClientWasCreated(
+            EventId::generate(),
             $newClient->id,
-            $newClient->getContact(),
-            $newClient->getBusiness()
-        ));
+            $newClient->companyName,
+            $newClient->contacts,
+            $newClient->address,
+            $newClient->vatNumber,
+            $newClient->regNumber,
+            $newClient->bankAccount,
+            $newClient->liquidatedAt
+        );
 
-        return $newClient;
+        $newTodo->recordThat($todoWasCreated);
+        $newTodo->notifyThat($todoWasCreated);
+
+        return $newTodo;
     }
 
-    public static function reconstituteFromHistory(DomainEventsHistory $eventsHistory): self
-    {
-        $client = self::createEmptyClientWithId($eventsHistory->getAggregateId());
-
-        foreach ($eventsHistory as $event) {
-            $client->apply($event);
-        }
-
-        return $client;
-    }
 }

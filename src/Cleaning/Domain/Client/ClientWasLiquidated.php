@@ -3,20 +3,20 @@
 namespace CleaningCRM\Cleaning\Domain\Client;
 
 use CleaningCRM\Common\Domain\AggregateId;
-use CleaningCRM\Common\Domain\Person;
 use CleaningCRM\Common\Domain\DomainEvent;
+use DateTimeImmutable;
 
-class ContactWasChanged implements DomainEvent
+class ClientWasLiquidated implements DomainEvent
 {
     private $id;
     private $eventId;
-    private $contact;
+    private $deletedAt;
 
-    public function __construct(ClientId $id, EventId $eventId, Person $contact)
+    public function __construct(ClientId $todoId, AggregateId $eventId, DateTimeImmutable $deletedAt)
     {
-        $this->id = $id;
+        $this->id = $todoId;
         $this->eventId = $eventId;
-        $this->contact = $contact;
+        $this->deletedAt = $deletedAt;
     }
 
     public function getEventId(): AggregateId
@@ -29,8 +29,8 @@ class ContactWasChanged implements DomainEvent
         return $this->id;
     }
 
-    public function getContact(): Person
+    public function getDeletedAt(): DateTimeImmutable
     {
-        return $this->contact;
+        return $this->deletedAt;
     }
 }

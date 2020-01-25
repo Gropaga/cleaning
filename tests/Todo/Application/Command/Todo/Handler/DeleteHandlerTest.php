@@ -9,6 +9,7 @@ use CleaningCRM\Todo\Application\Command\Todo\Handler\DeleteHandler;
 use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\TodoId;
 use CleaningCRM\Todo\Domain\Todo\TodoRepository;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 class DeleteHandlerTest extends TestCase
@@ -27,7 +28,8 @@ class DeleteHandlerTest extends TestCase
         );
 
         $command = new Delete(
-            (string) TodoId::generate()
+            (string) TodoId::generate(),
+            new DateTimeImmutable()
         );
 
         call_user_func(new DeleteHandler($repo), $command);

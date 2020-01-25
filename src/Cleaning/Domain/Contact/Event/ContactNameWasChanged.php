@@ -1,23 +1,24 @@
 <?php
 
-namespace CleaningCRM\Cleaning\Domain\Client;
+namespace CleaningCRM\Cleaning\Domain\Contact\Event;
 
 use CleaningCRM\Cleaning\Domain\Contact\ContactId;
 use CleaningCRM\Common\Domain\AggregateId;
-use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\DomainEvent;
+use CleaningCRM\Common\Domain\EventId;
+use CleaningCRM\Common\Domain\Name;
 
-class ContactWasRemoved implements DomainEvent
+class ContactNameWasChanged implements DomainEvent
 {
-    private $clientId;
     private $eventId;
     private $contactId;
+    private $name;
 
-    public function __construct(ClientId $clientId, EventId $eventId, ContactId $contactId)
+    public function __construct(EventId $eventId, ContactId $contactId, Name $name)
     {
         $this->eventId = $eventId;
-        $this->clientId = $clientId;
         $this->contactId = $contactId;
+        $this->name = $name;
     }
 
     public function getEventId(): EventId
@@ -27,11 +28,11 @@ class ContactWasRemoved implements DomainEvent
 
     public function getAggregateId(): AggregateId
     {
-        return $this->clientId;
+        return $this->contactId;
     }
 
-    public function getContactId(): ContactId
+    public function getName(): Name
     {
-        return $this->contactId;
+        return $this->name;
     }
 }

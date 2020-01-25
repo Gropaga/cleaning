@@ -2,22 +2,23 @@
 
 namespace CleaningCRM\Todo\Domain\Todo\Event;
 
+use CleaningCRM\Cleaning\Domain\Client\ClientId;
+use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
 use CleaningCRM\Common\Domain\EventId;
-use CleaningCRM\Todo\Domain\Todo\TodoId;
 
-class TodoTitleWasChanged implements DomainEvent
+class AddressWasChanged implements DomainEvent
 {
-    private $eventId;
     private $todoId;
-    private $title;
+    private $eventId;
+    private $address;
 
-    public function __construct(EventId $eventId, TodoId $todoId, string $title)
+    public function __construct(EventId $eventId, ClientId $todoId, Address $address)
     {
         $this->eventId = $eventId;
         $this->todoId = $todoId;
-        $this->title = $title;
+        $this->address = $address;
     }
 
     public function getEventId(): EventId
@@ -30,8 +31,8 @@ class TodoTitleWasChanged implements DomainEvent
         return $this->todoId;
     }
 
-    public function getTitle(): string
+    public function getAddress(): Address
     {
-        return $this->title;
+        return $this->address;
     }
 }

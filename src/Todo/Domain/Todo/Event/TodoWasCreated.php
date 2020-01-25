@@ -34,7 +34,7 @@ class TodoWasCreated implements DomainEvent
         $this->interval = $interval;
     }
 
-    public function getEventId(): AggregateId
+    public function getEventId(): EventId
     {
         return $this->eventId;
     }

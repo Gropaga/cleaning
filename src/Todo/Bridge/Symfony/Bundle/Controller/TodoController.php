@@ -8,6 +8,7 @@ use CleaningCRM\Todo\Application\Command\Todo\Update;
 use CleaningCRM\Todo\Application\Dto\TodoDto;
 use CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter\Deserialize;
 use CleaningCRM\Todo\Domain\Todo\TodoId;
+use DateTimeImmutable;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
@@ -113,7 +114,10 @@ class TodoController
     public function delete(string $id): Response
     {
         $this->handle(
-            new Delete($id)
+            new Delete(
+                $id,
+                new DateTimeImmutable()
+            )
         );
 
         return Response::create(

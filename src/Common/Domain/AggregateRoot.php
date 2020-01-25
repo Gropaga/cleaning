@@ -36,6 +36,12 @@ abstract class AggregateRoot implements RecordsEvents, NotifyEvents
         $this->$method($event);
     }
 
+    protected function notify(DomainEvent $event)
+    {
+        $method = 'notify'.ClassNameHelper::getShortClassName(get_class($event));
+        $this->$method($event);
+    }
+
     public function getNotifyEvents(): DomainEvents
     {
         return new DomainEvents($this->notifyEvents);

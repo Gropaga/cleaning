@@ -20,7 +20,7 @@ class TodoDescriptionWasChanged implements DomainEvent
         $this->description = $description;
     }
 
-    public function getEventId(): AggregateId
+    public function getEventId(): EventId
     {
         return $this->eventId;
     }

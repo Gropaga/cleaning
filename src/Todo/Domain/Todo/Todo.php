@@ -31,8 +31,7 @@ final class Todo extends AggregateRoot
         bool $completed,
         Interval $interval,
         ?DateTimeImmutable $deleteAt = null
-    )
-    {
+    ) {
         $this->id = $id;
         $this->title = $title;
         $this->interval = $interval;
@@ -170,12 +169,16 @@ final class Todo extends AggregateRoot
         $this->notifyThat($todoCompletedWasChanged);
     }
 
-    public function delete(): void
+    public function delete(DateTimeImmutable $deleteAt): void
     {
+        if ($this->deletedAt !== null) {
+            return;
+        }
+
         $todoDeletedAtWasChanged = new TodoDeletedAtWasChanged(
             EventId::generate(),
             $this->id,
-            new DateTimeImmutable()
+            $deleteAt
         );
 
         $this->applyAndRecordThat($todoDeletedAtWasChanged);
@@ -193,37 +196,21 @@ final class Todo extends AggregateRoot
 
     protected function applyTodoTitleWasChanged(TodoTitleWasChanged $event): void
     {
-        if ($event->getTitle() === $this->title) {
-            return;
-        }
-
         $this->title = $event->getTitle();
     }
 
     protected function applyTodoDeletedAtWasChanged(TodoDeletedAtWasChanged $event): void
     {
-        if ($event->getDeletedAt() === $this->deletedAt) {
-            return;
-        }
-
         $this->deletedAt = $event->getDeletedAt();
     }
 
     protected function applyTodoIntervalWasChanged(TodoIntervalWasChanged $event): void
     {
-        if ($event->getInterval()->equals($this->interval)) {
-            return;
-        }
-
         $this->interval = $event->getInterval();
     }
 
     protected function applyTodoDescriptionWasChanged(TodoDescriptionWasChanged $event): void
     {
-        if ($event->getDescription() === $this->description) {
-            return;
-        }
-
         $this->description = $event->getDescription();
     }
 

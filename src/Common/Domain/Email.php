@@ -18,6 +18,11 @@ class Email
         $this->email = $email;
     }
 
+    public static function createEmpty(): self
+    {
+        return new self('email@domain.com');
+    }
+
     public function email(): string
     {
         return $this->email;

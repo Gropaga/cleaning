@@ -58,9 +58,9 @@ class Address
 
     public function equals(Address $address): bool
     {
-        return $this->city === $address->city() &&
-            $this->country === $address->country() &&
-            $this->street === $address->street() &&
+        return $this->city === $address->city &&
+            $this->country === $address->country &&
+            $this->street === $address->street &&
             $this->postcode === $address->postcode;
     }
 }

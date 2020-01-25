@@ -20,7 +20,7 @@ class TodoCompletedWasChanged implements DomainEvent
         $this->completed = $completed;
     }
 
-    public function getEventId(): AggregateId
+    public function getEventId(): EventId
     {
         return $this->eventId;
     }

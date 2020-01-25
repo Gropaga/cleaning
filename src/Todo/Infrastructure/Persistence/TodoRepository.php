@@ -9,6 +9,7 @@ use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\TodoProjection as TodoProjectionPort;
 use CleaningCRM\Todo\Domain\Todo\TodoRepository as TodoRepositoryPort;
 use Doctrine\DBAL\Connection;
+use Throwable;
 
 class TodoRepository implements TodoRepositoryPort
 {
@@ -23,6 +24,9 @@ class TodoRepository implements TodoRepositoryPort
         $this->projection = $projection;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function add(RecordsEvents $aggregate): void
     {
         $recordedEvents = $aggregate->getRecordedEvents();

@@ -21,7 +21,7 @@ class TodoDeletedAtWasChanged implements DomainEvent
         $this->deletedAt = $deletedAt;
     }
 
-    public function getEventId(): AggregateId
+    public function getEventId(): EventId
     {
         return $this->eventId;
     }

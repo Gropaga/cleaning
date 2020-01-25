@@ -13,14 +13,14 @@ class ClientId implements AggregateId
     /**
      * @throws Exception
      */
-    public static function generate(): BusinessId
+    public static function generate(): ClientId
     {
-        return new BusinessId(UuidGenerator::generate());
+        return new ClientId(UuidGenerator::generate());
     }
 
-    public static function fromString(string $id): BusinessId
+    public static function fromString(string $id): ClientId
     {
-        return new BusinessId($id);
+        return new ClientId($id);
     }
 
     public function __toString()

@@ -1,32 +1,34 @@
 <?php
 
-namespace CleaningCRM\Cleaning\Domain\Client;
+namespace CleaningCRM\Cleaning\Domain\Contact\Event;
 
+use CleaningCRM\Cleaning\Domain\Contact\ContactId;
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
+use CleaningCRM\Common\Domain\EventId;
 use DateTimeImmutable;
 
-class ClientWasLiquidated implements DomainEvent
+class ContactDeletedAtWasChanged implements DomainEvent
 {
-    private $id;
     private $eventId;
+    private $contactId;
     private $deletedAt;
 
-    public function __construct(ClientId $todoId, AggregateId $eventId, DateTimeImmutable $deletedAt)
+    public function __construct(EventId $eventId, ContactId $contactId, DateTimeImmutable $deletedAt)
     {
-        $this->id = $todoId;
         $this->eventId = $eventId;
+        $this->contactId = $contactId;
         $this->deletedAt = $deletedAt;
     }
 
-    public function getEventId(): AggregateId
+    public function getEventId(): EventId
     {
         return $this->eventId;
     }
 
     public function getAggregateId(): AggregateId
     {
-        return $this->id;
+        return $this->contactId;
     }
 
     public function getDeletedAt(): DateTimeImmutable

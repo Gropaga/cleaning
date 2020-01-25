@@ -193,10 +193,11 @@ final class TodoTest extends TestCase
 
         $todo = Todo::reconstituteFromHistory($eventsHistory);
 
+        $deletedAt = (new DateTimeImmutable())->setTime(3,3,3);
 
         $this->assertEquals(null, $todo->getDeletedAt());
-        $todo->delete();
-        $this->assertInstanceOf(DateTimeImmutable::class, $todo->getDeletedAt());
+        $todo->delete($deletedAt);
+        $this->assertEquals($deletedAt, $todo->getDeletedAt());
 
     }
 
@@ -240,6 +241,7 @@ final class TodoTest extends TestCase
 
         $todo = Todo::reconstituteFromHistory($eventsHistory);
 
+        $this->assertEquals($todoId, $todo->getId());
         $this->assertEquals('New Title', $todo->getTitle());
         $this->assertEquals('New Description', $todo->getDescription());
         $this->assertEquals(false, $todo->isCompleted());

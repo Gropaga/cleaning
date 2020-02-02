@@ -1,6 +1,6 @@
 <?php
 
-namespace CleaningCRM\Todo\Infrastructure\EventPublisher;
+namespace CleaningCRM\Common\Infrastructure\EventPublisher;
 
 use CleaningCRM\Common\Domain\EventPublisher;
 use CleaningCRM\Common\Domain\NotifyEvents;
@@ -25,7 +25,6 @@ class AggregateEventPublisher implements EventPublisher
     public function publish(): void
     {
         foreach ($this->events as $event) {
-            dump($event);
             $this->eventBus->dispatch($event);
         }
     }

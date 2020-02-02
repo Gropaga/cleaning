@@ -11,6 +11,7 @@ use CleaningCRM\Todo\Domain\Todo\Event\TodoTitleWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoWasCreated;
 use Doctrine\DBAL\Connection;
 use CleaningCRM\Todo\Domain\Todo\TodoProjection as TodoProjectionPort;
+use Doctrine\DBAL\DBALException;
 
 class TodoProjection extends AbstractProjection implements TodoProjectionPort
 {
@@ -21,7 +22,10 @@ class TodoProjection extends AbstractProjection implements TodoProjectionPort
         $this->connection = $connection;
     }
 
-    public function projectWhenTodoWasCreated(TodoWasCreated $event)
+    /**
+     * @throws DBALException
+     */
+    public function projectWhenTodoWasCreated(TodoWasCreated $event): void
     {
         $stmt = $this->connection->prepare(
             <<<SQL
@@ -40,7 +44,10 @@ SQL
         ]);
     }
 
-    public function projectWhenTodoDescriptionWasChanged(TodoDescriptionWasChanged $event)
+    /**
+     * @throws DBALException
+     */
+    public function projectWhenTodoDescriptionWasChanged(TodoDescriptionWasChanged $event): void
     {
         $stmt = $this->connection->prepare('UPDATE todo SET description = :description WHERE id = :id');
 
@@ -50,7 +57,10 @@ SQL
         ]);
     }
 
-    public function projectWhenTodoCompletedWasChanged(TodoCompletedWasChanged $event)
+    /**
+     * @throws DBALException
+     */
+    public function projectWhenTodoCompletedWasChanged(TodoCompletedWasChanged $event): void
     {
         $stmt = $this->connection->prepare('UPDATE todo SET completed = :completed WHERE id = :id');
 
@@ -60,7 +70,10 @@ SQL
         ]);
     }
 
-    public function projectWhenTodoTitleWasChanged(TodoTitleWasChanged $event)
+    /**
+     * @throws DBALException
+     */
+    public function projectWhenTodoTitleWasChanged(TodoTitleWasChanged $event): void
     {
         $stmt = $this->connection->prepare('UPDATE todo SET title = :title WHERE id = :id');
 
@@ -70,7 +83,10 @@ SQL
         ]);
     }
 
-    public function projectWhenTodoIntervalWasChanged(TodoIntervalWasChanged $event)
+    /**
+     * @throws DBALException
+     */
+    public function projectWhenTodoIntervalWasChanged(TodoIntervalWasChanged $event): void
     {
         $stmt = $this->connection->prepare('UPDATE todo SET start = :start, "end" = :end WHERE id = :id');
 
@@ -81,7 +97,10 @@ SQL
         ]);
     }
 
-    public function projectWhenTodoDeletedAtWasChanged(TodoDeletedAtWasChanged $event)
+    /**
+     * @throws DBALException
+     */
+    public function projectWhenTodoDeletedAtWasChanged(TodoDeletedAtWasChanged $event): void
     {
         $stmt = $this->connection->prepare('UPDATE todo SET deleted_at = :deleted_at WHERE id = :id');
 

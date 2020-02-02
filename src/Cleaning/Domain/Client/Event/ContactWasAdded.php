@@ -2,7 +2,6 @@
 
 namespace CleaningCRM\Cleaning\Domain\Client;
 
-use CleaningCRM\Cleaning\Domain\Contact\ContactId;
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\DomainEvent;
@@ -11,13 +10,13 @@ class ContactWasAdded implements DomainEvent
 {
     private $clientId;
     private $eventId;
-    private $contactId;
+    private $RelatedContact;
 
-    public function __construct(EventId $eventId, ClientId $clientId, ContactId $contactId)
+    public function __construct(EventId $eventId, ClientId $clientId, RelatedContact $RelatedContact)
     {
         $this->eventId = $eventId;
         $this->clientId = $clientId;
-        $this->contactId = $contactId;
+        $this->RelatedContact = $RelatedContact;
     }
 
     public function getEventId(): EventId
@@ -30,8 +29,8 @@ class ContactWasAdded implements DomainEvent
         return $this->clientId;
     }
 
-    public function getContactId(): ContactId
+    public function getRelatedContact(): RelatedContact
     {
-        return $this->contactId;
+        return $this->RelatedContact;
     }
 }

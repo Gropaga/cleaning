@@ -12,15 +12,15 @@ use CleaningCRM\Todo\Domain\Todo\Event\TodoWasCreated;
 
 interface TodoProjection extends Projection
 {
-    public function projectWhenTodoWasCreated(TodoWasCreated $event);
+    public function projectWhenTodoWasCreated(TodoWasCreated $event): void;
 
-    public function projectWhenTodoDescriptionWasChanged(TodoDescriptionWasChanged $event);
+    public function projectWhenTodoDescriptionWasChanged(TodoDescriptionWasChanged $event): void;
 
-    public function projectWhenTodoCompletedWasChanged(TodoCompletedWasChanged $event);
+    public function projectWhenTodoCompletedWasChanged(TodoCompletedWasChanged $event): void;
 
-    public function projectWhenTodoTitleWasChanged(TodoTitleWasChanged $event);
+    public function projectWhenTodoTitleWasChanged(TodoTitleWasChanged $event): void;
 
-    public function projectWhenTodoIntervalWasChanged(TodoIntervalWasChanged $event);
+    public function projectWhenTodoIntervalWasChanged(TodoIntervalWasChanged $event): void;
 
-    public function projectWhenTodoDeletedAtWasChanged(TodoDeletedAtWasChanged $event);
+    public function projectWhenTodoDeletedAtWasChanged(TodoDeletedAtWasChanged $event): void;
 }

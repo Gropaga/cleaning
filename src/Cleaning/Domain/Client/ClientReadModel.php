@@ -1,41 +1,33 @@
 <?php
 
-namespace CleaningCRM\Todo\Domain\Todo;
+namespace CleaningCRM\Cleaning\Domain\Client;
 
-use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Cleaning\Domain\Contact\RelatedContacts;
 use CleaningCRM\Common\Domain\Address;
-use CleaningCRM\Common\Domain\AggregateId;
-use CleaningCRM\Common\Domain\DomainEvent;
-use CleaningCRM\Common\Domain\EventId;
 use DateTimeImmutable;
 
-class ClientWasCreated implements DomainEvent
+class ClientReadModel
 {
-    private $eventId;
-    private $clientId;
-    private $contacts;
+    private $id;
     private $companyName;
+    private $contacts;
     private $address;
     private $vatNumber;
     private $regNumber;
     private $bankAccount;
     private $liquidatedAt;
 
-    public function __construct(
-        EventId $eventId,
-        ClientId $clientId,
+    private function __construct(
+        ClientId $id,
         string $companyName,
         RelatedContacts $contacts,
         Address $address,
         string $vatNumber,
         string $regNumber,
         string $bankAccount,
-        DateTimeImmutable $liquidatedAt
-    )
-    {
-        $this->eventId = $eventId;
-        $this->clientId = $clientId;
+        ?DateTimeImmutable $liquidatedAt = null
+    ) {
+        $this->id = $id;
         $this->companyName = $companyName;
         $this->contacts = $contacts;
         $this->address = $address;
@@ -45,24 +37,19 @@ class ClientWasCreated implements DomainEvent
         $this->liquidatedAt = $liquidatedAt;
     }
 
-    public function getEventId(): EventId
+    public function getId(): ClientId
     {
-        return $this->eventId;
-    }
-
-    public function getAggregateId(): AggregateId
-    {
-        return $this->clientId;
-    }
-
-    public function getContacts(): RelatedContacts
-    {
-        return $this->contacts;
+        return $this->id;
     }
 
     public function getCompanyName(): string
     {
         return $this->companyName;
+    }
+
+    public function getContacts(): RelatedContacts
+    {
+        return $this->contacts;
     }
 
     public function getAddress(): Address
@@ -85,7 +72,7 @@ class ClientWasCreated implements DomainEvent
         return $this->bankAccount;
     }
 
-    public function getLiquidatedAt(): DateTimeImmutable
+    public function getLiquidatedAt(): ?DateTimeImmutable
     {
         return $this->liquidatedAt;
     }

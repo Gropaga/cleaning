@@ -3,13 +3,11 @@
 namespace CleaningCRM\Cleaning\Domain\Contact;
 
 use Assert\AssertionFailedException;
-use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Cleaning\Domain\Contact\Event\ContactAddressWasChanged;
 use CleaningCRM\Cleaning\Domain\Contact\Event\ContactDeletedAtWasChanged;
 use CleaningCRM\Cleaning\Domain\Contact\Event\ContactEmailWasChanged;
 use CleaningCRM\Cleaning\Domain\Contact\Event\ContactNameWasChanged;
 use CleaningCRM\Cleaning\Domain\Contact\Event\ContactPhoneWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactTypeWasChanged;
 use CleaningCRM\Cleaning\Domain\Contact\Event\ContactWasCreated;
 use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\AggregateRoot;
@@ -28,7 +26,6 @@ final class Contact extends AggregateRoot
     private $phone;
     private $email;
     private $address;
-    private $type;
     private $deletedAt;
 
     private function __construct(
@@ -37,7 +34,6 @@ final class Contact extends AggregateRoot
         Phone $phone,
         Email $email,
         Address $address,
-        Type $type,
         ?DateTimeImmutable $deleteAt = null
     ) {
         $this->id = $id;
@@ -45,7 +41,6 @@ final class Contact extends AggregateRoot
         $this->phone = $phone;
         $this->email = $email;
         $this->address = $address;
-        $this->type = $type;
         $this->deletedAt = $deleteAt;
     }
 
@@ -74,20 +69,17 @@ final class Contact extends AggregateRoot
         return $this->address;
     }
 
-    public function getType(): Type
-    {
-        return $this->type;
-    }
-
-    public static function create(ContactId $id, Name $name, Phone $phone, Email $email, Address $address, Type $type): self
+    /**
+     * @throws AssertionFailedException
+     */
+    public static function create(ContactId $id, Name $name, Phone $phone, Email $email, Address $address): self
     {
         $newContact = new Contact(
             $id,
             $name,
             $phone,
             $email,
-            $address,
-            $type
+            $address
         );
 
         $contactWasCreated = new ContactWasCreated(
@@ -96,8 +88,7 @@ final class Contact extends AggregateRoot
             $newContact->getName(),
             $newContact->getPhone(),
             $newContact->getEmail(),
-            $newContact->getAddress(),
-            $newContact->getType()
+            $newContact->getAddress()
         );
 
         $newContact->recordThat($contactWasCreated);
@@ -116,8 +107,7 @@ final class Contact extends AggregateRoot
             Name::createEmpty(),
             Phone::createEmpty(),
             Email::createEmpty(),
-            Address::createEmpty(),
-            Type::CONTACT_PERSON()
+            Address::createEmpty()
         );
     }
 
@@ -185,22 +175,6 @@ final class Contact extends AggregateRoot
         $this->notifyThat($contactAddressWasChanged);
     }
 
-    public function changeType(Type $type): void
-    {
-        if ($type->equals($this->type)) {
-            return;
-        }
-
-        $contactTypeWasChanged = new ContactTypeWasChanged(
-            EventId::generate(),
-            $this->id,
-            $type
-        );
-
-        $this->applyAndRecordThat($contactTypeWasChanged);
-        $this->notifyThat($contactTypeWasChanged);
-    }
-
     public function delete(DateTimeImmutable $deleteAt): void
     {
         if ($this->deletedAt !== null) {
@@ -223,7 +197,6 @@ final class Contact extends AggregateRoot
         $this->phone = $event->getPhone();
         $this->email = $event->getEmail();
         $this->address = $event->getAddress();
-        $this->type = $event->getType();
     }
 
     protected function applyNameWasChanged(ContactNameWasChanged $event): void
@@ -241,9 +214,9 @@ final class Contact extends AggregateRoot
         $this->email = $event->getEmail();
     }
 
-    protected function applyTypeWasChanged(ContactTypeWasChanged $event): void
+    protected function applyAddressWasChanges(ContactAddressWasChanged $event): void
     {
-        $this->type = $event->getType();
+        $this->address = $event->getAddress();
     }
 
     protected function applyTodoDeletedAtWasChanged(TodoDeletedAtWasChanged $event): void

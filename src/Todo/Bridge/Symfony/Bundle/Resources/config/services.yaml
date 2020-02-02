@@ -37,10 +37,10 @@ services:
   CleaningCRM\Todo\Infrastructure\Projection\TodoProjection: ~
   CleaningCRM\Todo\Domain\Todo\TodoProjection: '@CleaningCRM\Todo\Infrastructure\Projection\TodoProjection'
 
-  CleaningCRM\Todo\Infrastructure\EventPublisher\AggregateEventPublisher:
+  CleaningCRM\Common\Infrastructure\EventPublisher\AggregateEventPublisher:
     shared: true
 
-  CleaningCRM\Common\Domain\EventPublisher: '@CleaningCRM\Todo\Infrastructure\EventPublisher\AggregateEventPublisher'
+  CleaningCRM\Common\Domain\EventPublisher: '@CleaningCRM\Common\Infrastructure\EventPublisher\AggregateEventPublisher'
 
   CleaningCRM\Common\Infrastructure\Serializer\SerializerFactory:
     arguments:

@@ -13,17 +13,17 @@ use CleaningCRM\Common\Domain\Projection;
 
 interface ContactProjection extends Projection
 {
-    public function projectWhenContactAddressWasChanged (ContactAddressWasChanged $event): void;
+    public function projectWhenContactAddressWasChanged(ContactAddressWasChanged $event): void;
 
-    public function projectWhenContactDeletedAtWasChanged (ContactDeletedAtWasChanged $event): void;
+    public function projectWhenContactDeletedAtWasChanged(ContactDeletedAtWasChanged $event): void;
 
-    public function projectWhenContactEmailWasChanged (ContactEmailWasChanged $event): void;
+    public function projectWhenContactEmailWasChanged(ContactEmailWasChanged $event): void;
 
-    public function projectWhenContactNameWasChanged (ContactNameWasChanged $event): void;
+    public function projectWhenContactNameWasChanged(ContactNameWasChanged $event): void;
 
-    public function projectWhenContactPhoneWasChanged (ContactPhoneWasChanged $event): void;
+    public function projectWhenContactPhoneWasChanged(ContactPhoneWasChanged $event): void;
 
-    public function projectWhenContactTypeWasChanged (ContactTypeWasChanged $event): void;
+    public function projectWhenContactTypeWasChanged(ContactTypeWasChanged $event): void;
 
-    public function projectWhenContactWasCreated (ContactWasCreated $event): void;
+    public function projectWhenContactWasCreated(ContactWasCreated $event): void;
 }

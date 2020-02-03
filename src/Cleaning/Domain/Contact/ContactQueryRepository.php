@@ -2,8 +2,6 @@
 
 namespace CleaningCRM\Cleaning\Domain\Contact;
 
-use CleaningCRM\Cleaning\Domain\Client\ClientCountReadModel;
-
 interface ContactQueryRepository
 {
     public function byId(string $id): ContactReadModel;

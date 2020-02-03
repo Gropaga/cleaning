@@ -33,14 +33,12 @@ class TodoQueryController
     }
 
     /**
-     *
      * @Route("/get/{id}", methods={"GET"})
      * @SWG\Response(
      *     response=200,
      *     description="Get todo",
      *     @SWG\Schema(ref=@Model(type=TodoReadModel::class))
      * )
-     *
      */
     public function todo(string $id): Response
     {
@@ -55,14 +53,12 @@ class TodoQueryController
     }
 
     /**
-     *
      * @Route("/count", methods={"GET"})
      * @SWG\Response(
      *     response=200,
      *     description="Get todo count",
      *     @SWG\Schema(ref=@Model(type=TodoCountReadModel::class))
      * )
-     *
      */
     public function count(): Response
     {

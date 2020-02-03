@@ -8,13 +8,13 @@ use CleaningCRM\Common\Domain\DomainEvents;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
 use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\Interval;
-use CleaningCRM\Todo\Domain\Todo\Event\TodoTitleWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoCompletedWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\TodoIntervalWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoDescriptionWasChanged;
-use CleaningCRM\Todo\Domain\Todo\TodoId;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoIntervalWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoTitleWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoWasCreated;
+use CleaningCRM\Todo\Domain\Todo\Todo;
+use CleaningCRM\Todo\Domain\Todo\TodoId;
 use DateInterval;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
@@ -62,42 +62,42 @@ final class TodoTest extends TestCase
                 TodoTitleWasChanged::class,
                 'Hello world',
                 'getTitle',
-                self::HAS_DOMAIN_EFFECT
+                self::HAS_DOMAIN_EFFECT,
             ],
             [
                 'changeTitle',
                 TodoTitleWasChanged::class,
                 'Title 1234',
                 'getTitle',
-                self::NO_DOMAIN_EFFECT
+                self::NO_DOMAIN_EFFECT,
             ],
             [
                 'changeDescription',
                 TodoDescriptionWasChanged::class,
                 'Something new',
                 'getDescription',
-                self::HAS_DOMAIN_EFFECT
+                self::HAS_DOMAIN_EFFECT,
             ],
             [
                 'changeDescription',
                 TodoDescriptionWasChanged::class,
                 'Description 5678',
                 'getDescription',
-                self::NO_DOMAIN_EFFECT
+                self::NO_DOMAIN_EFFECT,
             ],
             [
                 'changeCompleted',
                 TodoCompletedWasChanged::class,
                 false,
                 'isCompleted',
-                self::HAS_DOMAIN_EFFECT
+                self::HAS_DOMAIN_EFFECT,
             ],
             [
                 'changeCompleted',
                 TodoCompletedWasChanged::class,
                 true,
                 'isCompleted',
-                self::NO_DOMAIN_EFFECT
+                self::NO_DOMAIN_EFFECT,
             ],
             [
                 'changeInterval',
@@ -107,7 +107,7 @@ final class TodoTest extends TestCase
                     DateTimeImmutable::createFromFormat('Y-m-d', '1980-02-02')->setTime(0, 0)
                 ),
                 'getInterval',
-                self::HAS_DOMAIN_EFFECT
+                self::HAS_DOMAIN_EFFECT,
             ],
             [
                 'changeInterval',
@@ -117,7 +117,7 @@ final class TodoTest extends TestCase
                     DateTimeImmutable::createFromFormat('Y-m-d', '1980-01-02')->setTime(0, 0)
                 ),
                 'getInterval',
-                self::NO_DOMAIN_EFFECT
+                self::NO_DOMAIN_EFFECT,
             ],
         ];
     }
@@ -160,8 +160,8 @@ final class TodoTest extends TestCase
     {
         $todoId = TodoId::generate();
 
-        $start = (new DateTimeImmutable())->setTime(1,1,1);
-        $end = (new DateTimeImmutable())->setTime(2,2,2);
+        $start = (new DateTimeImmutable())->setTime(1, 1, 1);
+        $end = (new DateTimeImmutable())->setTime(2, 2, 2);
 
         $interval = Interval::create(
             $start,
@@ -193,12 +193,11 @@ final class TodoTest extends TestCase
 
         $todo = Todo::reconstituteFromHistory($eventsHistory);
 
-        $deletedAt = (new DateTimeImmutable())->setTime(3,3,3);
+        $deletedAt = (new DateTimeImmutable())->setTime(3, 3, 3);
 
         $this->assertEquals(null, $todo->getDeletedAt());
         $todo->delete($deletedAt);
         $this->assertEquals($deletedAt, $todo->getDeletedAt());
-
     }
 
     /**
@@ -208,8 +207,8 @@ final class TodoTest extends TestCase
     {
         $todoId = TodoId::generate();
 
-        $start = (new DateTimeImmutable())->setTime(1,1,1);
-        $end = (new DateTimeImmutable())->setTime(2,2,2);
+        $start = (new DateTimeImmutable())->setTime(1, 1, 1);
+        $end = (new DateTimeImmutable())->setTime(2, 2, 2);
 
         $interval = Interval::create(
             $start,

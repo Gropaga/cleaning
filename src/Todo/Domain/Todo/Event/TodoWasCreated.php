@@ -24,8 +24,7 @@ class TodoWasCreated implements DomainEvent
         string $description,
         bool $completed,
         Interval $interval
-    )
-    {
+    ) {
         $this->todoId = $todoId;
         $this->eventId = $eventId;
         $this->title = $title;

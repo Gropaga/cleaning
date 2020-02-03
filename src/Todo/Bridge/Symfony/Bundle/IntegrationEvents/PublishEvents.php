@@ -28,5 +28,4 @@ class PublishEvents implements EventSubscriberInterface
             ConsoleEvents::TERMINATE => 'publishEvents',
         ];
     }
-
 }

@@ -5,22 +5,22 @@ namespace CleaningCRM\Todo\Domain\Todo;
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Cleaning\Domain\Contact\RelatedContacts;
 use CleaningCRM\Common\Domain\Address;
-use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
+use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
 use DateTimeImmutable;
 
 class ClientWasCreated implements DomainEvent
 {
-    private $eventId;
-    private $clientId;
-    private $contacts;
-    private $companyName;
-    private $address;
-    private $vatNumber;
-    private $regNumber;
-    private $bankAccount;
-    private $liquidatedAt;
+    use DomainEventTrait;
+
+    private RelatedContacts $contacts;
+    private string $companyName;
+    private Address $address;
+    private string $vatNumber;
+    private string $regNumber;
+    private string $bankAccount;
+    private ?DateTimeImmutable $liquidatedAt;
 
     public function __construct(
         EventId $eventId,
@@ -31,11 +31,10 @@ class ClientWasCreated implements DomainEvent
         string $vatNumber,
         string $regNumber,
         string $bankAccount,
-        DateTimeImmutable $liquidatedAt
-    )
-    {
+        ?DateTimeImmutable $liquidatedAt
+    ) {
         $this->eventId = $eventId;
-        $this->clientId = $clientId;
+        $this->aggregateId = $clientId;
         $this->companyName = $companyName;
         $this->contacts = $contacts;
         $this->address = $address;
@@ -43,16 +42,6 @@ class ClientWasCreated implements DomainEvent
         $this->regNumber = $regNumber;
         $this->bankAccount = $bankAccount;
         $this->liquidatedAt = $liquidatedAt;
-    }
-
-    public function getEventId(): EventId
-    {
-        return $this->eventId;
-    }
-
-    public function getAggregateId(): AggregateId
-    {
-        return $this->clientId;
     }
 
     public function getContacts(): RelatedContacts

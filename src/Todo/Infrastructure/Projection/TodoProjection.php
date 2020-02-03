@@ -4,13 +4,13 @@ namespace CleaningCRM\Todo\Infrastructure\Projection;
 
 use CleaningCRM\Common\Domain\AbstractProjection;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoCompletedWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\TodoIntervalWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoDeletedAtWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoDescriptionWasChanged;
+use CleaningCRM\Todo\Domain\Todo\Event\TodoIntervalWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoTitleWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoWasCreated;
-use Doctrine\DBAL\Connection;
 use CleaningCRM\Todo\Domain\Todo\TodoProjection as TodoProjectionPort;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 
 class TodoProjection extends AbstractProjection implements TodoProjectionPort
@@ -53,7 +53,7 @@ SQL
 
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':description' => $event->getDescription()
+            ':description' => $event->getDescription(),
         ]);
     }
 
@@ -79,7 +79,7 @@ SQL
 
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':title' => $event->getTitle()
+            ':title' => $event->getTitle(),
         ]);
     }
 
@@ -93,7 +93,7 @@ SQL
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
             ':start' => $event->getInterval()->start()->format('Y-m-d H:i:s'),
-            ':end' => $event->getInterval()->end()->format('Y-m-d H:i:s')
+            ':end' => $event->getInterval()->end()->format('Y-m-d H:i:s'),
         ]);
     }
 

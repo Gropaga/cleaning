@@ -3,9 +3,9 @@
 namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
 use CleaningCRM\Cleaning\Domain\Client\Client;
+use CleaningCRM\Cleaning\Domain\Client\ClientProjection as ClientProjectionPort;
 use CleaningCRM\Cleaning\Domain\Contact\ContactRepository as ContactRepositoryPort;
 use CleaningCRM\Common\Domain\AggregateId;
-use CleaningCRM\Cleaning\Domain\Client\ClientProjection as ClientProjectionPort;
 use CleaningCRM\Common\Domain\EventStore as EventStorePort;
 use CleaningCRM\Common\Domain\RecordsEvents;
 use Doctrine\DBAL\Connection;

@@ -62,14 +62,14 @@ SQL
         );
 
         $stmt->execute([
-            ':id' => (string)$event->getAggregateId(),
+            ':id' => (string) $event->getAggregateId(),
             ':companyName' => $event->getCompanyName(),
-            ':contacts' => $this->serializer->serialize($event->getContacts() ,'JSON'),
+            ':contacts' => $this->serializer->serialize($event->getContacts(), 'JSON'),
             ':address' => $this->serializer->serialize($event->getAddress(), 'JSON'),
             ':vatNumber' => $event->getVatNumber(),
             ':regNumber' => $event->getRegNumber(),
             ':bankAccount' => $event->getBankAccount(),
-            ':liquidatedAt' => $event->getLiquidatedAt()->format('m-d-Y H:i:s')
+            ':liquidatedAt' => $event->getLiquidatedAt()->format('m-d-Y H:i:s'),
         ]);
     }
 
@@ -113,7 +113,6 @@ SQL
     }
 
     /**
-     * @param CompanyNameWasChanged $event
      * @throws DBALException
      */
     public function projectWhenCompanyNameWasChanged(CompanyNameWasChanged $event): void

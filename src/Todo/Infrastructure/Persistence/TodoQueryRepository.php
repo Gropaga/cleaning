@@ -59,8 +59,8 @@ class TodoQueryRepository implements TodoQueryRepositoryPort
         $stmt = $this->connection->prepare('SELECT * FROM todo WHERE start BETWEEN :start AND :end AND deleted_at IS NULL');
         $stmt->execute(
             [
-                ':start' => $startDate->setTime(0,0)->format('Y-m-d H:i:s'),
-                ':end' => $endDate->setTime(23,59, 59)->format('Y-m-d H:i:s'),
+                ':start' => $startDate->setTime(0, 0)->format('Y-m-d H:i:s'),
+                ':end' => $endDate->setTime(23, 59, 59)->format('Y-m-d H:i:s'),
             ]
         );
 

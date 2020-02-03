@@ -35,7 +35,7 @@ class Name
 
     public function fullName(): string
     {
-        return $this->name . ' ' . $this->surname;
+        return $this->name.' '.$this->surname;
     }
 
     public function equals(Name $person): bool

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CleaningCRM\Common\Domain;
 
 use DomainException;
@@ -13,7 +12,7 @@ class Email
     {
         $email = filter_var($email, FILTER_VALIDATE_EMAIL);
         if (false === $email) {
-            throw new DomainException($email  . ' not a valid email address');
+            throw new DomainException($email.' not a valid email address');
         }
         $this->email = $email;
     }

@@ -20,8 +20,7 @@ class TodoReadModel
         string $description,
         Interval $interval,
         bool $completed
-    )
-    {
+    ) {
         $this->id = (string) $id;
         $this->title = $title;
         $this->description = $description;

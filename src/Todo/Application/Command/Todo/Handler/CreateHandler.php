@@ -4,7 +4,6 @@ namespace CleaningCRM\Todo\Application\Command\Todo\Handler;
 
 use CleaningCRM\Common\Domain\EventPublisher;
 use CleaningCRM\Todo\Application\Command\Todo\Create;
-use CleaningCRM\Todo\Domain;
 use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\TodoRepository;
 

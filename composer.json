@@ -2,7 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.2.24",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-pdo": "*",
@@ -23,6 +23,8 @@
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "roave/security-advisories": "dev-master",
         "symfony/maker-bundle": "^1.14",
         "symfony/phpunit-bridge": "^5.0",
         "symfony/test-pack": "^1.0",
@@ -62,6 +64,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "cs-fixer": [
+            "php-cs-fixer fix"
         ]
     },
     "conflict": {

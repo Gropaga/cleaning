@@ -7,14 +7,15 @@ namespace CleaningCRM\Common\Domain;
 use DateTimeImmutable;
 use DomainException;
 
-class Interval {
+class Interval
+{
     private $start;
     private $end;
 
     private function __construct(DateTimeImmutable $start, DateTimeImmutable $end)
     {
         if ($start > $end) {
-            throw new DomainException($start->format('Y-m-d H:i:s') . ' should be before or equal ' . $end->format('Y-m-d H:i:s'));
+            throw new DomainException($start->format('Y-m-d H:i:s').' should be before or equal '.$end->format('Y-m-d H:i:s'));
         }
 
         $this->start = $start;

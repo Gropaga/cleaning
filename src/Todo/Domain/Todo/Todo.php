@@ -102,7 +102,7 @@ final class Todo extends AggregateRoot
 
         $interval = Interval::create($start, $end);
 
-        return new self($id, '', '',true, $interval, null);
+        return new self($id, '', '', true, $interval, null);
     }
 
     public function changeDescription(string $description): void
@@ -171,7 +171,7 @@ final class Todo extends AggregateRoot
 
     public function delete(DateTimeImmutable $deleteAt): void
     {
-        if ($this->deletedAt !== null) {
+        if (null !== $this->deletedAt) {
             return;
         }
 

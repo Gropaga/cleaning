@@ -2,31 +2,21 @@
 
 namespace CleaningCRM\Cleaning\Domain\Client;
 
-use CleaningCRM\Common\Domain\AggregateId;
-use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\DomainEvent;
+use CleaningCRM\Common\Domain\DomainEventTrait;
+use CleaningCRM\Common\Domain\EventId;
 
 class ContactWasRemoved implements DomainEvent
 {
-    private $eventId;
-    private $clientId;
-    private $relatedContact;
+    use DomainEventTrait;
 
-    public function __construct(EventId $eventId, ClientId $clientId, RelatedContact $relatedContact)
+    private RelatedContact $relatedContact;
+
+    public function __construct(EventId $eventId, ClientId $aggregateId, RelatedContact $relatedContact)
     {
         $this->eventId = $eventId;
-        $this->clientId = $clientId;
+        $this->aggregateId = $aggregateId;
         $this->relatedContact = $relatedContact;
-    }
-
-    public function getEventId(): EventId
-    {
-        return $this->eventId;
-    }
-
-    public function getAggregateId(): AggregateId
-    {
-        return $this->clientId;
     }
 
     public function getRelatedContact(): RelatedContact

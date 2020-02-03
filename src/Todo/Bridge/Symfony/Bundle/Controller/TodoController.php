@@ -33,7 +33,6 @@ class TodoController
     }
 
     /**
-     *
      * @Route("/create", methods={"POST"})
      * @SWG\Parameter(
      *         name="body",
@@ -51,7 +50,6 @@ class TodoController
      *         )
      *     )
      * @Deserialize(TodoDto::class, validate=true, param="todo")
-     *
      */
     public function create(TodoDto $todo): Response
     {
@@ -70,7 +68,6 @@ class TodoController
     }
 
     /**
-     *
      * @Route("/update/{id}", methods={"PATCH"})
      * @SWG\Parameter(
      *         name="body",
@@ -88,7 +85,6 @@ class TodoController
      *         )
      *     )
      * @Deserialize(TodoDto::class, validate=true, param="todo")
-     *
      */
     public function update(string $id, TodoDto $todo): Response
     {
@@ -107,9 +103,7 @@ class TodoController
     }
 
     /**
-     *
      * @Route("/delete/{id}", methods={"DELETE"})
-     *
      */
     public function delete(string $id): Response
     {

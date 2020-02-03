@@ -4,13 +4,13 @@ namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\Command;
 
 use CleaningCRM\Todo\Application\Command\Todo\Update;
 use CleaningCRM\Todo\Application\Dto\TodoDto;
+use CleaningCRM\Todo\Domain\Todo\TodoId;
 use DateTimeImmutable;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
-use CleaningCRM\Todo\Domain\Todo\TodoId;
 
 class UpdateTodoCommand extends Command
 {

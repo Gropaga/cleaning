@@ -5,8 +5,6 @@ namespace CleaningCRM\Cleaning\Application\Client\Command\Handler;
 use CleaningCRM\Cleaning\Application\Client\Command\Create;
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Common\Domain\EventPublisher;
-use CleaningCRM\Todo\Domain;
-use CleaningCRM\Todo\Domain\Todo\Todo;
 use CleaningCRM\Todo\Domain\Todo\TodoRepository;
 
 /** @see Create */

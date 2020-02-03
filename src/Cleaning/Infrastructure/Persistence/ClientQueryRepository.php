@@ -6,5 +6,4 @@ use CleaningCRM\Cleaning\Domain\Client\ClientQueryRepository as ClientQueryRepos
 
 final class ClientQueryRepository implements ClientQueryRepositoryPort
 {
-
 }

@@ -6,7 +6,6 @@ use CleaningCRM\Cleaning\Application\Client\Command\Liquidate;
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
 use CleaningCRM\Todo\Application\Command\Todo\Delete;
-use CleaningCRM\Todo\Domain\Todo\Todo;
 
 /** @see Delete */
 class LiquidateHandler

@@ -3,12 +3,12 @@
 namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
 use Assert\AssertionFailedException;
+use CleaningCRM\Cleaning\Domain\Client\ClientProjection as ClientProjectionPort;
 use CleaningCRM\Cleaning\Domain\Contact\Contact;
 use CleaningCRM\Cleaning\Domain\Contact\ContactRepository as ContactRepositoryPort;
 use CleaningCRM\Common\Domain\AggregateId;
-use CleaningCRM\Common\Domain\RecordsEvents;
 use CleaningCRM\Common\Domain\EventStore as EventStorePort;
-use CleaningCRM\Cleaning\Domain\Client\ClientProjection as ClientProjectionPort;
+use CleaningCRM\Common\Domain\RecordsEvents;
 use Doctrine\DBAL\Connection;
 use Throwable;
 

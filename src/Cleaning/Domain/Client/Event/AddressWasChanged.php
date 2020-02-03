@@ -4,31 +4,21 @@ namespace CleaningCRM\Todo\Domain\Todo\Event;
 
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Common\Domain\Address;
-use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
+use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
 
 class AddressWasChanged implements DomainEvent
 {
-    private $todoId;
-    private $eventId;
-    private $address;
+    use DomainEventTrait;
 
-    public function __construct(EventId $eventId, ClientId $todoId, Address $address)
+    private Address $address;
+
+    public function __construct(EventId $eventId, ClientId $clientId, Address $address)
     {
         $this->eventId = $eventId;
-        $this->todoId = $todoId;
+        $this->aggregateId = $clientId;
         $this->address = $address;
-    }
-
-    public function getEventId(): EventId
-    {
-        return $this->eventId;
-    }
-
-    public function getAggregateId(): AggregateId
-    {
-        return $this->todoId;
     }
 
     public function getAddress(): Address

@@ -2,7 +2,7 @@
 
 namespace CleaningCRM\Cleaning\Infrastructure\Projection;
 
-
+use CleaningCRM\Cleaning\Domain\Contact\ContactProjection as ContactProjectionPort;
 use CleaningCRM\Cleaning\Domain\Contact\Event\ContactAddressWasChanged;
 use CleaningCRM\Cleaning\Domain\Contact\Event\ContactDeletedAtWasChanged;
 use CleaningCRM\Cleaning\Domain\Contact\Event\ContactEmailWasChanged;
@@ -11,7 +11,6 @@ use CleaningCRM\Cleaning\Domain\Contact\Event\ContactPhoneWasChanged;
 use CleaningCRM\Cleaning\Domain\Contact\Event\ContactTypeWasChanged;
 use CleaningCRM\Cleaning\Domain\Contact\Event\ContactWasCreated;
 use CleaningCRM\Common\Domain\AbstractProjection;
-use CleaningCRM\Cleaning\Domain\Contact\ContactProjection as ContactProjectionPort;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 

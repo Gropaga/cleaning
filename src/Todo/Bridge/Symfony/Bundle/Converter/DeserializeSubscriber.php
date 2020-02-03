@@ -31,7 +31,6 @@ class DeserializeSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-
         if (!$request->attributes->get('_deserialize')) {
             return;
         }
@@ -47,4 +46,3 @@ class DeserializeSubscriber implements EventSubscriberInterface
         $request->attributes->set($config->param(), $object);
     }
 }
-

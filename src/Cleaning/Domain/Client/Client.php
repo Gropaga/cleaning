@@ -4,12 +4,11 @@ namespace CleaningCRM\Cleaning\Domain\Client;
 
 use Assert\AssertionFailedException;
 use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasLiquidated;
-use CleaningCRM\Cleaning\Domain\Contact\ContactId;
 use CleaningCRM\Cleaning\Domain\Contact\RelatedContacts;
 use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\AggregateRoot;
-use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
+use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Todo\Domain\Todo\ClientWasCreated;
 use CleaningCRM\Todo\Domain\Todo\Event\AddressWasChanged;
 use CleaningCRM\Todo\Domain\Todo\Event\BankAccountWasChanged;
@@ -20,14 +19,14 @@ use DateTimeImmutable;
 
 final class Client extends AggregateRoot
 {
-    private $id;
-    private $companyName;
-    private $relatedContacts;
-    private $address;
-    private $vatNumber;
-    private $regNumber;
-    private $bankAccount;
-    private $liquidatedAt;
+    private ClientId $id;
+    private string $companyName;
+    private RelatedContacts $relatedContacts;
+    private Address $address;
+    private string $vatNumber;
+    private string $regNumber;
+    private string $bankAccount;
+    private ?DateTimeImmutable $liquidatedAt;
 
     private function __construct(
         ClientId $id,
@@ -98,8 +97,7 @@ final class Client extends AggregateRoot
         string $regNumber,
         string $bankAccount,
         DateTimeImmutable $liquidatedAt
-    ): self
-    {
+    ): self {
         $newClient = new Client(
             $id,
             $companyName,
@@ -210,7 +208,6 @@ final class Client extends AggregateRoot
         $this->notifyThat($regNumberWasChanged);
     }
 
-
     public function changeBankAccount(string $bankAccount): void
     {
         if ($bankAccount === $this->bankAccount) {
@@ -229,8 +226,7 @@ final class Client extends AggregateRoot
 
     public function liquidate(DateTimeImmutable $liquidatedAt): void
     {
-
-        if ($this->liquidatedAt !== null) {
+        if (null !== $this->liquidatedAt) {
             return;
         }
 
@@ -262,7 +258,7 @@ final class Client extends AggregateRoot
 
     public function removeContact(RelatedContact $relatedContact): void
     {
-        if (! $this->relatedContacts->includes($relatedContact)) {
+        if (!$this->relatedContacts->includes($relatedContact)) {
             return;
         }
 

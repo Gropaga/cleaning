@@ -2,8 +2,8 @@
 
 namespace CleaningCRM\Todo\Infrastructure\Persistence;
 
-use CleaningCRM\Common\Domain\DomainEvent;
 use CleaningCRM\Common\Domain\AggregateId;
+use CleaningCRM\Common\Domain\DomainEvent;
 use CleaningCRM\Common\Domain\DomainEvents;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
 use CleaningCRM\Common\Domain\EventStore;
@@ -59,5 +59,4 @@ SQL
 
         return new DomainEventsHistory($aggregateId, $events);
     }
-
 }

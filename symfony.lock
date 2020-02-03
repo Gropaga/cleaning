@@ -2,6 +2,12 @@
     "beberlei/assert": {
         "version": "v3.2.6"
     },
+    "composer/semver": {
+        "version": "1.5.1"
+    },
+    "composer/xdebug-handler": {
+        "version": "1.4.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -83,6 +89,18 @@
     },
     "exsyst/swagger": {
         "version": "v0.4.1"
+    },
+    "friendsofphp/php-cs-fixer": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.2",
+            "ref": "cc05ab6abf6894bddb9bbd6a252459010ebe040b"
+        },
+        "files": [
+            ".php_cs.dist"
+        ]
     },
     "hoa/compiler": {
         "version": "3.17.08.08"
@@ -166,6 +184,9 @@
     "phar-io/version": {
         "version": "2.0.1"
     },
+    "php-cs-fixer/diff": {
+        "version": "v1.3.0"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.0.0"
     },
@@ -219,6 +240,9 @@
     },
     "ramsey/uuid": {
         "version": "3.8.0"
+    },
+    "roave/security-advisories": {
+        "version": "dev-master"
     },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"
@@ -423,6 +447,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.12.0"
+    },
+    "symfony/process": {
+        "version": "v4.3.11"
     },
     "symfony/property-info": {
         "version": "v4.3.8"

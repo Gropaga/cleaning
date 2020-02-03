@@ -21,12 +21,12 @@ use DateTimeImmutable;
 
 final class Contact extends AggregateRoot
 {
-    private $id;
-    private $name;
-    private $phone;
-    private $email;
-    private $address;
-    private $deletedAt;
+    private ContactId $id;
+    private Name $name;
+    private string $phone;
+    private Email $email;
+    private Address $address;
+    private ?DateTimeImmutable $deletedAt;
 
     private function __construct(
         ContactId $id,
@@ -177,7 +177,7 @@ final class Contact extends AggregateRoot
 
     public function delete(DateTimeImmutable $deleteAt): void
     {
-        if ($this->deletedAt !== null) {
+        if (null !== $this->deletedAt) {
             return;
         }
 

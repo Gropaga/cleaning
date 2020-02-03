@@ -6,5 +6,4 @@ use CleaningCRM\Common\Domain\AggregateRepository;
 
 interface ClientRepository extends AggregateRepository
 {
-
 }

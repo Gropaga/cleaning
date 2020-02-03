@@ -16,8 +16,7 @@ final class TodoByDateQuery
     public function __construct(
         DateTimeImmutable $start,
         DateTimeImmutable $end
-    )
-    {
+    ) {
         $this->start = $start;
         $this->end = $end;
     }

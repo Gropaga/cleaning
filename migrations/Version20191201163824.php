@@ -12,22 +12,21 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20191201163824 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return 'Adding soft delete column to todo';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         $this->addSql(<<<SQL
 ALTER TABLE todo
 ADD COLUMN deleted_at timestamp;
 SQL
 );
-
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         $this->addSql(<<<SQL
 ALTER TABLE todo

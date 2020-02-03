@@ -32,7 +32,7 @@ class Address
         return preg_replace(
             '/\s+/',
             ' ',
-            $this->street . ', ' .  $this->city . ', ' . $this->country . ', ' . $this->postcode
+            $this->street.', '.$this->city.', '.$this->country.', '.$this->postcode
         );
     }
 

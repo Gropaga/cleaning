@@ -2,20 +2,16 @@
 
 namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\Command;
 
-use CleaningCRM\Common\Domain\EventPublisher;
 use CleaningCRM\Common\Domain\Interval;
 use CleaningCRM\Todo\Application\Command\Todo\Create;
 use CleaningCRM\Todo\Application\Dto\TodoDto;
-use CleaningCRM\Todo\Bridge\Symfony\Bundle\IntegrationEvents\PublishEvents;
-use CleaningCRM\Todo\Domain\Todo\Todo;
-use CleaningCRM\Todo\Domain\Todo\TodoRepository;
+use CleaningCRM\Todo\Domain\Todo\TodoId;
 use DateTimeImmutable;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
-use CleaningCRM\Todo\Domain\Todo\TodoId;
 
 class CreateTodoCommand extends Command
 {
@@ -35,7 +31,7 @@ class CreateTodoCommand extends Command
     {
         $todoId = TodoId::generate();
 
-        $todoDto = new TodoDto;
+        $todoDto = new TodoDto();
         $todoDto->completed = false;
         $todoDto->interval = Interval::create(
             DateTimeImmutable::createFromFormat('Y-m-d', '2000-01-11'),
@@ -49,6 +45,6 @@ class CreateTodoCommand extends Command
             $todoDto
         ));
 
-        $output->writeln('New Todo ' . $todoId);
+        $output->writeln('New Todo '.$todoId);
     }
 }

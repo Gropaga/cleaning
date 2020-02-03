@@ -2,8 +2,6 @@
 
 namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
-
 class ContactQueryRepository
 {
-
 }

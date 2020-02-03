@@ -3,32 +3,22 @@
 namespace CleaningCRM\Cleaning\Domain\Contact\Event;
 
 use CleaningCRM\Cleaning\Domain\Contact\ContactId;
-use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
+use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\Phone;
 
 class ContactPhoneWasChanged implements DomainEvent
 {
-    private $eventId;
-    private $contactId;
-    private $phone;
+    use DomainEventTrait;
 
-    public function __construct(EventId $eventId, ContactId $contactId, Phone $phone)
+    private string $phone;
+
+    public function __construct(EventId $eventId, ContactId $aggregateId, Phone $phone)
     {
         $this->eventId = $eventId;
-        $this->contactId = $contactId;
+        $this->aggregateId = $aggregateId;
         $this->phone = $phone;
-    }
-
-    public function getEventId(): EventId
-    {
-        return $this->eventId;
-    }
-
-    public function getAggregateId(): AggregateId
-    {
-        return$this->contactId;
     }
 
     public function getPhone(): Phone

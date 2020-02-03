@@ -11,7 +11,7 @@ use IteratorAggregate;
 
 class RelatedContacts implements IteratorAggregate
 {
-    private $relatedContacts;
+    private array $relatedContacts;
 
     /**
      * @throws AssertionFailedException
@@ -63,8 +63,7 @@ class RelatedContacts implements IteratorAggregate
                 Duplicate related contact.
                 Contact ID: {$relatedContact->getContactId()}.
                 Type: {$relatedContact->getType()}.
-EXEPTION
-);
+EXEPTION);
         }
 
         return new RelatedContacts(
@@ -77,18 +76,17 @@ EXEPTION
      */
     public function remove(RelatedContact $relatedContact): RelatedContacts
     {
-        if (! $this->includes($relatedContact)) {
+        if (!$this->includes($relatedContact)) {
             throw new DomainException(<<<EXEPTION
                 Related contact not found for removal.
                 Contact ID: {$relatedContact->getContactId()}.
                 Type: {$relatedContact->getType()}.
-EXEPTION
-            );
+EXEPTION);
         }
 
         return new RelatedContacts(
-            array_filter($this->relatedContacts, static function(RelatedContact $item) use ($relatedContact) {
-                return ! $item->equals($relatedContact);
+            array_filter($this->relatedContacts, static function (RelatedContact $item) use ($relatedContact) {
+                return !$item->equals($relatedContact);
             })
         );
     }

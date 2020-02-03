@@ -10,6 +10,7 @@ use IteratorAggregate;
 class ClientReadModelCollection implements IteratorAggregate
 {
     private $clients;
+
     /**
      * @throws AssertionFailedException
      */
@@ -26,5 +27,4 @@ class ClientReadModelCollection implements IteratorAggregate
     {
         return new ArrayIterator($this->clients);
     }
-
 }

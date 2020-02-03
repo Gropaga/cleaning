@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Domain\Client;
 
 use CleaningCRM\Cleaning\Domain\Contact\ContactId;
 
 class RelatedContact
 {
-    private $contactId;
-    private $type;
+    private ContactId $contactId;
+    private string $type;
 
     public function __construct(
         ContactId $contactId,
         string $type
-    )
-    {
+    ) {
         $this->contactId = $contactId;
         $this->type = $type;
     }

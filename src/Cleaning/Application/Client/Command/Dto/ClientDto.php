@@ -6,7 +6,7 @@ namespace CleaningCRM\Cleaning\Application\Client\Dto;
 
 use ArrayAccess;
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
-use CleaningCRM\Cleaning\Domain\Contact\RelatedContacts;
+use CleaningCRM\Cleaning\Domain\Person\RelatedContacts;
 use CleaningCRM\Common\Application\AsArrayTrait;
 use CleaningCRM\Common\Domain\Address;
 use DateTimeImmutable;

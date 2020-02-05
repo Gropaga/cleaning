@@ -4,15 +4,15 @@ namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
 use Assert\AssertionFailedException;
 use CleaningCRM\Cleaning\Domain\Client\ClientProjection as ClientProjectionPort;
-use CleaningCRM\Cleaning\Domain\Contact\Contact;
-use CleaningCRM\Cleaning\Domain\Contact\ContactRepository as ContactRepositoryPort;
+use CleaningCRM\Cleaning\Domain\Person\Person;
+use CleaningCRM\Cleaning\Domain\Person\PersonRepository as ContactRepositoryPort;
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\EventStore as EventStorePort;
 use CleaningCRM\Common\Domain\RecordsEvents;
 use Doctrine\DBAL\Connection;
 use Throwable;
 
-class ContactRepository implements ContactRepositoryPort
+class PersonRepository implements ContactRepositoryPort
 {
     private $connection;
     private $eventStore;
@@ -47,6 +47,6 @@ class ContactRepository implements ContactRepositoryPort
     {
         $events = $this->eventStore->get($id);
 
-        return Contact::reconstituteFromHistory($events);
+        return Person::reconstituteFromHistory($events);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace CleaningCRM\Cleaning\Domain\Contact;
+namespace CleaningCRM\Cleaning\Domain\Person;
 
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Common\Domain\Address;
@@ -8,14 +8,13 @@ use CleaningCRM\Common\Domain\Name;
 use CleaningCRM\Common\Domain\Phone;
 use DateTimeImmutable;
 
-class ContactReadModel
+class PersonReadModel
 {
     private $id;
     private $name;
     private $phone;
     private $email;
     private $address;
-    private $type;
     private $clients;
     private $deletedAt;
 
@@ -25,7 +24,6 @@ class ContactReadModel
         $phone,
         $email,
         $address,
-        $type,
         $clients,
         $deletedAt
     ) {
@@ -34,7 +32,6 @@ class ContactReadModel
         $this->phone = $phone;
         $this->email = $email;
         $this->address = $address;
-        $this->type = $type;
         $this->clients = $clients;
         $this->deletedAt = $deletedAt;
     }
@@ -64,12 +61,7 @@ class ContactReadModel
         return $this->address;
     }
 
-    public function getType(): Type
-    {
-        return $this->type;
-    }
-
-    public function getClients(): ClientReadModelCollection
+    public function getClients(): PersonReadModelCollection
     {
         return $this->clients;
     }

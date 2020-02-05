@@ -2,35 +2,36 @@
 
 namespace CleaningCRM\Cleaning\Domain\Client;
 
-use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
+use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
 
 class ContactTypeWasUpdated implements DomainEvent
 {
-    private ClientId $clientId;
-    private EventId $eventId;
-    private RelatedContact $relatedContact;
+    use DomainEventTrait;
 
-    public function __construct(EventId $eventId, ClientId $clientId, RelatedContact $relatedContact)
-    {
+    private ContactId $contactId;
+    private string $type;
+
+    public function __construct(
+        EventId $eventId,
+        ClientId $aggregateId,
+        ContactId $contactId,
+        string $type
+    ) {
         $this->eventId = $eventId;
-        $this->clientId = $clientId;
-        $this->relatedContact = $relatedContact;
+        $this->aggregateId = $aggregateId;
+        $this->contactId = $contactId;
+        $this->type = $type;
     }
 
-    public function getEventId(): EventId
+    public function getContactId(): ContactId
     {
-        return $this->eventId;
+        return $this->contactId;
     }
 
-    public function getAggregateId(): AggregateId
+    public function getType(): string
     {
-        return $this->clientId;
-    }
-
-    public function getRelatedContact(): RelatedContact
-    {
-        return $this->relatedContact;
+        return $this->type;
     }
 }

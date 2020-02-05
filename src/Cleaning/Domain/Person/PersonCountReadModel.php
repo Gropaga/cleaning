@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CleaningCRM\Cleaning\Domain\Contact;
+namespace CleaningCRM\Cleaning\Domain\Person;
 
-class ContactCountReadModel
+class PersonCountReadModel
 {
     private $count;
 

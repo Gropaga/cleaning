@@ -1,8 +1,8 @@
 <?php
 
-namespace CleaningCRM\Cleaning\Domain\Contact\Event;
+namespace CleaningCRM\Cleaning\Domain\Person\Event;
 
-use CleaningCRM\Cleaning\Domain\Contact\ContactId;
+use CleaningCRM\Cleaning\Domain\Person\PersonId;
 use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\DomainEvent;
@@ -12,7 +12,7 @@ use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\Name;
 use CleaningCRM\Common\Domain\Phone;
 
-class ContactWasCreated implements DomainEvent
+class PersonWasCreated implements DomainEvent
 {
     use DomainEventTrait;
 
@@ -23,7 +23,7 @@ class ContactWasCreated implements DomainEvent
 
     public function __construct(
         EventId $eventId,
-        ContactId $aggregateId,
+        PersonId $aggregateId,
         Name $name,
         Phone $phone,
         Email $email,

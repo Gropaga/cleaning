@@ -3,7 +3,7 @@
 namespace CleaningCRM\Todo\Domain\Todo;
 
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
-use CleaningCRM\Cleaning\Domain\Contact\RelatedContacts;
+use CleaningCRM\Cleaning\Domain\Person\RelatedContacts;
 use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\DomainEvent;
 use CleaningCRM\Common\Domain\DomainEventTrait;
@@ -14,7 +14,7 @@ class ClientWasCreated implements DomainEvent
 {
     use DomainEventTrait;
 
-    private RelatedContacts $contacts;
+    private array $contacts;
     private string $companyName;
     private Address $address;
     private string $vatNumber;
@@ -26,7 +26,7 @@ class ClientWasCreated implements DomainEvent
         EventId $eventId,
         ClientId $clientId,
         string $companyName,
-        RelatedContacts $contacts,
+        array $contacts,
         Address $address,
         string $vatNumber,
         string $regNumber,
@@ -44,7 +44,7 @@ class ClientWasCreated implements DomainEvent
         $this->liquidatedAt = $liquidatedAt;
     }
 
-    public function getContacts(): RelatedContacts
+    public function getContacts(): array
     {
         return $this->contacts;
     }

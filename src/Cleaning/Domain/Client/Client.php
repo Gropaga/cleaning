@@ -4,7 +4,7 @@ namespace CleaningCRM\Cleaning\Domain\Client;
 
 use Assert\AssertionFailedException;
 use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasLiquidated;
-use CleaningCRM\Cleaning\Domain\Contact\RelatedContacts;
+use CleaningCRM\Cleaning\Domain\Person\PersonId;
 use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\AggregateRoot;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
@@ -21,7 +21,7 @@ final class Client extends AggregateRoot
 {
     private ClientId $id;
     private string $companyName;
-    private RelatedContacts $relatedContacts;
+    private array $contacts;
     private Address $address;
     private string $vatNumber;
     private string $regNumber;
@@ -31,7 +31,7 @@ final class Client extends AggregateRoot
     private function __construct(
         ClientId $id,
         string $companyName,
-        RelatedContacts $contacts,
+        array $contacts,
         Address $address,
         string $vatNumber,
         string $regNumber,
@@ -40,7 +40,7 @@ final class Client extends AggregateRoot
     ) {
         $this->id = $id;
         $this->companyName = $companyName;
-        $this->relatedContacts = $contacts;
+        $this->contacts = $contacts;
         $this->address = $address;
         $this->vatNumber = $vatNumber;
         $this->regNumber = $regNumber;
@@ -58,9 +58,9 @@ final class Client extends AggregateRoot
         return $this->companyName;
     }
 
-    public function getRelatedContacts(): RelatedContacts
+    public function getContacts(): array
     {
-        return $this->relatedContacts;
+        return $this->contacts;
     }
 
     public function getAddress(): Address
@@ -91,7 +91,7 @@ final class Client extends AggregateRoot
     public static function create(
         ClientId $id,
         string $companyName,
-        RelatedContacts $contacts,
+        array $contacts,
         Address $address,
         string $vatNumber,
         string $regNumber,
@@ -113,7 +113,7 @@ final class Client extends AggregateRoot
             EventId::generate(),
             $newClient->id,
             $newClient->companyName,
-            $newClient->relatedContacts,
+            $newClient->contacts,
             $newClient->address,
             $newClient->vatNumber,
             $newClient->regNumber,
@@ -135,7 +135,7 @@ final class Client extends AggregateRoot
         return new self(
             $id,
             '',
-            RelatedContacts::createEmpty(),
+            [],
             Address::createEmpty(),
             '',
             '',
@@ -240,36 +240,72 @@ final class Client extends AggregateRoot
         $this->notifyThat($clientWasLiquidated);
     }
 
-    public function addContact(RelatedContact $relatedContact): void
+    public function addContact(ContactId $contactId, PersonId $personId, string $type): void
     {
-        if ($this->relatedContacts->includes($relatedContact)) {
+        if ($this->hasContact($contactId)) {
             return;
         }
 
         $contactWasAdded = new ContactWasAdded(
             EventId::generate(),
             $this->id,
-            $relatedContact
+            $contactId,
+            $personId,
+            $type
         );
 
         $this->applyAndRecordThat($contactWasAdded);
         $this->notifyThat($contactWasAdded);
     }
 
-    public function removeContact(RelatedContact $relatedContact): void
+    public function removeContact(ContactId $contactId): void
     {
-        if (!$this->relatedContacts->includes($relatedContact)) {
+        if ($this->hasContact($contactId)) {
             return;
         }
 
-        $contactWasRemoved = new ContactWasRemoved(
+        $relatedContactWasRemoved = new ContactWasRemoved(
             EventId::generate(),
             $this->id,
-            $relatedContact
+            $contactId
         );
 
-        $this->applyAndRecordThat($contactWasRemoved);
-        $this->notifyThat($contactWasRemoved);
+        $this->applyAndRecordThat($relatedContactWasRemoved);
+        $this->notifyThat($relatedContactWasRemoved);
+    }
+
+    public function updateContactPerson(ContactId $contactId, PersonId $personId): void
+    {
+        if ($this->hasContact($contactId)) {
+            return;
+        }
+
+        $contactPersonWasUpdated = new ContactPersonWasUpdated(
+            EventId::generate(),
+            $this->id,
+            $contactId,
+            $personId
+        );
+
+        $this->applyAndRecordThat($contactPersonWasUpdated);
+        $this->notifyThat($contactPersonWasUpdated);
+    }
+
+    public function updateContactType(ContactId $contactId, string $type): void
+    {
+        if ($this->hasContact($contactId)) {
+            return;
+        }
+
+        $contactTypeWasUpdated = new ContactTypeWasUpdated(
+            EventId::generate(),
+            $this->id,
+            $contactId,
+            $type
+        );
+
+        $this->applyAndRecordThat($contactTypeWasUpdated);
+        $this->notifyThat($contactTypeWasUpdated);
     }
 
     protected function applyAddressWasChanged(AddressWasChanged $event): void
@@ -285,7 +321,7 @@ final class Client extends AggregateRoot
     protected function applyClientWasCreated(ClientWasCreated $event): void
     {
         $this->companyName = $event->getCompanyName();
-        $this->relatedContacts = $event->getContacts();
+        $this->contacts = $event->getContacts();
         $this->address = $event->getAddress();
         $this->vatNumber = $event->getVatNumber();
         $this->regNumber = $event->getRegNumber();
@@ -308,15 +344,39 @@ final class Client extends AggregateRoot
      */
     protected function applyContactWasAdded(ContactWasAdded $event): void
     {
-        $this->relatedContacts = $this->relatedContacts->append($event->getRelatedContact());
+        $this->contacts[] = new Contact(
+            $event->getContactId(),
+            $event->getPersonId(),
+            $event->getType()
+        );
     }
 
-    /**
-     * @throws AssertionFailedException
-     */
-    protected function applyContactWasRemoved(ContactWasRemoved $contactWasRemoved): void
+    protected function applyContactWasRemoved(ContactWasRemoved $event): void
     {
-        $this->relatedContacts = $this->relatedContacts->remove($contactWasRemoved->getRelatedContact());
+        $this->contacts = array_filter(
+            $this->contacts,
+            fn (Contact $item) => $event->getContactId() !== $item->getContactId()
+        );
+    }
+
+    protected function applyContactTypeWasUpdated(ContactTypeWasUpdated $event): void
+    {
+        $this->contacts = array_map(
+            fn (Contact $item) => $event->getContactId()->equals($item->getContactId())
+                ? $item->setType($event->getType())
+                : $item,
+            $this->contacts
+        );
+    }
+
+    protected function applyContactPersonWasUpdated(ContactPersonWasUpdated $event): void
+    {
+        $this->contacts = array_map(
+            fn (Contact $item) => $event->getPersonId()->equals($item->getPersonId())
+                ? $item->setType($event->getPersonId())
+                : $item,
+            $this->contacts
+        );
     }
 
     protected function applyRegNumberWasChanged(RegNumberWasChanged $event): void
@@ -329,21 +389,33 @@ final class Client extends AggregateRoot
         $this->vatNumber = $event->getVatNumber();
     }
 
+    private function hasContact(ContactId $contactId): bool
+    {
+        /** @var Contact $contact */
+        foreach ($this->contacts as $contact) {
+            if ($contact->getContactId()->equals($contactId)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @throws AssertionFailedException
      */
     public static function reconstituteFromHistory(DomainEventsHistory $eventsHistory): self
     {
-        $todo = self::createEmptyTodoWithId(
+        $client = self::createEmptyTodoWithId(
             ClientId::fromString(
                 (string) $eventsHistory->getAggregateId()
             )
         );
 
         foreach ($eventsHistory as $event) {
-            $todo->apply($event);
+            $client->apply($event);
         }
 
-        return $todo;
+        return $client;
     }
 }

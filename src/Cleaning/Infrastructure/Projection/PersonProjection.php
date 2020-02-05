@@ -2,19 +2,19 @@
 
 namespace CleaningCRM\Cleaning\Infrastructure\Projection;
 
-use CleaningCRM\Cleaning\Domain\Contact\ContactProjection as ContactProjectionPort;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactAddressWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactDeletedAtWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactEmailWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactNameWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactPhoneWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactTypeWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactWasCreated;
+use CleaningCRM\Cleaning\Domain\Person\PersonProjection as ContactProjectionPort;
+use CleaningCRM\Cleaning\Domain\Person\Event\AddressWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted;
+use CleaningCRM\Cleaning\Domain\Person\Event\EmailWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\NameWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\ContactTypeWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\ContactWasCreated;
 use CleaningCRM\Common\Domain\AbstractProjection;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 
-class ContactProjection extends AbstractProjection implements ContactProjectionPort
+class PersonProjection extends AbstractProjection implements ContactProjectionPort
 {
     protected $connection;
 
@@ -45,27 +45,27 @@ SQL
         ]);
     }
 
-    public function projectWhenContactAddressWasChanged(ContactAddressWasChanged $event): void
+    public function projectWhenContactAddressWasChanged(AddressWasChanged $event): void
     {
         // TODO: Implement projectWhenContactAddressWasChanged() method.
     }
 
-    public function projectWhenContactDeletedAtWasChanged(ContactDeletedAtWasChanged $event): void
+    public function projectWhenContactDeletedAtWasChanged(PersonWasDeleted $event): void
     {
         // TODO: Implement projectWhenContactDeletedAtWasChanged() method.
     }
 
-    public function projectWhenContactEmailWasChanged(ContactEmailWasChanged $event): void
+    public function projectWhenContactEmailWasChanged(EmailWasChanged $event): void
     {
         // TODO: Implement projectWhenContactEmailWasChanged() method.
     }
 
-    public function projectWhenContactNameWasChanged(ContactNameWasChanged $event): void
+    public function projectWhenContactNameWasChanged(NameWasChanged $event): void
     {
         // TODO: Implement projectWhenContactNameWasChanged() method.
     }
 
-    public function projectWhenContactPhoneWasChanged(ContactPhoneWasChanged $event): void
+    public function projectWhenContactPhoneWasChanged(PhoneWasChanged $event): void
     {
         // TODO: Implement projectWhenContactPhoneWasChanged() method.
     }

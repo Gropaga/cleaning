@@ -10,17 +10,17 @@ class ContactWasRemoved implements DomainEvent
 {
     use DomainEventTrait;
 
-    private RelatedContact $relatedContact;
+    private ContactId $contactId;
 
-    public function __construct(EventId $eventId, ClientId $aggregateId, RelatedContact $relatedContact)
+    public function __construct(EventId $eventId, ClientId $aggregateId, ContactId $contactId)
     {
         $this->eventId = $eventId;
         $this->aggregateId = $aggregateId;
-        $this->relatedContact = $relatedContact;
+        $this->contactId = $contactId;
     }
 
-    public function getRelatedContact(): RelatedContact
+    public function getContactId(): ContactId
     {
-        return $this->relatedContact;
+        return $this->contactId;
     }
 }

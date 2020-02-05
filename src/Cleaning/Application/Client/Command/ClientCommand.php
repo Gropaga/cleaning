@@ -6,7 +6,7 @@ use CleaningCRM\Cleaning\Domain\Client\ClientId;
 
 class ClientCommand
 {
-    private $clientId;
+    private string $clientId;
 
     public function __construct(string $clientId)
     {

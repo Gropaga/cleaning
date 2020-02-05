@@ -2,7 +2,7 @@
 
 namespace CleaningCRM\Cleaning\Domain\Client;
 
-use CleaningCRM\Cleaning\Domain\Contact\RelatedContacts;
+use CleaningCRM\Cleaning\Domain\Person\RelatedContacts;
 use CleaningCRM\Common\Domain\Address;
 use DateTimeImmutable;
 

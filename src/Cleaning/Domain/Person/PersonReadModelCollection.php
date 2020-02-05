@@ -1,13 +1,13 @@
 <?php
 
-namespace CleaningCRM\Cleaning\Domain\Contact;
+namespace CleaningCRM\Cleaning\Domain\Person;
 
 use ArrayIterator;
 use Assert\Assertion;
 use Assert\AssertionFailedException;
 use IteratorAggregate;
 
-class ClientReadModelCollection implements IteratorAggregate
+class PersonReadModelCollection implements IteratorAggregate
 {
     private $clients;
 
@@ -17,7 +17,7 @@ class ClientReadModelCollection implements IteratorAggregate
     public function __construct(array $clients)
     {
         foreach ($clients as $client) {
-            Assertion::isInstanceOf($client, ClientReadModel::class);
+            Assertion::isInstanceOf($client, PersonReadModel::class);
         }
 
         $this->clients = $clients;

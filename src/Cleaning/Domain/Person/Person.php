@@ -1,14 +1,14 @@
 <?php
 
-namespace CleaningCRM\Cleaning\Domain\Contact;
+namespace CleaningCRM\Cleaning\Domain\Person;
 
 use Assert\AssertionFailedException;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactAddressWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactDeletedAtWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactEmailWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactNameWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactPhoneWasChanged;
-use CleaningCRM\Cleaning\Domain\Contact\Event\ContactWasCreated;
+use CleaningCRM\Cleaning\Domain\Person\Event\AddressWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted;
+use CleaningCRM\Cleaning\Domain\Person\Event\EmailWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\NameWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated;
 use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\AggregateRoot;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
@@ -19,9 +19,9 @@ use CleaningCRM\Common\Domain\Phone;
 use CleaningCRM\Todo\Domain\Todo\Event\TodoDeletedAtWasChanged;
 use DateTimeImmutable;
 
-final class Contact extends AggregateRoot
+final class Person extends AggregateRoot
 {
-    private ContactId $id;
+    private PersonId $id;
     private Name $name;
     private string $phone;
     private Email $email;
@@ -29,7 +29,7 @@ final class Contact extends AggregateRoot
     private ?DateTimeImmutable $deletedAt;
 
     private function __construct(
-        ContactId $id,
+        PersonId $id,
         Name $name,
         Phone $phone,
         Email $email,
@@ -44,7 +44,7 @@ final class Contact extends AggregateRoot
         $this->deletedAt = $deleteAt;
     }
 
-    public function getId(): ContactId
+    public function getId(): PersonId
     {
         return $this->id;
     }
@@ -72,9 +72,9 @@ final class Contact extends AggregateRoot
     /**
      * @throws AssertionFailedException
      */
-    public static function create(ContactId $id, Name $name, Phone $phone, Email $email, Address $address): self
+    public static function create(PersonId $id, Name $name, Phone $phone, Email $email, Address $address): self
     {
-        $newContact = new Contact(
+        $newPerson = new Person(
             $id,
             $name,
             $phone,
@@ -82,25 +82,25 @@ final class Contact extends AggregateRoot
             $address
         );
 
-        $contactWasCreated = new ContactWasCreated(
+        $personWasCreated = new PersonWasCreated(
             EventId::generate(),
-            $newContact->getId(),
-            $newContact->getName(),
-            $newContact->getPhone(),
-            $newContact->getEmail(),
-            $newContact->getAddress()
+            $newPerson->getId(),
+            $newPerson->getName(),
+            $newPerson->getPhone(),
+            $newPerson->getEmail(),
+            $newPerson->getAddress()
         );
 
-        $newContact->recordThat($contactWasCreated);
-        $newContact->notifyThat($contactWasCreated);
+        $newPerson->recordThat($personWasCreated);
+        $newPerson->notifyThat($personWasCreated);
 
-        return $newContact;
+        return $newPerson;
     }
 
     /**
      * @throws AssertionFailedException
      */
-    public static function createEmptyContactWithId(ContactId $id): self
+    public static function createEmptyPersonWithId(PersonId $id): self
     {
         return new self(
             $id,
@@ -117,14 +117,14 @@ final class Contact extends AggregateRoot
             return;
         }
 
-        $contactNameWasChanged = new ContactNameWasChanged(
+        $personNameWasChanged = new NameWasChanged(
             EventId::generate(),
             $this->id,
             $name
         );
 
-        $this->applyAndRecordThat($contactNameWasChanged);
-        $this->notifyThat($contactNameWasChanged);
+        $this->applyAndRecordThat($personNameWasChanged);
+        $this->notifyThat($personNameWasChanged);
     }
 
     public function changePhone(Phone $phone): void
@@ -133,14 +133,14 @@ final class Contact extends AggregateRoot
             return;
         }
 
-        $contactPhoneWasChanged = new ContactPhoneWasChanged(
+        $personPhoneWasChanged = new PhoneWasChanged(
             EventId::generate(),
             $this->id,
             $phone
         );
 
-        $this->applyAndRecordThat($contactPhoneWasChanged);
-        $this->notifyThat($contactPhoneWasChanged);
+        $this->applyAndRecordThat($personPhoneWasChanged);
+        $this->notifyThat($personPhoneWasChanged);
     }
 
     public function changeEmail(Email $email): void
@@ -149,14 +149,14 @@ final class Contact extends AggregateRoot
             return;
         }
 
-        $contactEmailWasChanged = new ContactEmailWasChanged(
+        $personEmailWasChanged = new EmailWasChanged(
             EventId::generate(),
             $this->id,
             $email
         );
 
-        $this->applyAndRecordThat($contactEmailWasChanged);
-        $this->notifyThat($contactEmailWasChanged);
+        $this->applyAndRecordThat($personEmailWasChanged);
+        $this->notifyThat($personEmailWasChanged);
     }
 
     public function changeAddress(Address $address): void
@@ -165,14 +165,14 @@ final class Contact extends AggregateRoot
             return;
         }
 
-        $contactAddressWasChanged = new ContactAddressWasChanged(
+        $personAddressWasChanged = new AddressWasChanged(
             EventId::generate(),
             $this->id,
             $address
         );
 
-        $this->applyAndRecordThat($contactAddressWasChanged);
-        $this->notifyThat($contactAddressWasChanged);
+        $this->applyAndRecordThat($personAddressWasChanged);
+        $this->notifyThat($personAddressWasChanged);
     }
 
     public function delete(DateTimeImmutable $deleteAt): void
@@ -181,7 +181,7 @@ final class Contact extends AggregateRoot
             return;
         }
 
-        $todoDeletedAtWasChanged = new ContactDeletedAtWasChanged(
+        $todoDeletedAtWasChanged = new PersonWasDeleted(
             EventId::generate(),
             $this->id,
             $deleteAt
@@ -191,7 +191,7 @@ final class Contact extends AggregateRoot
         $this->notifyThat($todoDeletedAtWasChanged);
     }
 
-    public function applyContactWasCreated(ContactWasCreated $event): void
+    public function applyPersonWasCreated(PersonWasCreated $event): void
     {
         $this->name = $event->getName();
         $this->phone = $event->getPhone();
@@ -199,22 +199,22 @@ final class Contact extends AggregateRoot
         $this->address = $event->getAddress();
     }
 
-    protected function applyNameWasChanged(ContactNameWasChanged $event): void
+    protected function applyNameWasChanged(NameWasChanged $event): void
     {
         $this->name = $event->getName();
     }
 
-    protected function applyPhoneWasChanged(ContactPhoneWasChanged $event): void
+    protected function applyPhoneWasChanged(PhoneWasChanged $event): void
     {
         $this->phone = $event->getPhone();
     }
 
-    protected function applyEmailWasChanged(ContactEmailWasChanged $event): void
+    protected function applyEmailWasChanged(EmailWasChanged $event): void
     {
         $this->email = $event->getEmail();
     }
 
-    protected function applyAddressWasChanges(ContactAddressWasChanged $event): void
+    protected function applyAddressWasChanges(AddressWasChanged $event): void
     {
         $this->address = $event->getAddress();
     }
@@ -229,16 +229,16 @@ final class Contact extends AggregateRoot
      */
     public static function reconstituteFromHistory(DomainEventsHistory $eventsHistory)
     {
-        $contact = self::createEmptyContactWithId(
-            ContactId::fromString(
+        $person = self::createEmptyPersonWithId(
+            PersonId::fromString(
                 (string) $eventsHistory->getAggregateId()
             )
         );
 
         foreach ($eventsHistory as $event) {
-            $contact->apply($event);
+            $person->apply($event);
         }
 
-        return $contact;
+        return $person;
     }
 }

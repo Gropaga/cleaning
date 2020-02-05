@@ -7,26 +7,23 @@ use CleaningCRM\Common\Domain\DomainEvent;
 use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
 
-final class ContactWasAdded implements DomainEvent
+class ContactPersonWasUpdated implements DomainEvent
 {
     use DomainEventTrait;
 
     private ContactId $contactId;
     private PersonId $personId;
-    private string $type;
 
     public function __construct(
         EventId $eventId,
         ClientId $aggregateId,
-        ContactId $contactId,
-        PersonId $personId,
-        string $type
+        ContactId $relatedContactId,
+        PersonId $personId
     ) {
         $this->eventId = $eventId;
         $this->aggregateId = $aggregateId;
-        $this->contactId = $contactId;
+        $this->contactId = $relatedContactId;
         $this->personId = $personId;
-        $this->type = $type;
     }
 
     public function getContactId(): ContactId
@@ -37,10 +34,5 @@ final class ContactWasAdded implements DomainEvent
     public function getPersonId(): PersonId
     {
         return $this->personId;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
     }
 }

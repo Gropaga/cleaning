@@ -7,7 +7,7 @@ use CleaningCRM\Cleaning\Domain\Client\ClientProjection as ClientProjectionPort;
 use CleaningCRM\Cleaning\Domain\Client\ContactWasAdded;
 use CleaningCRM\Cleaning\Domain\Client\ContactWasRemoved;
 use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasLiquidated;
-use CleaningCRM\Cleaning\Domain\Contact\RelatedContacts;
+use CleaningCRM\Cleaning\Domain\Person\RelatedContacts;
 use CleaningCRM\Common\Domain\AbstractProjection;
 use CleaningCRM\Todo\Domain\Todo\ClientWasCreated;
 use CleaningCRM\Todo\Domain\Todo\Event\AddressWasChanged;

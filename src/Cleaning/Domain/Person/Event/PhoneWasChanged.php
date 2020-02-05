@@ -1,20 +1,20 @@
 <?php
 
-namespace CleaningCRM\Cleaning\Domain\Contact\Event;
+namespace CleaningCRM\Cleaning\Domain\Person\Event;
 
-use CleaningCRM\Cleaning\Domain\Contact\ContactId;
+use CleaningCRM\Cleaning\Domain\Person\PersonId;
 use CleaningCRM\Common\Domain\DomainEvent;
 use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\Phone;
 
-class ContactPhoneWasChanged implements DomainEvent
+class PhoneWasChanged implements DomainEvent
 {
     use DomainEventTrait;
 
     private string $phone;
 
-    public function __construct(EventId $eventId, ContactId $aggregateId, Phone $phone)
+    public function __construct(EventId $eventId, PersonId $aggregateId, Phone $phone)
     {
         $this->eventId = $eventId;
         $this->aggregateId = $aggregateId;

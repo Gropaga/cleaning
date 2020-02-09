@@ -8,11 +8,11 @@ use CleaningCRM\Common\Domain\Interval;
 
 class TodoReadModel
 {
-    private $id;
-    private $title;
-    private $description;
-    private $interval;
-    private $completed;
+    private TodoId $id;
+    private string $title;
+    private string $description;
+    private Interval $interval;
+    private bool $completed;
 
     public function __construct(
         TodoId $id,

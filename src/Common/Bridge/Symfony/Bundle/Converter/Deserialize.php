@@ -1,6 +1,6 @@
 <?php
 
-namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter;
+namespace CleaningCRM\Common\Bridge\Symfony\Bundle\Converter;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationInterface;
 

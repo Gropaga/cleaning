@@ -17,12 +17,12 @@ use DateTimeImmutable;
 
 final class Todo extends AggregateRoot
 {
-    private $id;
-    private $title;
-    private $description;
-    private $completed;
-    private $interval;
-    private $deletedAt;
+    private TodoId $id;
+    private string $title;
+    private string $description;
+    private bool $completed;
+    private Interval $interval;
+    private ?DateTimeImmutable $deletedAt;
 
     private function __construct(
         TodoId $id,

@@ -46,7 +46,7 @@ services:
     arguments:
       - '%kernel.project_dir%/var/cache/serializer'
       - '%kernel.debug%'
-      - '%common.bundle_dir%/Infrastructure/Serializer/Mapping'
+      - ['%common.bundle_dir%/Infrastructure/Serializer/Mapping', '%todo.bundle_dir%/Infrastructure/Serializer/Mapping',]
 
   JMS\Serializer\Serializer:
     factory: 'CleaningCRM\Common\Infrastructure\Serializer\SerializerFactory:create'
@@ -55,10 +55,10 @@ services:
 
   CleaningCRM\Todo\Infrastructure\Persistence\TodoReadModelMapper: ~
 
-  CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter\DeserializeSubscriber:
-    class: CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter\DeserializeSubscriber
+  CleaningCRM\Common\Bridge\Symfony\Bundle\Converter\DeserializeSubscriber:
+    class: CleaningCRM\Common\Bridge\Symfony\Bundle\Converter\DeserializeSubscriber
     tags: ['kernel.event_subscriber']
 
-  CleaningCRM\Todo\Bridge\Symfony\Bundle\IntegrationEvents\PublishEvents:
-    class: CleaningCRM\Todo\Bridge\Symfony\Bundle\IntegrationEvents\PublishEvents
+  CleaningCRM\Common\Bridge\Symfony\Bundle\IntegrationEvents\PublishEvents:
+    class: CleaningCRM\Common\Bridge\Symfony\Bundle\IntegrationEvents\PublishEvents
     tags: ['kernel.response', 'console.terminate']

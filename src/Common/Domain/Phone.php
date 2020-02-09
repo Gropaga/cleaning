@@ -7,7 +7,7 @@ use Assert\AssertionFailedException;
 
 class Phone
 {
-    private $phone;
+    private string $phone;
 
     /**
      * @throws AssertionFailedException

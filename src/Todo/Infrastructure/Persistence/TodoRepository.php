@@ -13,9 +13,9 @@ use Throwable;
 
 class TodoRepository implements TodoRepositoryPort
 {
-    private $connection;
-    private $eventStore;
-    private $projection;
+    private Connection $connection;
+    private EventStorePort $eventStore;
+    private TodoProjectionPort $projection;
 
     public function __construct(Connection $connection, EventStorePort $eventStore, TodoProjectionPort $projection)
     {

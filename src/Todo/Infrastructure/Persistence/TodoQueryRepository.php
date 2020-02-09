@@ -14,8 +14,8 @@ use PDO;
 
 class TodoQueryRepository implements TodoQueryRepositoryPort
 {
-    private $connection;
-    private $mapper;
+    private Connection $connection;
+    private TodoReadModelMapper $mapper;
 
     public function __construct(Connection $connection, TodoReadModelMapper $mapper)
     {

@@ -9,9 +9,9 @@ use CleaningCRM\Todo\Domain\Todo\TodoId;
 
 class TodoTitleWasChanged implements DomainEvent
 {
-    private $eventId;
-    private $todoId;
-    private $title;
+    private EventId $eventId;
+    private TodoId $todoId;
+    private string $title;
 
     public function __construct(EventId $eventId, TodoId $todoId, string $title)
     {

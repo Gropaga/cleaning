@@ -6,7 +6,7 @@ use CleaningCRM\Todo\Application\Dto\TodoDto;
 
 class Update extends TodoCommand
 {
-    private $todoDto;
+    private TodoDto $todoDto;
 
     public function __construct(string $todoId, TodoDto $todoDto)
     {

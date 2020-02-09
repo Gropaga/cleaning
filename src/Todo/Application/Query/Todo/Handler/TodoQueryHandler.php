@@ -8,7 +8,7 @@ use CleaningCRM\Todo\Domain\Todo\TodoQueryRepository;
 
 abstract class TodoQueryHandler
 {
-    protected $repository;
+    protected TodoQueryRepository $repository;
 
     public function __construct(TodoQueryRepository $repository)
     {

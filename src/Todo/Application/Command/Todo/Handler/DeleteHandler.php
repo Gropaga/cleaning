@@ -10,7 +10,7 @@ use DateTimeImmutable;
 /** @see Delete */
 class DeleteHandler
 {
-    private $repository;
+    private TodoRepository $repository;
 
     public function __construct(TodoRepository $repository)
     {

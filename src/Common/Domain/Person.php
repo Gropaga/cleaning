@@ -6,11 +6,11 @@ use Assert\AssertionFailedException;
 
 class Person
 {
-    private $id;
-    private $person;
-    private $phone;
-    private $email;
-    private $address;
+    private string $id;
+    private Name $person;
+    private Phone $phone;
+    private Email $email;
+    private Address $address;
 
     public function __construct(AggregateId $id, Name $person, Phone $phone, Email $email, Address $address)
     {

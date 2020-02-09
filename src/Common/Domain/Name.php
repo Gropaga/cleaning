@@ -4,8 +4,8 @@ namespace CleaningCRM\Common\Domain;
 
 class Name
 {
-    private $name;
-    private $surname;
+    private string $name;
+    private string $surname;
 
     private function __construct(string $name, string $surname)
     {

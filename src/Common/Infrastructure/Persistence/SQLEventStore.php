@@ -14,8 +14,8 @@ use PDO;
 
 class SQLEventStore implements EventStore
 {
-    protected $connection;
-    protected $serializer;
+    protected Connection $connection;
+    protected SerializerInterface $serializer;
 
     public function __construct(Connection $connection, SerializerInterface $serializer)
     {

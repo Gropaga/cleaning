@@ -2,11 +2,11 @@
 
 namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\Controller;
 
+use CleaningCRM\Common\Bridge\Symfony\Bundle\Converter\Deserialize;
 use CleaningCRM\Todo\Application\Command\Todo\Create;
 use CleaningCRM\Todo\Application\Command\Todo\Delete;
 use CleaningCRM\Todo\Application\Command\Todo\Update;
 use CleaningCRM\Todo\Application\Dto\TodoDto;
-use CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter\Deserialize;
 use CleaningCRM\Todo\Domain\Todo\TodoId;
 use DateTimeImmutable;
 use JMS\Serializer\SerializerInterface;
@@ -24,7 +24,7 @@ class TodoController
 {
     use HandleTrait;
 
-    private $serializer;
+    private SerializerInterface $serializer;
 
     public function __construct(MessageBusInterface $messageBus, SerializerInterface $serializer)
     {
@@ -88,8 +88,6 @@ class TodoController
      */
     public function update(string $id, TodoDto $todo): Response
     {
-        $id = TodoId::fromString($id);
-
         $this->handle(
             new Update($id, $todo)
         );

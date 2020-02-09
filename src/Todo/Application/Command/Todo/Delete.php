@@ -8,7 +8,7 @@ use DateTimeImmutable;
 /** @see DeleteHandler */
 class Delete extends TodoCommand
 {
-    private $deletedAt;
+    private DateTimeImmutable $deletedAt;
 
     public function __construct(string $todoId, DateTimeImmutable $deletedAt)
     {

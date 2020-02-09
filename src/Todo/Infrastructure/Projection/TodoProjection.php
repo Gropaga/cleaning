@@ -15,7 +15,7 @@ use Doctrine\DBAL\DBALException;
 
 class TodoProjection extends AbstractProjection implements TodoProjectionPort
 {
-    protected $connection;
+    protected Connection $connection;
 
     public function __construct(Connection $connection)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\IntegrationEvents;
+namespace CleaningCRM\Common\Bridge\Symfony\Bundle\IntegrationEvents;
 
 use CleaningCRM\Common\Domain\EventPublisher;
 use Symfony\Component\Console\ConsoleEvents;
@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class PublishEvents implements EventSubscriberInterface
 {
-    private $eventPublisher;
+    private EventPublisher $eventPublisher;
 
     public function __construct(EventPublisher $eventPublisher)
     {

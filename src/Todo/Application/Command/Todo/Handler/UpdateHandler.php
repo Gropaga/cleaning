@@ -10,7 +10,7 @@ use CleaningCRM\Todo\Domain\Todo\TodoRepository;
 /** @see Create */
 class UpdateHandler
 {
-    private $repository;
+    private TodoRepository $repository;
 
     public function __construct(TodoRepository $repository)
     {

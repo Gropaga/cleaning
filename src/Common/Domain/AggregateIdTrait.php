@@ -4,7 +4,7 @@ namespace CleaningCRM\Common\Domain;
 
 trait AggregateIdTrait
 {
-    private $id;
+    private string $id;
 
     public static function fromString(string $id): self
     {

@@ -10,8 +10,8 @@ use CleaningCRM\Todo\Domain\Todo\TodoRepository;
 /** @see Create */
 class CreateHandler
 {
-    private $repository;
-    private $publisher;
+    private TodoRepository $repository;
+    private EventPublisher $publisher;
 
     public function __construct(TodoRepository $repository, EventPublisher $publisher)
     {

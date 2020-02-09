@@ -2,11 +2,9 @@
 
 namespace CleaningCRM\Common\Domain;
 
-use Exception;
-
 class EventId implements AggregateId
 {
-    private $id;
+    private string $id;
 
     public static function generate(): self
     {

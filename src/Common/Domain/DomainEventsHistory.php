@@ -4,7 +4,7 @@ namespace CleaningCRM\Common\Domain;
 
 class DomainEventsHistory extends DomainEvents
 {
-    private $aggregateId;
+    private AggregateId $aggregateId;
 
     public function __construct(AggregateId $aggregateId, $events)
     {

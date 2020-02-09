@@ -7,13 +7,13 @@ use JMS\Serializer\SerializerInterface;
 
 class SerializerFactory
 {
-    private $cacheDir;
+    private string $cacheDir;
 
-    private $debug;
+    private string $debug;
 
-    private $metadataDir;
+    private array $metadataDir;
 
-    public function __construct($cacheDir, $debug, $metadataDir)
+    public function __construct(string $cacheDir, string $debug, array $metadataDir)
     {
         $this->cacheDir = $cacheDir;
         $this->debug = $debug;
@@ -25,8 +25,11 @@ class SerializerFactory
         $builder = SerializerBuilder::create();
 
         $builder->setCacheDir($this->cacheDir)
-            ->setDebug($this->debug)
-            ->addMetadataDir($this->metadataDir);
+            ->setDebug($this->debug);
+
+        foreach ($this->metadataDir as $dir) {
+            $builder->addMetadataDir($dir);
+        }
 
         return $builder->build();
     }

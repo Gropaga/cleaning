@@ -7,11 +7,16 @@ use IteratorAggregate;
 
 class DomainEvents implements IteratorAggregate
 {
-    private $events = [];
+    private array $events = [];
 
     public function __construct(array $events)
     {
         $this->events = $events;
+    }
+
+    public static function createEmpty(): DomainEvents
+    {
+        return new DomainEvents([]);
     }
 
     public function getIterator()

@@ -1,0 +1,12 @@
+parameters:
+    todo.bundle_dir: '%kernel.project_dir%/src/Cleaning'
+    common.bundle_dir: '%kernel.project_dir%/src/Common'
+
+    services:
+        _defaults:
+            autowire: true      # Automatically injects dependencies in your services.
+            autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+        CleaningCRM\Todo\Bridge\Symfony\Bundle\Command\:
+            resource: '%todo.bundle_dir%/Bridge/Symfony/Bundle/Command'
+            tags: ['console.command']

@@ -4,7 +4,7 @@ namespace CleaningCRM\Todo\Application\Query\Todo;
 
 final class TodoQuery
 {
-    private $id;
+    private string $id;
 
     public function __construct(string $id)
     {

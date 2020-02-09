@@ -6,7 +6,7 @@ namespace CleaningCRM\Todo\Domain\Todo;
 
 final class TodoCountReadModel
 {
-    private $count;
+    private int $count;
 
     public function __construct(int $count)
     {

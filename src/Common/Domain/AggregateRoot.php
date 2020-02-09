@@ -7,8 +7,8 @@ abstract class AggregateRoot implements RecordsEvents, NotifyEvents
     /**
      * @var array|DomainEvent[]
      */
-    private $recordedEvents = [];
-    private $notifyEvents = [];
+    private array $recordedEvents = [];
+    private array $notifyEvents = [];
 
     public function getRecordedEvents(): DomainEvents
     {

@@ -10,9 +10,9 @@ use DateTimeImmutable;
 
 class TodoDeletedAtWasChanged implements DomainEvent
 {
-    private $eventId;
-    private $todoId;
-    private $deletedAt;
+    private EventId $eventId;
+    private TodoId $todoId;
+    private DateTimeImmutable $deletedAt;
 
     public function __construct(EventId $eventId, TodoId $todoId, DateTimeImmutable $deletedAt)
     {

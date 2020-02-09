@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Tests\Todo\Application\Query\Todo\Handler;
 
-use CleaningCRM\Todo\Application\Query\Todo\Handler\TodoQueryHandler;
+use CleaningCRM\Todo\Application\Query\Todo\Handler\TodoByIdQueryHandler;
 use CleaningCRM\Todo\Application\Query\Todo\TodoQuery;
 use CleaningCRM\Todo\Domain\Todo\TodoId;
 use CleaningCRM\Todo\Domain\Todo\TodoQueryRepository;
 use PHPUnit\Framework\TestCase;
 
-class TodoQueryHandlerHandlerTest extends TestCase
+class TodoQueryHandlerTest extends TestCase
 {
     /**
      * @test
@@ -26,6 +26,6 @@ class TodoQueryHandlerHandlerTest extends TestCase
 
         $query = new TodoQuery($todoId);
 
-        call_user_func(new TodoQueryHandler($repo), $query);
+        call_user_func(new TodoByIdQueryHandler($repo), $query);
     }
 }

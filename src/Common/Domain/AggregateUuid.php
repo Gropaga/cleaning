@@ -4,11 +4,10 @@ namespace CleaningCRM\Cleaning\Domain\Client;
 
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\UuidGenerator;
-use Exception;
 
 class AggregateUuid implements AggregateId
 {
-    private $id;
+    private string $id;
 
     public static function generate(): self
     {

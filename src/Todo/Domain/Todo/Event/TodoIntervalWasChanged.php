@@ -10,9 +10,9 @@ use CleaningCRM\Todo\Domain\Todo\TodoId;
 
 class TodoIntervalWasChanged implements DomainEvent
 {
-    private $todoId;
-    private $eventId;
-    private $interval;
+    private TodoId $todoId;
+    private EventId $eventId;
+    private Interval $interval;
 
     public function __construct(EventId $eventId, TodoId $todoId, Interval $interval)
     {

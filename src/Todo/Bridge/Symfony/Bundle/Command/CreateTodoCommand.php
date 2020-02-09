@@ -19,7 +19,7 @@ class CreateTodoCommand extends Command
 
     protected static $defaultName = 'app:create-todo';
 
-    private $commandBus;
+    private MessageBusInterface $commandBus;
 
     public function __construct(MessageBusInterface $commandBus)
     {

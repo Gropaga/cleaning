@@ -10,12 +10,12 @@ use CleaningCRM\Todo\Domain\Todo\TodoId;
 
 class TodoWasCreated implements DomainEvent
 {
-    private $todoId;
-    private $eventId;
-    private $title;
-    private $description;
-    private $interval;
-    private $completed;
+    private TodoId $todoId;
+    private EventId $eventId;
+    private string $title;
+    private string $description;
+    private Interval $interval;
+    private bool $completed;
 
     public function __construct(
         EventId $eventId,

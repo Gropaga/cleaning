@@ -24,7 +24,7 @@ class TodoQueryController
 {
     use HandleTrait;
 
-    private $serializer;
+    private SerializerInterface $serializer;
 
     public function __construct(MessageBusInterface $messageBus, SerializerInterface $serializer)
     {

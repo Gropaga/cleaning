@@ -4,11 +4,10 @@ namespace CleaningCRM\Todo\Domain\Todo;
 
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\UuidGenerator;
-use Exception;
 
 class TodoId implements AggregateId
 {
-    private $todoId;
+    private string $todoId;
 
     public static function generate(): TodoId
     {

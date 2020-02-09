@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CleaningCRM\Todo\Bridge\Symfony\Bundle\Converter;
+namespace CleaningCRM\Common\Bridge\Symfony\Bundle\Converter;
 
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

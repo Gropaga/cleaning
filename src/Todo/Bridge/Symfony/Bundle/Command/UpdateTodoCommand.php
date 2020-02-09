@@ -16,7 +16,7 @@ class UpdateTodoCommand extends Command
 {
     protected static $defaultName = 'app:update-todo';
 
-    private $bus;
+    private MessageBusInterface $bus;
 
     public function __construct(MessageBusInterface $bus)
     {

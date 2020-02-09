@@ -1,0 +1,18 @@
+CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated:
+  exclusion_policy: ALL
+
+  properties:
+    personId:
+      type: CleaningCRM\Cleaning\Domain\Person\PersonId
+
+    name:
+      type: CleaningCRM\Common\Domain\Name
+
+    phone:
+      type: string
+
+    email:
+      type: CleaningCRM\Common\Domain\Email
+
+    address:
+      type: CleaningCRM\Common\Domain\Address

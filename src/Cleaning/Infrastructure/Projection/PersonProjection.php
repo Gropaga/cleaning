@@ -2,21 +2,21 @@
 
 namespace CleaningCRM\Cleaning\Infrastructure\Projection;
 
-use CleaningCRM\Cleaning\Domain\Person\PersonProjection as ContactProjectionPort;
 use CleaningCRM\Cleaning\Domain\Person\Event\AddressWasChanged;
-use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted;
 use CleaningCRM\Cleaning\Domain\Person\Event\EmailWasChanged;
 use CleaningCRM\Cleaning\Domain\Person\Event\NameWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated;
+use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted;
 use CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged;
-use CleaningCRM\Cleaning\Domain\Person\Event\ContactTypeWasChanged;
-use CleaningCRM\Cleaning\Domain\Person\Event\ContactWasCreated;
+use CleaningCRM\Cleaning\Domain\Person\PersonProjection as ContactProjectionPort;
 use CleaningCRM\Common\Domain\AbstractProjection;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
+use JsonException;
 
 class PersonProjection extends AbstractProjection implements ContactProjectionPort
 {
-    protected $connection;
+    protected Connection $connection;
 
     public function __construct(Connection $connection)
     {
@@ -25,53 +25,49 @@ class PersonProjection extends AbstractProjection implements ContactProjectionPo
 
     /**
      * @throws DBALException
+     * @throws JsonException
      */
-    public function projectWhenContactWasCreated(ContactWasCreated $event): void
+    public function projectWhenPersonWasCreated(PersonWasCreated $event): void
     {
         $stmt = $this->connection->prepare(
             <<<SQL
-INSERT INTO contact (id, name, phone, email, address, type, clients, "deletedAt")
+INSERT INTO person (id, name, phone, email, address, "deletedAt")
              VALUES (:id, :title, :description, :completed, :start, :end)
 SQL
         );
 
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':title' => $event->getTitle(),
-            ':description' => $event->getDescription(),
-            ':start' => $event->getInterval()->start()->format('m-d-Y H:i:s'),
-            ':end' => $event->getInterval()->end()->format('m-d-Y H:i:s'),
-            ':completed' => $event->getCompleted() ? 'TRUE' : 'FALSE',
+            ':name' => $event->getName(),
+            ':email' => $event->getEmail(),
+            ':address' => json_encode($event->getAddress(), JSON_THROW_ON_ERROR, 512),
         ]);
     }
 
-    public function projectWhenContactAddressWasChanged(AddressWasChanged $event): void
+    public function projectWhenPersonAddressWasChanged(AddressWasChanged $event): void
     {
-        // TODO: Implement projectWhenContactAddressWasChanged() method.
+        // TODO: Implement projectWhenPersonAddressWasChanged() method.
     }
 
-    public function projectWhenContactDeletedAtWasChanged(PersonWasDeleted $event): void
+    public function projectWhenPersonDeletedAtWasChanged(PersonWasDeleted $event): void
     {
-        // TODO: Implement projectWhenContactDeletedAtWasChanged() method.
+        // TODO: Implement projectWhenPersonDeletedAtWasChanged() method.
     }
 
-    public function projectWhenContactEmailWasChanged(EmailWasChanged $event): void
+    public function projectWhenPersonEmailWasChanged(EmailWasChanged $event): void
     {
-        // TODO: Implement projectWhenContactEmailWasChanged() method.
+        // TODO: Implement projectWhenPersonEmailWasChanged() method.
     }
 
-    public function projectWhenContactNameWasChanged(NameWasChanged $event): void
+    public function projectWhenPersonNameWasChanged(NameWasChanged $event): void
     {
-        // TODO: Implement projectWhenContactNameWasChanged() method.
+        // TODO: Implement projectWhenPersonNameWasChanged() method.
     }
 
-    public function projectWhenContactPhoneWasChanged(PhoneWasChanged $event): void
+    public function projectWhenPersonPhoneWasChanged(PhoneWasChanged $event): void
     {
-        // TODO: Implement projectWhenContactPhoneWasChanged() method.
+        // TODO: Implement projectWhenPersonPhoneWasChanged() method.
     }
 
-    public function projectWhenContactTypeWasChanged(ContactTypeWasChanged $event): void
-    {
-        // TODO: Implement projectWhenContactTypeWasChanged() method.
-    }
+
 }

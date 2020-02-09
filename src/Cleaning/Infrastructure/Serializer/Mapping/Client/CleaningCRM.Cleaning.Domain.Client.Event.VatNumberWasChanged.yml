@@ -1,0 +1,9 @@
+CleaningCRM\Cleaning\Domain\Client\Event\CompanyNameWasChanged:
+  exclusion_policy: ALL
+
+  properties:
+    clientId:
+      type: CleaningCRM\Cleaning\Domain\Client\Event\VatNumberWasChanged
+
+    companyName:
+      type: string

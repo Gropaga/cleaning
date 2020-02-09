@@ -1,11 +1,14 @@
 <?php
 
-namespace CleaningCRM\Todo\Domain\Todo\Event;
+namespace CleaningCRM\Cleaning\Domain\Client\Event;
 
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Common\Domain\DomainEvent;
 use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
+
+//\CleaningCRM\Cleaning\Domain\Client\Event\CompanyNameWasChanged
+//CleaningCRM.Cleaning.Domain.Client.Event.CompanyNameWasChanged
 
 class CompanyNameWasChanged implements DomainEvent
 {
@@ -13,10 +16,10 @@ class CompanyNameWasChanged implements DomainEvent
 
     private string $companyName;
 
-    public function __construct(EventId $eventId, ClientId $aggregateId, string $companyName)
+    public function __construct(EventId $eventId, ClientId $clientId, string $companyName)
     {
         $this->eventId = $eventId;
-        $this->aggregateId = $aggregateId;
+        $this->aggregateId = $clientId;
         $this->companyName = $companyName;
     }
 

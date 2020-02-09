@@ -10,11 +10,11 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200126193001 extends AbstractMigration
+final class Version20200209170925 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Create Client + Contact';
+        return 'Create Client + Person';
     }
 
     public function up(Schema $schema): void
@@ -35,13 +35,12 @@ SQL
         );
 
         $this->addSql(<<<SQL
-    CREATE TABLE "public"."contact" (
+    CREATE TABLE "public"."person" (
       "id" uuid NOT NULL,
       "name" json,
       "phone" text,
       "email" text,
       "address" text,
-      "clients" json,
       "deletedAt" timestamp,
       PRIMARY KEY ("id")
      );

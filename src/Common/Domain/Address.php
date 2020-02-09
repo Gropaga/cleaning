@@ -1,13 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Common\Domain;
 
-class Address
+use ArrayIterator;
+use IteratorAggregate;
+use Traversable;
+
+final class Address implements Traversable, IteratorAggregate
 {
-    private $city;
-    private $country;
-    private $street;
-    private $postcode;
+    private string $city;
+    private string $country;
+    private string $street;
+    private string $postcode;
 
     private function __construct(string $city, string $country, string $street, string $postcode)
     {
@@ -62,5 +68,17 @@ class Address
             $this->country === $address->country &&
             $this->street === $address->street &&
             $this->postcode === $address->postcode;
+    }
+
+    public function getIterator(): ArrayIterator
+    {
+        return new ArrayIterator(
+            [
+                'city' => $this->city,
+                'country' => $this->country,
+                'street' => $this->street,
+                'postcode' => $this->postcode,
+            ]
+        );
     }
 }

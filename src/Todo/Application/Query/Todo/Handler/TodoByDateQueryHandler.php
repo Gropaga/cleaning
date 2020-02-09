@@ -6,7 +6,7 @@ namespace CleaningCRM\Todo\Application\Query\Todo\Handler;
 
 use CleaningCRM\Todo\Application\Query\Todo\TodoByDateQuery;
 
-final class TodoByDateQueryHandler extends QueryHandler
+final class TodoByDateQueryHandler extends TodoQueryHandler
 {
     public function __invoke(TodoByDateQuery $query): array
     {

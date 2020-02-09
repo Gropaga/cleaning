@@ -2,14 +2,16 @@
 
 namespace CleaningCRM\Cleaning\Domain\Client;
 
+use CleaningCRM\Cleaning\Domain\Client\Event\AddressWasChanged;
+use CleaningCRM\Cleaning\Domain\Client\Event\BankAccountWasChanged;
+use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasCreated;
 use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasLiquidated;
+use CleaningCRM\Cleaning\Domain\Client\Event\CompanyNameWasChanged;
+use CleaningCRM\Cleaning\Domain\Client\Event\ContactWasAdded;
+use CleaningCRM\Cleaning\Domain\Client\Event\ContactWasRemoved;
+use CleaningCRM\Cleaning\Domain\Client\Event\RegNumberWasChanged;
+use CleaningCRM\Cleaning\Domain\Client\Event\VatNumberWasChanged;
 use CleaningCRM\Common\Domain\Projection;
-use CleaningCRM\Todo\Domain\Todo\ClientWasCreated;
-use CleaningCRM\Todo\Domain\Todo\Event\AddressWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\BankAccountWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\CompanyNameWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\RegNumberWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\VatNumberWasChanged;
 
 interface ClientProjection extends Projection
 {
@@ -26,6 +28,10 @@ interface ClientProjection extends Projection
     public function projectWhenContactWasAdded(ContactWasAdded $event): void;
 
     public function projectWhenContactWasRemoved(ContactWasRemoved $event): void;
+
+    public function projectWhenContactPersonWasUpdated(ContactWasRemoved $event): void;
+
+    public function projectWhenContactTypeWasUpdated(ContactWasRemoved $event): void;
 
     public function projectWhenRegNumberWasChanged(RegNumberWasChanged $event): void;
 

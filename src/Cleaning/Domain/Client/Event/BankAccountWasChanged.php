@@ -1,6 +1,6 @@
 <?php
 
-namespace CleaningCRM\Todo\Domain\Todo\Event;
+namespace CleaningCRM\Cleaning\Domain\Client\Event;
 
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Common\Domain\DomainEvent;

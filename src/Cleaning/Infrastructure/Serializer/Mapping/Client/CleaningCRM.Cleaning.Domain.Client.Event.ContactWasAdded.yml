@@ -1,0 +1,15 @@
+CleaningCRM\Cleaning\Domain\Client\Event\ContactWasAdded:
+  exclusion_policy: ALL
+
+  properties:
+    clientId:
+      type: CleaningCRM\Cleaning\Domain\Client\ClientId
+
+    contactId:
+      type: CleaningCRM\Cleaning\Domain\Client\ContactId
+
+    personId:
+      type: CleaningCRM\Cleaning\Domain\Client\Event\ContactPersonWasUpdated
+
+    type:
+      type: string

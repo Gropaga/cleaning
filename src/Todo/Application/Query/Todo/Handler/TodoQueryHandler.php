@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Todo\Application\Query\Todo\Handler;
 
-use CleaningCRM\Todo\Application\Query\Todo\TodoQuery;
-use CleaningCRM\Todo\Domain\Todo\TodoReadModel;
+use CleaningCRM\Todo\Domain\Todo\TodoQueryRepository;
 
-class TodoQueryHandler extends QueryHandler
+abstract class TodoQueryHandler
 {
-    public function __invoke(TodoQuery $query): TodoReadModel
+    protected $repository;
+
+    public function __construct(TodoQueryRepository $repository)
     {
-        return $this->repository->byId($query->getId());
+        $this->repository = $repository;
     }
 }

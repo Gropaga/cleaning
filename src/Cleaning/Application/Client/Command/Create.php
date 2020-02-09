@@ -10,7 +10,7 @@ use CleaningCRM\Cleaning\Application\Client\Dto\ClientDto;
 /** @see CreateHandler */
 class Create extends ClientCommand
 {
-    private $clientDto;
+    private ClientDto $clientDto;
 
     public function __construct(string $clientId, ClientDto $clientDto)
     {

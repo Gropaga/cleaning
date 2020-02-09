@@ -4,16 +4,18 @@ namespace CleaningCRM\Cleaning\Application\Client\Command\Handler;
 
 use CleaningCRM\Cleaning\Application\Client\Command\Create;
 use CleaningCRM\Cleaning\Domain\Client\Client;
+use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
+use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\EventPublisher;
-use CleaningCRM\Todo\Domain\Todo\TodoRepository;
+use DateTimeImmutable;
 
 /** @see Create */
 class CreateHandler
 {
-    private $repository;
-    private $publisher;
+    private ClientRepository $repository;
+    private EventPublisher $publisher;
 
-    public function __construct(TodoRepository $repository, EventPublisher $publisher)
+    public function __construct(ClientRepository $repository, EventPublisher $publisher)
     {
         $this->repository = $repository;
         $this->publisher = $publisher;
@@ -24,12 +26,17 @@ class CreateHandler
         $todo = Client::create(
             $command->getClientId(),
             $command->getClient()->companyName,
-            $command->getClient()->relatedContacts,
-            $command->getClient()->address,
+            $command->getClient()->contacts,
+            Address::create(
+                $command->getClient()->address->city,
+                $command->getClient()->address->country,
+                $command->getClient()->address->street,
+                $command->getClient()->address->postcode
+            ),
             $command->getClient()->vatNumber,
             $command->getClient()->regNumber,
             $command->getClient()->bankAccount,
-            $command->getClient()->liquidatedAt
+            DateTimeImmutable::createFromFormat(DateTimeImmutable::ATOM, $command->getClient()->liquidatedAt)
         );
 
         $this->repository->add($todo);

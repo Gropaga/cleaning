@@ -1,0 +1,12 @@
+CleaningCRM\Cleaning\Domain\Client\Contact:
+  exclusion_policy: ALL
+
+    properties:
+      contactId:
+        type: string
+
+      personId:
+        type: string
+
+      type:
+        type: string

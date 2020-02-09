@@ -1,10 +1,15 @@
 <?php
 
-namespace CleaningCRM\Cleaning\Domain\Client;
+namespace CleaningCRM\Cleaning\Domain\Client\Event;
 
+use CleaningCRM\Cleaning\Domain\Client\ClientId;
+use CleaningCRM\Cleaning\Domain\Client\ContactId;
 use CleaningCRM\Common\Domain\DomainEvent;
 use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
+
+//\CleaningCRM\Cleaning\Domain\Client\Event\ContactTypeWasUpdated
+//CleaningCRM.Cleaning.Domain.Client.Event.ContactTypeWasUpdated
 
 class ContactTypeWasUpdated implements DomainEvent
 {
@@ -15,12 +20,12 @@ class ContactTypeWasUpdated implements DomainEvent
 
     public function __construct(
         EventId $eventId,
-        ClientId $aggregateId,
+        ClientId $clientId,
         ContactId $contactId,
         string $type
     ) {
         $this->eventId = $eventId;
-        $this->aggregateId = $aggregateId;
+        $this->aggregateId = $clientId;
         $this->contactId = $contactId;
         $this->type = $type;
     }

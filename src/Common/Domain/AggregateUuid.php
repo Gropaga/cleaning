@@ -10,9 +10,6 @@ class AggregateUuid implements AggregateId
 {
     private $id;
 
-    /**
-     * @throws Exception
-     */
     public static function generate(): self
     {
         return new self(UuidGenerator::generate());

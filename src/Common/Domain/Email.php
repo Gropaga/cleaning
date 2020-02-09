@@ -6,7 +6,7 @@ use DomainException;
 
 class Email
 {
-    private $email;
+    private string $email;
 
     public function __construct(string $email)
     {

@@ -1,0 +1,7 @@
+CleaningCRM\Cleaning\Domain\Client\ClientId:
+  exclusion_policy: ALL
+
+  properties:
+    clientId:
+      type: string
+      serialized_name: id

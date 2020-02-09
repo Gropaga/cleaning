@@ -8,6 +8,10 @@ use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
 use CleaningCRM\Common\Domain\Phone;
 
+//\CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged
+//CleaningCRM.Cleaning.Domain.Person.Event.PhoneWasChanged
+
+
 class PhoneWasChanged implements DomainEvent
 {
     use DomainEventTrait;

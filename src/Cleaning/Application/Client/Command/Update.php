@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Cleaning\Application\Client\Command;
 
+use CleaningCRM\Cleaning\Application\Client\Command\Handler\UpdateHandler;
 use CleaningCRM\Cleaning\Application\Client\Dto\ClientDto;
 
+/** @see UpdateHandler */
 class Update extends ClientCommand
 {
-    private $clientDto;
+    private ClientDto $clientDto;
 
     public function __construct(string $clientId, ClientDto $clientDto)
     {

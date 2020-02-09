@@ -4,17 +4,17 @@ namespace CleaningCRM\Cleaning\Infrastructure\Projection;
 
 use Assert\AssertionFailedException as AssertionFailedExceptionAlias;
 use CleaningCRM\Cleaning\Domain\Client\ClientProjection as ClientProjectionPort;
-use CleaningCRM\Cleaning\Domain\Client\ContactWasAdded;
-use CleaningCRM\Cleaning\Domain\Client\ContactWasRemoved;
+use CleaningCRM\Cleaning\Domain\Client\Contact;
+use CleaningCRM\Cleaning\Domain\Client\Event\AddressWasChanged;
+use CleaningCRM\Cleaning\Domain\Client\Event\BankAccountWasChanged;
+use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasCreated;
 use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasLiquidated;
-use CleaningCRM\Cleaning\Domain\Person\RelatedContacts;
+use CleaningCRM\Cleaning\Domain\Client\Event\CompanyNameWasChanged;
+use CleaningCRM\Cleaning\Domain\Client\Event\ContactWasAdded;
+use CleaningCRM\Cleaning\Domain\Client\Event\ContactWasRemoved;
+use CleaningCRM\Cleaning\Domain\Client\Event\RegNumberWasChanged;
+use CleaningCRM\Cleaning\Domain\Client\Event\VatNumberWasChanged;
 use CleaningCRM\Common\Domain\AbstractProjection;
-use CleaningCRM\Todo\Domain\Todo\ClientWasCreated;
-use CleaningCRM\Todo\Domain\Todo\Event\AddressWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\BankAccountWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\CompanyNameWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\RegNumberWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\VatNumberWasChanged;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use JMS\Serializer\SerializerInterface;
@@ -22,8 +22,8 @@ use PDO;
 
 final class ClientProjection extends AbstractProjection implements ClientProjectionPort
 {
-    protected $connection;
-    private $serializer;
+    protected Connection $connection;
+    private SerializerInterface $serializer;
 
     public function __construct(Connection $connection, SerializerInterface $serializer)
     {
@@ -64,12 +64,63 @@ SQL
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
             ':companyName' => $event->getCompanyName(),
-            ':contacts' => $this->serializer->serialize($event->getContacts(), 'JSON'),
-            ':address' => $this->serializer->serialize($event->getAddress(), 'JSON'),
+            ':contacts' => json_encode(
+                array_map(static function (string $key, Contact $value) {
+                    $array = (array) $value;
+
+                    return "{$key} => {$array}";
+                }, array_keys($event->getContacts()), $event->getContacts()),
+                JSON_THROW_ON_ERROR,
+                512
+            ),
+            ':address' => json_encode($event->getAddress(), JSON_THROW_ON_ERROR, 512),
             ':vatNumber' => $event->getVatNumber(),
             ':regNumber' => $event->getRegNumber(),
             ':bankAccount' => $event->getBankAccount(),
-            ':liquidatedAt' => $event->getLiquidatedAt()->format('m-d-Y H:i:s'),
+        ]);
+    }
+
+    /**
+     * @throws DBALException
+     * @throws AssertionFailedExceptionAlias
+     */
+    public function projectWhenContactWasAdded(ContactWasAdded $event): void
+    {
+        $clientStmt = $this->connection->prepare('SELECT contacts FROM client WHERE id=:id');
+        $clientStmt->execute([':id' => $event->getAggregateId()]);
+        $clientStmtResult = $clientStmt->fetch(PDO::FETCH_ASSOC);
+
+
+
+        $relatedContacts = $this->serializer->deserialize($clientStmtResult, Contact::class, 'JSON');
+
+        $relatedContacts->append($event->getContactId());
+        $stmt = $this->connection->prepare('UPDATE client SET contacts = :contacts WHERE id = :id');
+        $stmt->execute([
+            ':id' => (string) $event->getAggregateId(),
+            ':contacts' => $this->serializer->serialize($relatedContacts, 'JSON'),
+        ]);
+    }
+
+    /**
+     * @throws AssertionFailedExceptionAlias
+     * @throws DBALException
+     */
+    public function projectWhenContactWasRemoved(ContactWasRemoved $event): void
+    {
+        $clientStmt = $this->connection->prepare('SELECT contacts FROM client WHERE id=:id');
+        $clientStmt->execute([':id' => $event->getAggregateId()]);
+        $clientStmtResult = $clientStmt->fetch(PDO::FETCH_ASSOC);
+
+        /** @var array $relatedContacts */
+        $relatedContacts = $this->serializer->deserialize($clientStmtResult, Contact::class, 'JSON');
+
+        // TODO need to implement this
+
+        $stmt = $this->connection->prepare('UPDATE client SET contacts = :contacts WHERE id = :id');
+        $stmt->execute([
+            ':id' => (string) $event->getAggregateId(),
+            ':contacts' => $this->serializer->serialize($relatedContacts, 'JSON'),
         ]);
     }
 
@@ -82,7 +133,7 @@ SQL
 
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':address' => $this->serializer->serialize($event->getAddress(), 'JSON'),
+            ':address' => json_encode($event->getAddress(), JSON_THROW_ON_ERROR, 512),
         ]);
     }
 
@@ -127,48 +178,6 @@ SQL
 
     /**
      * @throws DBALException
-     * @throws AssertionFailedExceptionAlias
-     */
-    public function projectWhenContactWasAdded(ContactWasAdded $event): void
-    {
-        $clientStmt = $this->connection->prepare('SELECT contacts FROM client WHERE id=:id');
-        $clientStmt->execute([':id' => $event->getAggregateId()]);
-        $clientStmtResult = $clientStmt->fetch(PDO::FETCH_ASSOC);
-
-        /** @var RelatedContacts $relatedContacts */
-        $relatedContacts = $this->serializer->deserialize($clientStmtResult, RelatedContacts::class, 'JSON');
-
-        $relatedContacts->append($event->getRelatedContact());
-        $stmt = $this->connection->prepare('UPDATE client SET contacts = :contacts WHERE id = :id');
-        $stmt->execute([
-            ':id' => (string) $event->getAggregateId(),
-            ':contacts' => $this->serializer->serialize($relatedContacts, 'JSON'),
-        ]);
-    }
-
-    /**
-     * @throws AssertionFailedExceptionAlias
-     * @throws DBALException
-     */
-    public function projectWhenContactWasRemoved(ContactWasRemoved $event): void
-    {
-        $clientStmt = $this->connection->prepare('SELECT contacts FROM client WHERE id=:id');
-        $clientStmt->execute([':id' => $event->getAggregateId()]);
-        $clientStmtResult = $clientStmt->fetch(PDO::FETCH_ASSOC);
-
-        /** @var RelatedContacts $relatedContacts */
-        $relatedContacts = $this->serializer->deserialize($clientStmtResult, RelatedContacts::class, 'JSON');
-
-        $relatedContacts->remove($event->getRelatedContact());
-        $stmt = $this->connection->prepare('UPDATE client SET contacts = :contacts WHERE id = :id');
-        $stmt->execute([
-            ':id' => (string) $event->getAggregateId(),
-            ':contacts' => $this->serializer->serialize($relatedContacts, 'JSON'),
-        ]);
-    }
-
-    /**
-     * @throws DBALException
      */
     public function projectWhenRegNumberWasChanged(RegNumberWasChanged $event): void
     {
@@ -191,5 +200,15 @@ SQL
             ':id' => (string) $event->getAggregateId(),
             ':vatNumber' => $event->getVatNumber(),
         ]);
+    }
+
+    public function projectWhenContactPersonWasUpdated(ContactWasRemoved $event): void
+    {
+        // TODO: Implement projectWhenContactPersonWasUpdated() method.
+    }
+
+    public function projectWhenContactTypeWasUpdated(ContactWasRemoved $event): void
+    {
+        // TODO: Implement projectWhenContactTypeWasUpdated() method.
     }
 }

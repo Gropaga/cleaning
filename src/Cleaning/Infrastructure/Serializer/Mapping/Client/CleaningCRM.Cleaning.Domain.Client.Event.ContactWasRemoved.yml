@@ -1,0 +1,9 @@
+CleaningCRM\Cleaning\Domain\Client\Event\ContactWasRemoved:
+  exclusion_policy: ALL
+
+  properties:
+    clientId:
+      type: CleaningCRM\Cleaning\Domain\Client\ClientId
+
+    contactId:
+      type: CleaningCRM\Cleaning\Domain\Client\ContactId

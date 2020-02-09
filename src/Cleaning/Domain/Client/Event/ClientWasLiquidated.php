@@ -8,6 +8,9 @@ use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
 use DateTimeImmutable;
 
+//\CleaningCRM\Cleaning\Domain\Client\Event\ClientWasLiquidated
+//CleaningCRM.Cleaning.Domain.Client.Event.ClientWasLiquidated
+
 class ClientWasLiquidated implements DomainEvent
 {
     use DomainEventTrait;

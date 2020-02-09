@@ -10,8 +10,8 @@ use DateTimeImmutable;
 /** @see TodoByDateQueryHandler */
 final class TodoByDateQuery
 {
-    private $start;
-    private $end;
+    private DateTimeImmutable $start;
+    private DateTimeImmutable $end;
 
     public function __construct(
         DateTimeImmutable $start,

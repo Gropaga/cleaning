@@ -4,15 +4,11 @@ namespace CleaningCRM\Cleaning\Domain\Client;
 
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\UuidGenerator;
-use Exception;
 
 class ContactId implements AggregateId
 {
     private string $relatedContactId;
 
-    /**
-     * @throws Exception
-     */
     public static function generate(): ContactId
     {
         return new ContactId(UuidGenerator::generate());

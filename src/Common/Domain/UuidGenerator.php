@@ -2,16 +2,21 @@
 
 namespace CleaningCRM\Common\Domain;
 
+use DomainException;
 use Exception;
 use Ramsey\Uuid\Uuid;
 
 class UuidGenerator
 {
     /**
-     * @throws Exception
+     * @throws DomainException
      */
     public static function generate(): string
     {
-        return Uuid::uuid4()->toString();
+        try {
+            return Uuid::uuid4()->toString();
+        } catch (Exception $e) {
+            throw new DomainException('Can\'t create aggregate id');
+        }
     }
 }

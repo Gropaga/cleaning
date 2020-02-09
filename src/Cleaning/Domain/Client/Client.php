@@ -3,18 +3,13 @@
 namespace CleaningCRM\Cleaning\Domain\Client;
 
 use Assert\AssertionFailedException;
+use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasCreated;
 use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasLiquidated;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
 use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\AggregateRoot;
 use CleaningCRM\Common\Domain\DomainEventsHistory;
 use CleaningCRM\Common\Domain\EventId;
-use CleaningCRM\Todo\Domain\Todo\ClientWasCreated;
-use CleaningCRM\Todo\Domain\Todo\Event\AddressWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\BankAccountWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\CompanyNameWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\RegNumberWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\VatNumberWasChanged;
 use DateTimeImmutable;
 
 final class Client extends AggregateRoot
@@ -117,8 +112,7 @@ final class Client extends AggregateRoot
             $newClient->address,
             $newClient->vatNumber,
             $newClient->regNumber,
-            $newClient->bankAccount,
-            $newClient->liquidatedAt
+            $newClient->bankAccount
         );
 
         $newClient->recordThat($clientWasCreated);

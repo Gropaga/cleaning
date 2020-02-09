@@ -27,10 +27,6 @@ test-unit:
 	$(RUN_PHP) bin/phpunit
 .PHONY: test-unit
 
-db-migrate:
-	$(RUN_PHP) bin/console doctrine:migration:migrate -n
-.PHONY: db-migrate
-
 clear-cache:
 	$(RUN_PHP) bin/console cache:clear
 .PHONY: cache-clear
@@ -57,3 +53,23 @@ sync-start:
 cs-fixer:
 	$(RUN_COMPOSER) run-script cs-fixer
 .PHONY: cs-fixer
+
+db-migrate:
+	$(RUN_PHP) bin/console doctrine:migration:migrate -n
+.PHONY: db-migrate
+
+db-prev:
+	$(RUN_PHP) bin/console doctrine:migration:migrate prev -n
+.PHONY: db-prev
+
+db-next:
+	$(RUN_PHP) bin/console doctrine:migration:migrate next -n
+.PHONY: db-next
+
+db-diff:
+	$(RUN_PHP) bin/console doctrine:migration:diff -n
+.PHONY: db-diff
+
+db-gen:
+	$(RUN_PHP) bin/console doctrine:migration:generate -n
+.PHONY: db-gen

@@ -1,0 +1,9 @@
+CleaningCRM\Cleaning\Domain\Client\Event\BankAccountWasChanged:
+  exclusion_policy: ALL
+
+  properties:
+    clientId:
+      type: CleaningCRM\Cleaning\Domain\Client\ClientId
+
+    bankAccount:
+      type: string;

@@ -1,6 +1,20 @@
 FROM php:7.4-fpm-alpine
 
 RUN apk add --no-cache \
-        php7-pgsql
+        libzip-dev \
+        libmcrypt-dev \
+        freetype \
+        libpng \
+        libjpeg-turbo \
+        freetype-dev \
+        libpng-dev \
+        libjpeg-turbo-dev \
+        postgresql-dev \
+        git \
+        zip \
+        && docker-php-ext-install zip \
+    	&& docker-php-ext-configure gd --with-freetype --with-jpeg \
+    	&& docker-php-ext-install gd \
+        && docker-php-ext-install pdo pgsql pdo_pgsql
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer

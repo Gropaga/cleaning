@@ -5,16 +5,19 @@ namespace CleaningCRM\Cleaning\Application\Client\Command\Handler;
 use CleaningCRM\Cleaning\Application\Client\Command\Liquidate;
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
-use CleaningCRM\Todo\Application\Command\Todo\Delete;
+use CleaningCRM\Common\Domain\EventPublisher;
+use DateTimeImmutable;
 
-/** @see Delete */
+/** @see Liquidate */
 class LiquidateHandler
 {
-    private $repository;
+    private ClientRepository $repository;
+    private EventPublisher $publisher;
 
-    public function __construct(ClientRepository $repository)
+    public function __construct(ClientRepository $repository, EventPublisher $publisher)
     {
         $this->repository = $repository;
+        $this->publisher = $publisher;
     }
 
     public function __invoke(Liquidate $command)
@@ -22,8 +25,9 @@ class LiquidateHandler
         /** @var $client Client */
         $client = $this->repository->get($command->getClientId());
 
-        $client->liquidate($command->getLiquidatedAt());
+        $client->liquidate(DateTimeImmutable::createFromFormat(DateTimeImmutable::ATOM, $command->getLiquidatedAt()));
 
         $this->repository->add($client);
+        $this->publisher->add($client);
     }
 }

@@ -1,11 +1,14 @@
 <?php
 
-namespace CleaningCRM\Todo\Domain\Todo\Event;
+namespace CleaningCRM\Cleaning\Domain\Client\Event;
 
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Common\Domain\DomainEvent;
 use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
+
+//\CleaningCRM\Cleaning\Domain\Client\Event\VatNumberWasChanged
+//CleaningCRM.Cleaning.Domain.Client.Event.VatNumberWasChanged
 
 class VatNumberWasChanged implements DomainEvent
 {
@@ -13,10 +16,10 @@ class VatNumberWasChanged implements DomainEvent
 
     private string $vatNumber;
 
-    public function __construct(EventId $eventId, ClientId $aggregateId, string $vatNumber)
+    public function __construct(EventId $eventId, ClientId $clientId, string $vatNumber)
     {
         $this->eventId = $eventId;
-        $this->aggregateId = $aggregateId;
+        $this->aggregateId = $clientId;
         $this->vatNumber = $vatNumber;
     }
 

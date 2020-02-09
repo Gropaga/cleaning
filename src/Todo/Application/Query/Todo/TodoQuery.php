@@ -2,7 +2,7 @@
 
 namespace CleaningCRM\Todo\Application\Query\Todo;
 
-class TodoQuery
+final class TodoQuery
 {
     private $id;
 

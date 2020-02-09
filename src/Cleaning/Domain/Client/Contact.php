@@ -4,9 +4,17 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Cleaning\Domain\Client;
 
+use ArrayIterator;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
+use Exception;
+use IteratorAggregate;
+use JsonSerializable;
+use Traversable;
 
-class Contact
+//\CleaningCRM\Cleaning\Domain\Client\Contact
+//CleaningCRM.Cleaning.Domain.Client.Contact
+
+final class Contact implements Traversable, IteratorAggregate, JsonSerializable
 {
     private ContactId $contactId;
     private PersonId $personId;
@@ -56,5 +64,16 @@ class Contact
     public function equals(Contact $contact): bool
     {
         return $contact->getContactId()->equals($this->getContactId());
+    }
+
+    public function getIterator(): ArrayIterator
+    {
+        return new ArrayIterator(
+            [
+                'contactId' => $this->contactId,
+                'personId' => $this->personId,
+                'type' => $this->type,
+            ]
+        );
     }
 }

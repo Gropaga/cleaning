@@ -10,9 +10,6 @@ class TodoId implements AggregateId
 {
     private $todoId;
 
-    /**
-     * @throws Exception
-     */
     public static function generate(): TodoId
     {
         return new TodoId(UuidGenerator::generate());

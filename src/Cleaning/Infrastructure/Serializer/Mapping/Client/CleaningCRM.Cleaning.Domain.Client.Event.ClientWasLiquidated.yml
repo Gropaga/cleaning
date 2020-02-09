@@ -1,0 +1,10 @@
+CleaningCRM\Cleaning\Domain\Client\Event\ClientWasLiquidated:
+  exclusion_policy: ALL
+
+  properties:
+    clientId:
+      type: CleaningCRM\Cleaning\Domain\Client\ClientId
+
+    liquidatedAt:
+      type: DateTimeImmutable<'Y-m-d\TH:i:s'>
+

@@ -4,11 +4,11 @@ namespace CleaningCRM\Cleaning\Domain\Person;
 
 use Assert\AssertionFailedException;
 use CleaningCRM\Cleaning\Domain\Person\Event\AddressWasChanged;
-use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted;
 use CleaningCRM\Cleaning\Domain\Person\Event\EmailWasChanged;
 use CleaningCRM\Cleaning\Domain\Person\Event\NameWasChanged;
-use CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged;
 use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated;
+use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted;
+use CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged;
 use CleaningCRM\Common\Domain\Address;
 use CleaningCRM\Common\Domain\AggregateRoot;
 use CleaningCRM\Common\Domain\DomainEventsHistory;

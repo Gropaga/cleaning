@@ -8,7 +8,7 @@ use CleaningCRM\Todo\Application\Query\Todo\TodoCountQuery;
 use CleaningCRM\Todo\Domain\Todo\TodoCountReadModel;
 
 /** @see TodoCountQuery */
-class TodoCountQueryHandler extends QueryHandler
+class TodoCountQueryHandler extends TodoQueryHandler
 {
     public function __invoke(TodoCountQuery $query): TodoCountReadModel
     {

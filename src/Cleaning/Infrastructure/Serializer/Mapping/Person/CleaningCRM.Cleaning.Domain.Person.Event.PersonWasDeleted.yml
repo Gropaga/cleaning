@@ -1,0 +1,9 @@
+CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted:
+  exclusion_policy: ALL
+
+  properties:
+    personId:
+      type: CleaningCRM\Cleaning\Domain\Person\PersonId
+
+    deletedAt:
+      type: DateTimeImmutable<'Y-m-d\TH:i:s'>

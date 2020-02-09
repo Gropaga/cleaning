@@ -3,9 +3,9 @@
 namespace CleaningCRM\Cleaning\Domain\Person;
 
 use CleaningCRM\Cleaning\Domain\Person\Event\AddressWasChanged;
-use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated;
 use CleaningCRM\Cleaning\Domain\Person\Event\EmailWasChanged;
 use CleaningCRM\Cleaning\Domain\Person\Event\NameWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated;
 use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted;
 use CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged;
 use CleaningCRM\Common\Domain\Projection;

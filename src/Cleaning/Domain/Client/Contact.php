@@ -6,7 +6,6 @@ namespace CleaningCRM\Cleaning\Domain\Client;
 
 use ArrayIterator;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
-use Exception;
 use IteratorAggregate;
 use JsonSerializable;
 use Traversable;

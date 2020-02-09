@@ -90,8 +90,6 @@ SQL
         $clientStmt->execute([':id' => $event->getAggregateId()]);
         $clientStmtResult = $clientStmt->fetch(PDO::FETCH_ASSOC);
 
-
-
         $relatedContacts = $this->serializer->deserialize($clientStmtResult, Contact::class, 'JSON');
 
         $relatedContacts->append($event->getContactId());

@@ -11,7 +11,6 @@ use CleaningCRM\Common\Domain\Phone;
 //\CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged
 //CleaningCRM.Cleaning.Domain.Person.Event.PhoneWasChanged
 
-
 class PhoneWasChanged implements DomainEvent
 {
     use DomainEventTrait;

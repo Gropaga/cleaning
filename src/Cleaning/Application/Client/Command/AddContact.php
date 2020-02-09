@@ -4,7 +4,6 @@ namespace CleaningCRM\Cleaning\Application\Client\Command;
 
 use CleaningCRM\Cleaning\Application\Client\Command\Dto\ContactDto;
 use CleaningCRM\Cleaning\Application\Client\Command\Handler\AddContactHandler;
-use CleaningCRM\Cleaning\Domain\Client\ClientId;
 
 /** @see AddContactHandler */
 class AddContact extends ClientCommand

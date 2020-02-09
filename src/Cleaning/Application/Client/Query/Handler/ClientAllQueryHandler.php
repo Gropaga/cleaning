@@ -6,5 +6,4 @@ namespace CleaningCRM\Cleaning\Application\Client\Query\Handler;
 
 class ClientAllQueryHandler
 {
-
 }

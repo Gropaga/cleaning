@@ -10,7 +10,6 @@ use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
 use CleaningCRM\Cleaning\Domain\Client\ContactId;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
 use CleaningCRM\Common\Domain\EventPublisher;
-use Ramsey\Uuid\Uuid;
 
 /** @see AddContact */
 final class AddContactHandler

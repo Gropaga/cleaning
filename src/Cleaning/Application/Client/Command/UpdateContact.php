@@ -4,8 +4,6 @@ namespace CleaningCRM\Cleaning\Application\Client\Command;
 
 use CleaningCRM\Cleaning\Application\Client\Command\Dto\ContactDto;
 use CleaningCRM\Cleaning\Application\Client\Command\Handler\UpdateContactHandler;
-use CleaningCRM\Cleaning\Domain\Client\ContactId;
-use CleaningCRM\Cleaning\Domain\Person\PersonId;
 
 /** @see UpdateContactHandler */
 class UpdateContact extends ClientCommand

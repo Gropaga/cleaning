@@ -68,6 +68,4 @@ SQL
     {
         // TODO: Implement projectWhenPersonPhoneWasChanged() method.
     }
-
-
 }

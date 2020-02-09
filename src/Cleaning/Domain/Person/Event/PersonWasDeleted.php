@@ -8,7 +8,6 @@ use CleaningCRM\Common\Domain\DomainEventTrait;
 use CleaningCRM\Common\Domain\EventId;
 use DateTimeImmutable;
 
-
 //\CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted
 //CleaningCRM.Cleaning.Domain.Person.Event.PersonWasDeleted
 

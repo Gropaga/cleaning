@@ -2,7 +2,6 @@
 
 namespace CleaningCRM\Cleaning\Domain\Person\Event;
 
-use ArrayAccess;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
 use CleaningCRM\Common\Application\AsArrayTrait;
 use CleaningCRM\Common\Domain\Address;

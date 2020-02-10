@@ -6,4 +6,5 @@ namespace CleaningCRM\Cleaning\Application\Client\Query;
 
 final class ClientQuery
 {
+
 }

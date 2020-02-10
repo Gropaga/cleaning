@@ -1,5 +1,5 @@
 parameters:
-    todo.bundle_dir: '%kernel.project_dir%/src/Cleaning'
+    cleaning.bundle_dir: '%kernel.project_dir%/src/Cleaning'
     common.bundle_dir: '%kernel.project_dir%/src/Common'
 
     services:
@@ -10,3 +10,21 @@ parameters:
         CleaningCRM\Todo\Bridge\Symfony\Bundle\Command\:
             resource: '%todo.bundle_dir%/Bridge/Symfony/Bundle/Command'
             tags: ['console.command']
+
+        CleaningCRM\Todo\Application\Command\Todo\Handler\:
+            resource: '%todo.bundle_dir%/Application/Command/Client/Handler'
+            tags:
+                - { name: messenger.message_handler, bus: command.bus }
+
+        CleaningCRM\Todo\Application\Query\Todo\Handler\:
+            resource: '%todo.bundle_dir%/Application/Query/Client/Handler'
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }
+
+        CleaningCRM\Todo\Bridge\Symfony\Bundle\Controller\:
+            resource: '%todo.bundle_dir%/Bridge/Symfony/Bundle/Controller'
+            tags: ['controller.service_arguments']
+
+        CleaningCRM\Cleaning\Infrastructure\Persistence\ClientRepository: ~
+        CleaningCRM\Cleaning\Domain\Client\ClientRepository: '@CleaningCRM/Cleaning/Infrastructure/Persistence/ClientRepository'
+

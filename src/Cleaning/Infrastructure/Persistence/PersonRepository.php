@@ -3,22 +3,22 @@
 namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
 use Assert\AssertionFailedException;
-use CleaningCRM\Cleaning\Domain\Client\ClientProjection as ClientProjectionPort;
 use CleaningCRM\Cleaning\Domain\Person\Person;
-use CleaningCRM\Cleaning\Domain\Person\PersonRepository as ContactRepositoryPort;
+use CleaningCRM\Cleaning\Domain\Person\PersonProjection as PersonProjectionPort;
+use CleaningCRM\Cleaning\Domain\Person\PersonRepository as PersonRepositoryPort;
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\EventStore as EventStorePort;
 use CleaningCRM\Common\Domain\RecordsEvents;
 use Doctrine\DBAL\Connection;
 use Throwable;
 
-class PersonRepository implements ContactRepositoryPort
+class PersonRepository implements PersonRepositoryPort
 {
-    private $connection;
-    private $eventStore;
-    private $projection;
+    private Connection $connection;
+    private EventStorePort $eventStore;
+    private PersonProjectionPort $projection;
 
-    public function __construct(Connection $connection, EventStorePort $eventStore, ClientProjectionPort $projection)
+    public function __construct(Connection $connection, EventStorePort $eventStore, PersonProjectionPort $projection)
     {
         $this->connection = $connection;
         $this->eventStore = $eventStore;

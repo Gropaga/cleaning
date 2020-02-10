@@ -1,21 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientProjection as ClientProjectionPort;
-use CleaningCRM\Cleaning\Domain\Person\PersonRepository as ContactRepositoryPort;
+use CleaningCRM\Cleaning\Domain\Client\ClientRepository as ClientRepositoryPort;
 use CleaningCRM\Common\Domain\AggregateId;
 use CleaningCRM\Common\Domain\EventStore as EventStorePort;
 use CleaningCRM\Common\Domain\RecordsEvents;
 use Doctrine\DBAL\Connection;
 use Throwable;
 
-class ClientRepository implements ContactRepositoryPort
+class ClientRepository implements ClientRepositoryPort
 {
-    private $connection;
-    private $eventStore;
-    private $projection;
+    private Connection $connection;
+    private EventStorePort $eventStore;
+    private ClientProjectionPort $projection;
 
     public function __construct(
         Connection $connection,

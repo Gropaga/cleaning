@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Person;
 
-use CleaningCRM\Cleaning\Application\Contact\Dto\ContactDto;
+use CleaningCRM\Cleaning\Application\Person\Dto\ContactDto;
 use CleaningCRM\Common\Bridge\Symfony\Bundle\Converter\Deserialize;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;

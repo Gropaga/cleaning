@@ -2,29 +2,30 @@ parameters:
     cleaning.bundle_dir: '%kernel.project_dir%/src/Cleaning'
     common.bundle_dir: '%kernel.project_dir%/src/Common'
 
-    services:
-        _defaults:
-            autowire: true      # Automatically injects dependencies in your services.
-            autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-        CleaningCRM\Todo\Bridge\Symfony\Bundle\Command\:
-            resource: '%todo.bundle_dir%/Bridge/Symfony/Bundle/Command'
-            tags: ['console.command']
+    CleaningCRM\Cleaning\Application\Client\Command\Handler\:
+        resource: '%cleaning.bundle_dir%/Application/Client/Command/Handler'
+        tags:
+            - { name: messenger.message_handler, bus: command.bus }
 
-        CleaningCRM\Todo\Application\Command\Todo\Handler\:
-            resource: '%todo.bundle_dir%/Application/Command/Client/Handler'
-            tags:
-                - { name: messenger.message_handler, bus: command.bus }
+    CleaningCRM\Cleaning\Application\Client\Query\Handler\:
+        resource: '%cleaning.bundle_dir%/Application/Client/Query/Handler'
+        tags:
+            - { name: messenger.message_handler, bus: query.bus }
 
-        CleaningCRM\Todo\Application\Query\Todo\Handler\:
-            resource: '%todo.bundle_dir%/Application/Query/Client/Handler'
-            tags:
-                - { name: messenger.message_handler, bus: query.bus }
+    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Client\ClientController:
+#        resource: '%cleaning.bundle_dir%/Bridge/Symfony/Bundle/Controller/Client/'
+#        tags: ['controller.service_arguments']
 
-        CleaningCRM\Todo\Bridge\Symfony\Bundle\Controller\:
-            resource: '%todo.bundle_dir%/Bridge/Symfony/Bundle/Controller'
-            tags: ['controller.service_arguments']
+    CleaningCRM\Cleaning\Infrastructure\Persistence\ClientQueryRepository: ~
+    CleaningCRM\Cleaning\Domain\Client\ClientQueryRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\ClientQueryRepository'
 
-        CleaningCRM\Cleaning\Infrastructure\Persistence\ClientRepository: ~
-        CleaningCRM\Cleaning\Domain\Client\ClientRepository: '@CleaningCRM/Cleaning/Infrastructure/Persistence/ClientRepository'
+    CleaningCRM\Cleaning\Infrastructure\Persistence\ClientRepository: ~
+    CleaningCRM\Cleaning\Domain\Client\ClientRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\ClientRepository'
 
+    CleaningCRM\Cleaning\Infrastructure\Projection\ClientProjection: ~
+    CleaningCRM\Cleaning\Domain\Client\ClientProjection: '@CleaningCRM\Todo\Infrastructure\Projection\TodoProjection'

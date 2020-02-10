@@ -10,6 +10,7 @@ use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Common\Bridge\Symfony\Bundle\Converter\Deserialize;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;

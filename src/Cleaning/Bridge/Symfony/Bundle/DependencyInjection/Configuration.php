@@ -11,9 +11,6 @@ final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-
-        dd(123);
-
         $treeBuilder = new TreeBuilder('cleaningcms_cleaning');
 
         $treeBuilder

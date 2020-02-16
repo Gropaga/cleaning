@@ -30,7 +30,8 @@ class UpdateHandlerTest extends TestCase
         $interval = Interval::create($start, $end);
 
         $todoDto = new TodoDto();
-        $todoDto->interval = $interval;
+        $todoDto->start = $start->format('Y-m-d\TH:i:s');
+        $todoDto->end = $end->format('Y-m-d\TH:i:s');
         $todoDto->completed = true;
         $todoDto->title = 'New Title';
         $todoDto->description = 'New Description';

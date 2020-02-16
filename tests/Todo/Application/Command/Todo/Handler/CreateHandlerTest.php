@@ -9,6 +9,7 @@ use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
 use CleaningCRM\Cleaning\Domain\Shared\Interval;
 use CleaningCRM\Cleaning\Domain\Todo\TodoId;
 use CleaningCRM\Cleaning\Domain\Todo\TodoRepository;
+use DateInterval;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
@@ -26,7 +27,8 @@ class CreateHandlerTest extends TestCase
         $publisher->expects($this->once())->method('add');
 
         $todoDto = new TodoDto();
-        $todoDto->interval = Interval::create(new DateTimeImmutable(), new DateTimeImmutable());
+        $todoDto->start = (new DateTimeImmutable())->format('Y-m-d\TH:i:s');
+        $todoDto->end = (new DateTimeImmutable())->add(new DateInterval('P1D'))->format('Y-m-d\TH:i:s');
         $todoDto->completed = true;
         $todoDto->title = 'Titleeee';
         $todoDto->description = 'Megadescription';

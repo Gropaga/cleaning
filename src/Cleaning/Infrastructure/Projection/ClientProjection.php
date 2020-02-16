@@ -14,7 +14,7 @@ use CleaningCRM\Cleaning\Domain\Client\Event\ContactWasAdded;
 use CleaningCRM\Cleaning\Domain\Client\Event\ContactWasRemoved;
 use CleaningCRM\Cleaning\Domain\Client\Event\RegNumberWasChanged;
 use CleaningCRM\Cleaning\Domain\Client\Event\VatNumberWasChanged;
-use CleaningCRM\Common\Domain\AbstractProjection;
+use CleaningCRM\Cleaning\Domain\Shared\AbstractProjection;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use JMS\Serializer\SerializerInterface;

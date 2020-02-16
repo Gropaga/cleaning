@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Domain\Client;
 
-use CleaningCRM\Common\Domain\AggregateId;
-use CleaningCRM\Common\Domain\UuidGenerator;
+use CleaningCRM\Cleaning\Domain\Shared\AggregateId;
+use CleaningCRM\Cleaning\Domain\Shared\UuidGenerator;
 
 class ContactId implements AggregateId
 {

@@ -6,7 +6,7 @@ namespace CleaningCRM\Cleaning\Domain\Person;
 
 class PersonCountReadModel
 {
-    private $count;
+    private int $count;
 
     public function __construct(int $count)
     {

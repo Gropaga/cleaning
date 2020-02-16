@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Person;
 
 use CleaningCRM\Cleaning\Application\Person\Dto\ContactDto;
-use CleaningCRM\Common\Bridge\Symfony\Bundle\Converter\Deserialize;
+use CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Converter\Deserialize;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
@@ -50,17 +50,17 @@ final class PersonController
      */
     public function create(ContactDto $todo): Response
     {
-        $id = TodoId::generate();
-
-        $this->handle(
-            new Create($id, $todo)
-        );
-
-        return Response::create(
-            $this->serializer->serialize(
-                $id,
-                'json'
-            )
-        );
+//        $id = TodoId::generate();
+//
+//        $this->handle(
+//            new Create($id, $todo)
+//        );
+//
+//        return Response::create(
+//            $this->serializer->serialize(
+//                $id,
+//                'json'
+//            )
+//        );
     }
 }

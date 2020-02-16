@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Tests\Todo\Application\Command\Todo\Handler;
 
-use CleaningCRM\Common\Domain\Interval;
-use CleaningCRM\Todo\Application\Command\Todo\Handler\UpdateHandler;
-use CleaningCRM\Todo\Application\Command\Todo\Update;
-use CleaningCRM\Todo\Application\Dto\TodoDto;
-use CleaningCRM\Todo\Domain\Todo\Todo;
-use CleaningCRM\Todo\Domain\Todo\TodoId;
-use CleaningCRM\Todo\Domain\Todo\TodoRepository;
+use CleaningCRM\Cleaning\Application\Todo\Command\Handler\UpdateHandler;
+use CleaningCRM\Cleaning\Application\Todo\Command\Update;
+use CleaningCRM\Cleaning\Application\Todo\Dto\TodoDto;
+use CleaningCRM\Cleaning\Domain\Shared\Interval;
+use CleaningCRM\Cleaning\Domain\Todo\Todo;
+use CleaningCRM\Cleaning\Domain\Todo\TodoId;
+use CleaningCRM\Cleaning\Domain\Todo\TodoRepository;
 use DateInterval;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;

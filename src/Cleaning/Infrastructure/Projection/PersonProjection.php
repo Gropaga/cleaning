@@ -9,7 +9,7 @@ use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated;
 use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted;
 use CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged;
 use CleaningCRM\Cleaning\Domain\Person\PersonProjection as ContactProjectionPort;
-use CleaningCRM\Common\Domain\AbstractProjection;
+use CleaningCRM\Cleaning\Domain\Shared\AbstractProjection;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use JsonException;

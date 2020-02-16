@@ -1,0 +1,11 @@
+CleaningCRM\Cleaning\Domain\Todo\Event\TodoDeletedAtWasChanged:
+    exclusion_policy: ALL
+
+    properties:
+        todoId:
+            type: CleaningCRM\Cleaning\Domain\Todo\TodoId
+            serialized_name: todo_id
+
+        deletedAt:
+            type: DateTimeImmutable
+            serialized_name: deleted_at

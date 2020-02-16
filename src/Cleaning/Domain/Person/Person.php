@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Domain\Person;
 
 use Assert\AssertionFailedException;
@@ -9,14 +11,13 @@ use CleaningCRM\Cleaning\Domain\Person\Event\NameWasChanged;
 use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated;
 use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted;
 use CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged;
-use CleaningCRM\Common\Domain\Address;
-use CleaningCRM\Common\Domain\AggregateRoot;
-use CleaningCRM\Common\Domain\DomainEventsHistory;
-use CleaningCRM\Common\Domain\Email;
-use CleaningCRM\Common\Domain\EventId;
-use CleaningCRM\Common\Domain\Name;
-use CleaningCRM\Common\Domain\Phone;
-use CleaningCRM\Todo\Domain\Todo\Event\TodoDeletedAtWasChanged;
+use CleaningCRM\Cleaning\Domain\Shared\Address;
+use CleaningCRM\Cleaning\Domain\Shared\AggregateRoot;
+use CleaningCRM\Cleaning\Domain\Shared\DomainEventsHistory;
+use CleaningCRM\Cleaning\Domain\Shared\Email;
+use CleaningCRM\Cleaning\Domain\Shared\EventId;
+use CleaningCRM\Cleaning\Domain\Shared\Name;
+use CleaningCRM\Cleaning\Domain\Shared\Phone;
 use DateTimeImmutable;
 
 final class Person extends AggregateRoot
@@ -181,14 +182,14 @@ final class Person extends AggregateRoot
             return;
         }
 
-        $todoDeletedAtWasChanged = new PersonWasDeleted(
+        $personWasDeleted = new PersonWasDeleted(
             EventId::generate(),
             $this->id,
             $deleteAt
         );
 
-        $this->applyAndRecordThat($todoDeletedAtWasChanged);
-        $this->notifyThat($todoDeletedAtWasChanged);
+        $this->applyAndRecordThat($personWasDeleted);
+        $this->notifyThat($personWasDeleted);
     }
 
     public function applyPersonWasCreated(PersonWasCreated $event): void
@@ -219,7 +220,7 @@ final class Person extends AggregateRoot
         $this->address = $event->getAddress();
     }
 
-    protected function applyTodoDeletedAtWasChanged(TodoDeletedAtWasChanged $event): void
+    protected function applyPersonWasDeleted(PersonWasDeleted $event): void
     {
         $this->deletedAt = $event->getDeletedAt();
     }

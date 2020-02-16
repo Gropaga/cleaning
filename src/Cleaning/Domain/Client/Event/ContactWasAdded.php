@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Domain\Client\Event;
 
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Cleaning\Domain\Client\ContactId;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
-use CleaningCRM\Common\Domain\DomainEvent;
-use CleaningCRM\Common\Domain\DomainEventTrait;
-use CleaningCRM\Common\Domain\EventId;
-
-//\CleaningCRM\Cleaning\Domain\Client\Event\ContactWasAdded
-// CleaningCRM.Cleaning.Domain.Client.Event.ContactWasAdded
+use CleaningCRM\Cleaning\Domain\Shared\DomainEvent;
+use CleaningCRM\Cleaning\Domain\Shared\DomainEventTrait;
+use CleaningCRM\Cleaning\Domain\Shared\EventId;
 
 final class ContactWasAdded implements DomainEvent
 {

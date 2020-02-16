@@ -73,3 +73,7 @@ db-diff:
 db-gen:
 	$(RUN_PHP) bin/console doctrine:migration:generate -n
 .PHONY: db-gen
+
+debug-autowiring:
+	$(RUN_PHP) bin/console debug:autowiring
+.PHONY: debug-autowiring

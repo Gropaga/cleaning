@@ -7,7 +7,7 @@ namespace CleaningCRM\Cleaning\Application\Client\Command\Handler;
 use CleaningCRM\Cleaning\Application\Client\Command\RemoveContact;
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
-use CleaningCRM\Common\Domain\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
 
 /** @see RemoveContact */
 class RemoveContactHandler

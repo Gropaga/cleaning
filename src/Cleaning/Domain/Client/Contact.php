@@ -7,13 +7,9 @@ namespace CleaningCRM\Cleaning\Domain\Client;
 use ArrayIterator;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
 use IteratorAggregate;
-use JsonSerializable;
 use Traversable;
 
-//\CleaningCRM\Cleaning\Domain\Client\Contact
-//CleaningCRM.Cleaning.Domain.Client.Contact
-
-final class Contact implements Traversable, IteratorAggregate, JsonSerializable
+final class Contact implements Traversable, IteratorAggregate
 {
     private ContactId $contactId;
     private PersonId $personId;

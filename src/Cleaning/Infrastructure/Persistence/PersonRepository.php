@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
 use Assert\AssertionFailedException;
 use CleaningCRM\Cleaning\Domain\Person\Person;
 use CleaningCRM\Cleaning\Domain\Person\PersonProjection as PersonProjectionPort;
 use CleaningCRM\Cleaning\Domain\Person\PersonRepository as PersonRepositoryPort;
-use CleaningCRM\Common\Domain\AggregateId;
-use CleaningCRM\Common\Domain\EventStore as EventStorePort;
-use CleaningCRM\Common\Domain\RecordsEvents;
+use CleaningCRM\Cleaning\Domain\Shared\AggregateId;
+use CleaningCRM\Cleaning\Domain\Shared\EventStore as EventStorePort;
+use CleaningCRM\Cleaning\Domain\Shared\RecordsEvents;
 use Doctrine\DBAL\Connection;
 use Throwable;
 

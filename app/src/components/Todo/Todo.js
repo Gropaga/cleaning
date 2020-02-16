@@ -38,10 +38,8 @@ const Todo = function () {
             saveTodo(
                 {
                     id,
-                    interval: {
-                        start: moment(start).format('YYYY-MM-DD\THH:mm:ss'),
-                        end: moment(end).format('YYYY-MM-DD\THH:mm:ss'),
-                    },
+                    start: moment(start).format('YYYY-MM-DD\THH:mm:ss'),
+                    end: moment(end).format('YYYY-MM-DD\THH:mm:ss'),
                     title,
                     description,
                     completed

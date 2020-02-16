@@ -1,0 +1,23 @@
+CleaningCRM\Cleaning\Domain\Todo\Event\TodoWasCreated:
+    exclusion_policy: ALL
+
+    properties:
+        todoId:
+            type: CleaningCRM\Cleaning\Domain\Todo\TodoId
+            serialized_name: todo_id
+
+        title:
+            type: string
+
+        description:
+            type: string
+
+        completed:
+            type: boolean
+
+        interval:
+            type: CleaningCRM\Cleaning\Domain\Shared\Interval
+
+        deletedAt:
+            type: DateTimeImmutable
+            serialized_name: deleted_at

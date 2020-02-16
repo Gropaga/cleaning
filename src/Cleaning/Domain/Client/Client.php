@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Domain\Client;
 
 use Assert\AssertionFailedException;
 use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasCreated;
 use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasLiquidated;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
-use CleaningCRM\Common\Domain\Address;
-use CleaningCRM\Common\Domain\AggregateRoot;
-use CleaningCRM\Common\Domain\DomainEventsHistory;
-use CleaningCRM\Common\Domain\EventId;
+use CleaningCRM\Cleaning\Domain\Shared\Address;
+use CleaningCRM\Cleaning\Domain\Shared\AggregateRoot;
+use CleaningCRM\Cleaning\Domain\Shared\DomainEventsHistory;
+use CleaningCRM\Cleaning\Domain\Shared\EventId;
 use DateTimeImmutable;
 
 final class Client extends AggregateRoot

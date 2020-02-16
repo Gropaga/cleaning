@@ -9,7 +9,7 @@ use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
 use CleaningCRM\Cleaning\Domain\Client\ContactId;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
-use CleaningCRM\Common\Domain\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
 
 /** @see AddContact */
 final class AddContactHandler

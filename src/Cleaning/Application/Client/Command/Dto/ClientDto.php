@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CleaningCRM\Cleaning\Application\Client\Dto;
+namespace CleaningCRM\Cleaning\Application\Client\Command\Dto;
 
 use ArrayAccess;
-use CleaningCRM\Common\Application\AsArrayTrait;
+use CleaningCRM\Cleaning\Application\Shared\AsArrayTrait;
 
 final class ClientDto implements ArrayAccess
 {

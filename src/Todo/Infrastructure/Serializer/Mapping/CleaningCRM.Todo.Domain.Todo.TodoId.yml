@@ -1,6 +1,0 @@
-CleaningCRM\Todo\Domain\Todo\TodoId:
-  exclusion_policy: ALL
-  properties:
-    todoId:
-      type: string
-      serialized_name: id

@@ -8,7 +8,7 @@ use CleaningCRM\Cleaning\Application\Client\Command\UpdateContact;
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
 use CleaningCRM\Cleaning\Domain\Client\ContactId;
-use CleaningCRM\Common\Domain\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
 
 /** @see UpdateContact */
 class UpdateContactHandler

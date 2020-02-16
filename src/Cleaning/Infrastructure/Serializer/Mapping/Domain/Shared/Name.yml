@@ -1,0 +1,9 @@
+CleaningCRM\Cleaning\Domain\Shared\Name:
+  exclusion_policy: ALL
+
+  properties:
+    name:
+      type: string
+
+    surname:
+      type: string

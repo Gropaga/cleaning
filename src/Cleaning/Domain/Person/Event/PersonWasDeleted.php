@@ -1,15 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Domain\Person\Event;
 
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
-use CleaningCRM\Common\Domain\DomainEvent;
-use CleaningCRM\Common\Domain\DomainEventTrait;
-use CleaningCRM\Common\Domain\EventId;
+use CleaningCRM\Cleaning\Domain\Shared\DomainEvent;
+use CleaningCRM\Cleaning\Domain\Shared\DomainEventTrait;
+use CleaningCRM\Cleaning\Domain\Shared\EventId;
 use DateTimeImmutable;
-
-//\CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted
-//CleaningCRM.Cleaning.Domain.Person.Event.PersonWasDeleted
 
 class PersonWasDeleted implements DomainEvent
 {

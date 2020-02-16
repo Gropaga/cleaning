@@ -1,31 +1,96 @@
 parameters:
-    cleaning.bundle_dir: '%kernel.project_dir%/src/Cleaning'
-    common.bundle_dir: '%kernel.project_dir%/src/Common'
+    bundle_name: 'cleaning'
+    bundle_dir: '%kernel.project_dir%/src/Cleaning'
+    mapping_dir: '%bundle_dir%/Infrastructure/Serializer/Mapping'
 
 services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Command\Client\:
+        resource: '%bundle_dir%/Bridge/Symfony/Bundle/Command/Client'
+        tags: ['console.command']
+
     CleaningCRM\Cleaning\Application\Client\Command\Handler\:
-        resource: '%cleaning.bundle_dir%/Application/Client/Command/Handler'
+        resource: '%bundle_dir%/Application/Client/Command/Handler'
         tags:
             - { name: messenger.message_handler, bus: command.bus }
 
     CleaningCRM\Cleaning\Application\Client\Query\Handler\:
-        resource: '%cleaning.bundle_dir%/Application/Client/Query/Handler'
+        resource: '%bundle_dir%/Application/Client/Query/Handler'
         tags:
             - { name: messenger.message_handler, bus: query.bus }
 
-    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Client\ClientController:
-#        resource: '%cleaning.bundle_dir%/Bridge/Symfony/Bundle/Controller/Client/'
-#        tags: ['controller.service_arguments']
+    CleaningCRM\Cleaning\Application\Todo\Command\Handler\:
+        resource: '%bundle_dir%/Application/Todo/Command/Handler'
+        tags:
+            - { name: messenger.message_handler, bus: command.bus }
 
-    CleaningCRM\Cleaning\Infrastructure\Persistence\ClientQueryRepository: ~
-    CleaningCRM\Cleaning\Domain\Client\ClientQueryRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\ClientQueryRepository'
+    CleaningCRM\Cleaning\Application\Todo\Query\Handler\:
+        resource: '%bundle_dir%/Application/Todo/Query/Handler'
+        tags:
+            - { name: messenger.message_handler, bus: query.bus }
+
+    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Client\:
+        resource: '%bundle_dir%/Bridge/Symfony/Bundle/Controller/Client'
+        tags: ['controller.service_arguments']
+
+    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Todo\:
+        resource: '%bundle_dir%/Bridge/Symfony/Bundle/Controller/Todo'
+        tags: ['controller.service_arguments']
+
+    CleaningCRM\Cleaning\Infrastructure\EventPublisher\AggregateEventPublisher: ~
+    CleaningCRM\Cleaning\Domain\Shared\EventPublisher: '@CleaningCRM\Cleaning\Infrastructure\EventPublisher\AggregateEventPublisher'
 
     CleaningCRM\Cleaning\Infrastructure\Persistence\ClientRepository: ~
     CleaningCRM\Cleaning\Domain\Client\ClientRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\ClientRepository'
 
+    CleaningCRM\Cleaning\Infrastructure\Persistence\ClientQueryRepository: ~
+    CleaningCRM\Cleaning\Domain\Client\ClientQueryRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\ClientQueryRepository'
+
     CleaningCRM\Cleaning\Infrastructure\Projection\ClientProjection: ~
-    CleaningCRM\Cleaning\Domain\Client\ClientProjection: '@CleaningCRM\Todo\Infrastructure\Projection\TodoProjection'
+    CleaningCRM\Cleaning\Domain\Client\ClientProjection: '@CleaningCRM\Cleaning\Infrastructure\Projection\ClientProjection'
+
+    CleaningCRM\Cleaning\Infrastructure\Persistence\ClientReadModelMapper: ~
+    CleaningCRM\Cleaning\Infrastructure\Persistence\ContactReadModelMapper: ~
+
+    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Serializer\SerializerFactory:
+        arguments:
+            - '%kernel.project_dir%/var/cache/cleaning/serializer'
+            - '%kernel.debug%'
+            -
+              CleaningCRM\Cleaning\Domain\Client: '%mapping_dir%/Domain/Client'
+              CleaningCRM\Cleaning\Domain\Todo: '%mapping_dir%/Domain/Todo'
+              CleaningCRM\Cleaning\Domain\Person: '%mapping_dir%/Domain/Person'
+              CleaningCRM\Cleaning\Domain\Shared: '%mapping_dir%/Domain/Shared'
+              CleaningCRM\Cleaning\Application\Todo: '%mapping_dir%/Application/Todo'
+
+    JMS\Serializer\Serializer:
+        factory: 'CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Serializer\SerializerFactory:create'
+
+    JMS\Serializer\SerializerInterface: '@JMS\Serializer\Serializer'
+
+    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Converter\DeserializeSubscriber:
+        tags: ['kernel.event_subscriber']
+
+    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\IntegrationEvents\PublishEvents:
+        tags: ['kernel.response', 'console.terminate']
+
+    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Command\:
+        resource: '%bundle_dir%/Bridge/Symfony/Bundle/Command'
+        tags: ['console.command']
+
+    CleaningCRM\Cleaning\Infrastructure\Persistence\TodoRepository: ~
+    CleaningCRM\Cleaning\Domain\Todo\TodoRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\TodoRepository'
+
+    CleaningCRM\Cleaning\Infrastructure\Persistence\TodoQueryRepository: ~
+    CleaningCRM\Cleaning\Domain\Todo\TodoQueryRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\TodoQueryRepository'
+
+    CleaningCRM\Cleaning\Infrastructure\Persistence\SQLEventStore: ~
+    CleaningCRM\Cleaning\Domain\Shared\EventStore: '@CleaningCRM\Cleaning\Infrastructure\Persistence\SQLEventStore'
+
+    CleaningCRM\Cleaning\Infrastructure\Projection\TodoProjection: ~
+    CleaningCRM\Cleaning\Domain\Todo\TodoProjection: '@CleaningCRM\Cleaning\Infrastructure\Projection\TodoProjection'
+
+    CleaningCRM\Cleaning\Infrastructure\Persistence\TodoReadModelMapper: ~

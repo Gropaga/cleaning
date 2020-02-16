@@ -1,6 +1,8 @@
 <?php
 
-namespace CleaningCRM\Cleaning\Infrastructure\Persistence;;
+declare(strict_types=1);
+
+namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
 use CleaningCRM\Cleaning\Domain\Client\ClientCountReadModel;
 use CleaningCRM\Cleaning\Domain\Client\ClientQueryRepository as ClientQueryRepositoryPort;

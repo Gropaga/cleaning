@@ -1,6 +1,8 @@
 <?php
 
-namespace CleaningCRM\Cleaning\Infrastructure\Persistence;;
+declare(strict_types=1);
+
+namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
 class ClientReadModelMapper
 {

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Tests\Todo\Application\Command\Todo\Handler;
 
-use CleaningCRM\Todo\Application\Command\Todo\Delete;
-use CleaningCRM\Todo\Application\Command\Todo\Handler\DeleteHandler;
-use CleaningCRM\Todo\Domain\Todo\Todo;
-use CleaningCRM\Todo\Domain\Todo\TodoId;
-use CleaningCRM\Todo\Domain\Todo\TodoRepository;
+use CleaningCRM\Cleaning\Application\Todo\Command\Delete;
+use CleaningCRM\Cleaning\Application\Todo\Command\Handler\DeleteHandler;
+use CleaningCRM\Cleaning\Domain\Todo\Todo;
+use CleaningCRM\Cleaning\Domain\Todo\TodoId;
+use CleaningCRM\Cleaning\Domain\Todo\TodoRepository;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 

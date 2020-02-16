@@ -1,17 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Domain\Person\Event;
 
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
-use CleaningCRM\Common\Domain\DomainEvent;
-use CleaningCRM\Common\Domain\DomainEventTrait;
-use CleaningCRM\Common\Domain\Email;
-use CleaningCRM\Common\Domain\EventId;
+use CleaningCRM\Cleaning\Domain\Shared\DomainEvent;
+use CleaningCRM\Cleaning\Domain\Shared\DomainEventTrait;
+use CleaningCRM\Cleaning\Domain\Shared\Email;
+use CleaningCRM\Cleaning\Domain\Shared\EventId;
 
-//CleaningCRM\Cleaning\Domain\Person\Event\EmailWasChanged
-//CleaningCRM.Cleaning.Domain.Person.Event.EmailWasChanged
-
-class EmailWasChanged implements DomainEvent
+final class EmailWasChanged implements DomainEvent
 {
     use DomainEventTrait;
 

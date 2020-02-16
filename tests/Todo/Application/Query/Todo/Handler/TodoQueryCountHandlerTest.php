@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Tests\Todo\Application\Query\Todo\Handler;
 
-use CleaningCRM\Todo\Application\Query\Todo\Handler\TodoCountQueryHandler;
-use CleaningCRM\Todo\Application\Query\Todo\TodoCountQuery;
-use CleaningCRM\Todo\Domain\Todo\TodoCountReadModel;
-use CleaningCRM\Todo\Domain\Todo\TodoQueryRepository;
+use CleaningCRM\Cleaning\Application\Todo\Query\Handler\TodoCountQueryHandler;
+use CleaningCRM\Cleaning\Application\Todo\Query\TodoCountQuery;
+use CleaningCRM\Cleaning\Domain\Todo\TodoCountReadModel;
+use CleaningCRM\Cleaning\Domain\Todo\TodoQueryRepository;
 use PHPUnit\Framework\TestCase;
 
 class TodoQueryCountHandlerTest extends TestCase

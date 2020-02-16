@@ -1,21 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Domain\Person\Event;
 
+use CleaningCRM\Cleaning\Application\Shared\AsArrayTrait;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
-use CleaningCRM\Common\Application\AsArrayTrait;
-use CleaningCRM\Common\Domain\Address;
-use CleaningCRM\Common\Domain\DomainEvent;
-use CleaningCRM\Common\Domain\DomainEventTrait;
-use CleaningCRM\Common\Domain\Email;
-use CleaningCRM\Common\Domain\EventId;
-use CleaningCRM\Common\Domain\Name;
-use CleaningCRM\Common\Domain\Phone;
+use CleaningCRM\Cleaning\Domain\Shared\Address;
+use CleaningCRM\Cleaning\Domain\Shared\DomainEvent;
+use CleaningCRM\Cleaning\Domain\Shared\DomainEventTrait;
+use CleaningCRM\Cleaning\Domain\Shared\Email;
+use CleaningCRM\Cleaning\Domain\Shared\EventId;
+use CleaningCRM\Cleaning\Domain\Shared\Name;
+use CleaningCRM\Cleaning\Domain\Shared\Phone;
 
-//\CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated
-//CleaningCRM.Cleaning.Domain.Person.Event.PersonWasCreated
-
-class PersonWasCreated implements DomainEvent
+final class PersonWasCreated implements DomainEvent
 {
     use DomainEventTrait;
     use AsArrayTrait;

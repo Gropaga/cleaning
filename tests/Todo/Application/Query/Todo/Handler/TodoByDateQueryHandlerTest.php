@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Tests\Todo\Application\Query\Todo\Handler;
 
-use CleaningCRM\Todo\Application\Query\Todo\Handler\TodoByDateQueryHandler;
-use CleaningCRM\Todo\Application\Query\Todo\TodoByDateQuery;
-use CleaningCRM\Todo\Domain\Todo\TodoQueryRepository;
+use CleaningCRM\Cleaning\Application\Todo\Query\Handler\TodoByDateQueryHandler;
+use CleaningCRM\Cleaning\Application\Todo\Query\TodoByDateQuery;
+use CleaningCRM\Cleaning\Domain\Todo\TodoQueryRepository;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 

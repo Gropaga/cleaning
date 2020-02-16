@@ -1,9 +1,0 @@
-CleaningCRM\Cleaning\Domain\Person\Event\AddressWasChanged:
-  exclusion_policy: ALL
-
-  properties:
-    personId:
-      type: CleaningCRM\Cleaning\Domain\Person\PersonId
-
-    address:
-      type: CleaningCRM\Common\Domain\Address

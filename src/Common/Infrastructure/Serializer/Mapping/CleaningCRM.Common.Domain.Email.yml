@@ -1,6 +1,0 @@
-CleaningCRM\Common\Domain\Email:
-  exclusion_policy: ALL
-
-  properties:
-    email:
-      type: string

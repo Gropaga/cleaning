@@ -35,14 +35,14 @@ export const showEditTodo = id => {
     }
 };
 
-export const addTodo = ({interval, title, description, completed}) => ({id}) => {
+export const addTodo = ({start, end, title, description, completed}) => ({id}) => {
     return {
         type: ADD_TODO,
         payload: {
             id,
             interval: {
-                start: moment(interval.start).toDate(),
-                end: moment(interval.end).toDate()
+                start: moment(start).toDate(),
+                end: moment(end).toDate()
             },
             title,
             description,
@@ -80,6 +80,9 @@ export const deleteTodo = deletedId => {
 };
 
 export const saveTodo = request => {
+
+    console.log(request);
+
     if (typeof request.id === 'undefined') {
         return {
             type: API,
@@ -93,7 +96,7 @@ export const saveTodo = request => {
         }
     }
 
-    const { title, description, interval, completed } = request;
+    const { title, description, start, end, completed } = request;
 
     return {
         type: API,
@@ -104,7 +107,8 @@ export const saveTodo = request => {
             request: {
                 title,
                 description,
-                interval,
+                start,
+                end,
                 completed
             },
             onSuccess: addTodo(request)

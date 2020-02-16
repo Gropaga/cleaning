@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Application\Client\Command;
 
 use CleaningCRM\Cleaning\Domain\Client\ClientId;

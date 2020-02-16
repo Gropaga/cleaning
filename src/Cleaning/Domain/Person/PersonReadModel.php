@@ -1,38 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Domain\Person;
 
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
-use CleaningCRM\Common\Domain\Address;
-use CleaningCRM\Common\Domain\Name;
-use CleaningCRM\Common\Domain\Phone;
+use CleaningCRM\Cleaning\Domain\Shared\Address;
+use CleaningCRM\Cleaning\Domain\Shared\Email;
+use CleaningCRM\Cleaning\Domain\Shared\Name;
+use CleaningCRM\Cleaning\Domain\Shared\Phone;
 use DateTimeImmutable;
 
 class PersonReadModel
 {
-    private $id;
-    private $name;
-    private $phone;
-    private $email;
-    private $address;
-    private $clients;
-    private $deletedAt;
+    private ClientId $id;
+    private Name $name;
+    private Phone $phone;
+    private Email $email;
+    private Address $address;
+    private ?DateTimeImmutable $deletedAt;
 
     public function __construct(
-        $id,
-        $name,
-        $phone,
-        $email,
-        $address,
-        $clients,
-        $deletedAt
+        ClientId $id,
+        Name $name,
+        Phone $phone,
+        Email $email,
+        Address $address,
+        ?DateTimeImmutable $deletedAt
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->phone = $phone;
         $this->email = $email;
         $this->address = $address;
-        $this->clients = $clients;
         $this->deletedAt = $deletedAt;
     }
 
@@ -51,7 +51,7 @@ class PersonReadModel
         return $this->phone;
     }
 
-    public function getEmail(): string
+    public function getEmail(): Email
     {
         return $this->email;
     }
@@ -61,12 +61,7 @@ class PersonReadModel
         return $this->address;
     }
 
-    public function getClients(): PersonReadModelCollection
-    {
-        return $this->clients;
-    }
-
-    public function getDeletedAt(): DateTimeImmutable
+    public function getDeletedAt(): ?DateTimeImmutable
     {
         return $this->deletedAt;
     }

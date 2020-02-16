@@ -1,26 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Domain\Client;
 
-use CleaningCRM\Cleaning\Domain\Person\RelatedContacts;
-use CleaningCRM\Common\Domain\Address;
+use CleaningCRM\Cleaning\Domain\Shared\Address;
 use DateTimeImmutable;
 
 class ClientReadModel
 {
-    private $id;
-    private $companyName;
-    private $contacts;
-    private $address;
-    private $vatNumber;
-    private $regNumber;
-    private $bankAccount;
-    private $liquidatedAt;
+    private ClientId $id;
+    private string $companyName;
+    private array $contacts;
+    private Address $address;
+    private string $vatNumber;
+    private string $regNumber;
+    private string $bankAccount;
+    private ?DateTimeImmutable $liquidatedAt;
 
     private function __construct(
         ClientId $id,
         string $companyName,
-        RelatedContacts $contacts,
+        array $contacts,
         Address $address,
         string $vatNumber,
         string $regNumber,
@@ -47,7 +48,7 @@ class ClientReadModel
         return $this->companyName;
     }
 
-    public function getContacts(): RelatedContacts
+    public function getContacts(): array
     {
         return $this->contacts;
     }

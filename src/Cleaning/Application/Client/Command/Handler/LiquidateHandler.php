@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Application\Client\Command\Handler;
 
 use CleaningCRM\Cleaning\Application\Client\Command\Liquidate;
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
-use CleaningCRM\Common\Domain\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
 use DateTimeImmutable;
 
 /** @see Liquidate */

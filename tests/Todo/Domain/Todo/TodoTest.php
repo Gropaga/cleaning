@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Tests\Todo\Domain\Todo;
 
-use CleaningCRM\Common\Domain\DomainEvents;
-use CleaningCRM\Common\Domain\DomainEventsHistory;
-use CleaningCRM\Common\Domain\EventId;
-use CleaningCRM\Common\Domain\Interval;
-use CleaningCRM\Todo\Domain\Todo\Event\TodoCompletedWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\TodoDescriptionWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\TodoIntervalWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\TodoTitleWasChanged;
-use CleaningCRM\Todo\Domain\Todo\Event\TodoWasCreated;
-use CleaningCRM\Todo\Domain\Todo\Todo;
-use CleaningCRM\Todo\Domain\Todo\TodoId;
+use CleaningCRM\Cleaning\Domain\Shared\DomainEvents;
+use CleaningCRM\Cleaning\Domain\Shared\DomainEventsHistory;
+use CleaningCRM\Cleaning\Domain\Shared\EventId;
+use CleaningCRM\Cleaning\Domain\Shared\Interval;
+use CleaningCRM\Cleaning\Domain\Todo\Event\TodoCompletedWasChanged;
+use CleaningCRM\Cleaning\Domain\Todo\Event\TodoDescriptionWasChanged;
+use CleaningCRM\Cleaning\Domain\Todo\Event\TodoIntervalWasChanged;
+use CleaningCRM\Cleaning\Domain\Todo\Event\TodoTitleWasChanged;
+use CleaningCRM\Cleaning\Domain\Todo\Event\TodoWasCreated;
+use CleaningCRM\Cleaning\Domain\Todo\Todo;
+use CleaningCRM\Cleaning\Domain\Todo\TodoId;
 use DateInterval;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;

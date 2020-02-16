@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Client;
 
 use CleaningCRM\Cleaning\Application\Client\Command\Create;
-use CleaningCRM\Cleaning\Application\Client\Dto\ClientDto;
+use CleaningCRM\Cleaning\Application\Client\Command\Dto\ClientDto;
+use CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Converter\Deserialize;
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
-use CleaningCRM\Common\Bridge\Symfony\Bundle\Converter\Deserialize;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;

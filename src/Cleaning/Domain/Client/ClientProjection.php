@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Domain\Client;
 
 use CleaningCRM\Cleaning\Domain\Client\Event\AddressWasChanged;
@@ -11,7 +13,7 @@ use CleaningCRM\Cleaning\Domain\Client\Event\ContactWasAdded;
 use CleaningCRM\Cleaning\Domain\Client\Event\ContactWasRemoved;
 use CleaningCRM\Cleaning\Domain\Client\Event\RegNumberWasChanged;
 use CleaningCRM\Cleaning\Domain\Client\Event\VatNumberWasChanged;
-use CleaningCRM\Common\Domain\Projection;
+use CleaningCRM\Cleaning\Domain\Shared\Projection;
 
 interface ClientProjection extends Projection
 {

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaningCRM\Cleaning\Application\Client\Command\Handler;
 
 use CleaningCRM\Cleaning\Application\Client\Command\Update;
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
-use CleaningCRM\Common\Domain\Address;
-use CleaningCRM\Common\Domain\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\Address;
+use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
 
 /** @see Update */
 class UpdateHandler

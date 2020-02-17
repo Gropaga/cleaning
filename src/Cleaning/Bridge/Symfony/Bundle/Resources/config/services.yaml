@@ -55,23 +55,6 @@ services:
     CleaningCRM\Cleaning\Infrastructure\Persistence\ClientReadModelMapper: ~
     CleaningCRM\Cleaning\Infrastructure\Persistence\ContactReadModelMapper: ~
 
-    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Serializer\SerializerFactory:
-        arguments:
-            - '%kernel.project_dir%/var/cache/cleaning/serializer'
-            - '%kernel.debug%'
-            -
-              CleaningCRM\Cleaning\Domain\Client: '%mapping_dir%/Domain/Client'
-              CleaningCRM\Cleaning\Domain\Todo: '%mapping_dir%/Domain/Todo'
-              CleaningCRM\Cleaning\Domain\Person: '%mapping_dir%/Domain/Person'
-              CleaningCRM\Cleaning\Domain\Shared: '%mapping_dir%/Domain/Shared'
-              CleaningCRM\Cleaning\Application\Todo: '%mapping_dir%/Application/Todo'
-              CleaningCRM\Cleaning\Application\Client: '%mapping_dir%/Application/Client'
-
-    JMS\Serializer\Serializer:
-        factory: 'CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Serializer\SerializerFactory:create'
-
-    JMS\Serializer\SerializerInterface: '@JMS\Serializer\Serializer'
-
     CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Converter\DeserializeSubscriber:
         tags: ['kernel.event_subscriber']
 

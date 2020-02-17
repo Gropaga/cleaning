@@ -12,8 +12,6 @@ use CleaningCRM\Cleaning\Domain\Todo\TodoId;
 use CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Converter\Deserialize;
 use DateTimeImmutable;
 use JMS\Serializer\SerializerInterface;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -36,21 +34,6 @@ final class TodoController
 
     /**
      * @Route("/create", methods={"POST"})
-     * @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         required=true,
-     *         @SWG\Schema(ref=@Model(type=TodoDto::class))
-     *     )
-     * @SWG\Response(
-     *         response=202,
-     *         description="Request accepted.",
-     *         @SWG\Header(
-     *             header="Location",
-     *             type="string",
-     *             description="New cinema resource."
-     *         )
-     *     )
      * @Deserialize(TodoDto::class, validate=true, param="todo")
      */
     public function create(TodoDto $todo): Response
@@ -71,21 +54,6 @@ final class TodoController
 
     /**
      * @Route("/update/{id}", methods={"PATCH"})
-     * @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         required=true,
-     *         @SWG\Schema(ref=@Model(type=TodoDto::class))
-     *     )
-     * @SWG\Response(
-     *         response=202,
-     *         description="Request accepted.",
-     *         @SWG\Header(
-     *             header="Location",
-     *             type="string",
-     *             description="New cinema resource."
-     *         )
-     *     )
      * @Deserialize(TodoDto::class, validate=true, param="todo")
      */
     public function update(string $id, TodoDto $todo): Response

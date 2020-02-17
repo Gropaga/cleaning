@@ -1,0 +1,25 @@
+jms_serializer:
+    visitors:
+        xml_serialization:
+            format_output: '%kernel.debug%'
+    metadata:
+        auto_detection: false
+        directories:
+            application-todo:
+                namespace_prefix: 'CleaningCRM\Cleaning\Application\Todo'
+                path: '%mapping_dir%/Application/Todo'
+            application-client:
+                namespace_prefix: 'CleaningCRM\Cleaning\Application\Client'
+                path: '%mapping_dir%/Application/Client'
+            domain-client:
+                namespace_prefix: 'CleaningCRM\Cleaning\Domain\Client'
+                path: '%mapping_dir%/Domain/Client'
+            domain-todo:
+                namespace_prefix: "CleaningCRM\\Cleaning\\Domain\\Todo"
+                path: '%mapping_dir%/Domain/Todo'
+            domain-person:
+                namespace_prefix: 'CleaningCRM\Cleaning\Domain\Person'
+                path: '%mapping_dir%/Domain/Person'
+            domain-shared:
+                namespace_prefix: 'CleaningCRM\Cleaning\Domain\Shared'
+                path: '%mapping_dir%/Domain/Shared'

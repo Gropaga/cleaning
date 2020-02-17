@@ -29,27 +29,27 @@ final class PersonController
         $this->serializer = $serializer;
     }
 
-    /**
-     * @Route("/create", methods={"POST"})
-     * @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         required=true,
-     *         @SWG\Schema(ref=@Model(type=TodoDto::class))
-     *     )
-     * @SWG\Response(
-     *         response=202,
-     *         description="Request accepted.",
-     *         @SWG\Header(
-     *             header="Location",
-     *             type="string",
-     *             description="New cinema resource."
-     *         )
-     *     )
-     * @Deserialize(TodoDto::class, validate=true, param="todo")
-     */
-    public function create(ContactDto $todo): Response
-    {
+//    /**
+//     * @Route("/create", methods={"POST"})
+//     * @SWG\Parameter(
+//     *         name="body",
+//     *         in="body",
+//     *         required=true,
+//     *         @SWG\Schema(ref=@Model(type=TodoDto::class))
+//     *     )
+//     * @SWG\Response(
+//     *         response=202,
+//     *         description="Request accepted.",
+//     *         @SWG\Header(
+//     *             header="Location",
+//     *             type="string",
+//     *             description="New cinema resource."
+//     *         )
+//     *     )
+//     * @Deserialize(TodoDto::class, validate=true, param="todo")
+//     */
+//    public function create(ContactDto $todo): Response
+//    {
 //        $id = TodoId::generate();
 //
 //        $this->handle(
@@ -62,5 +62,5 @@ final class PersonController
 //                'json'
 //            )
 //        );
-    }
+//    }
 }

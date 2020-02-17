@@ -9,6 +9,7 @@
         "ext-pdo": "*",
         "beberlei/assert": "^3.2",
         "jms/serializer": "^3.3",
+        "jms/serializer-bundle": "^3.5",
         "myclabs/php-enum": "^1.7",
         "nelmio/api-doc-bundle": "^3.4",
         "ramsey/uuid": "^3.8",

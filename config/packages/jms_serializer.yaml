@@ -15,7 +15,7 @@ jms_serializer:
                 namespace_prefix: 'CleaningCRM\Cleaning\Domain\Client'
                 path: '%mapping_dir%/Domain/Client'
             domain-todo:
-                namespace_prefix: "CleaningCRM\\Cleaning\\Domain\\Todo"
+                namespace_prefix: 'CleaningCRM\Cleaning\Domain\Todo'
                 path: '%mapping_dir%/Domain/Todo'
             domain-person:
                 namespace_prefix: 'CleaningCRM\Cleaning\Domain\Person'

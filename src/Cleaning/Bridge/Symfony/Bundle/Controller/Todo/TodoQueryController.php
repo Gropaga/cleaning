@@ -7,7 +7,6 @@ namespace CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Todo;
 use CleaningCRM\Cleaning\Application\Todo\Query\TodoByDateQuery;
 use CleaningCRM\Cleaning\Application\Todo\Query\TodoCountQuery;
 use CleaningCRM\Cleaning\Application\Todo\Query\TodoQuery;
-use CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Messenger\QueryTrait;
 use CleaningCRM\Cleaning\Domain\Todo\TodoCountReadModel;
 use CleaningCRM\Cleaning\Domain\Todo\TodoReadModel;
 use DateTimeImmutable;

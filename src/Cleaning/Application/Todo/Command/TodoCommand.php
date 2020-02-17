@@ -6,9 +6,9 @@ use CleaningCRM\Cleaning\Domain\Todo\TodoId;
 
 class TodoCommand
 {
-    private string $todoId;
+    private TodoId $todoId;
 
-    public function __construct(string $todoId)
+    public function __construct(TodoId $todoId)
     {
         $this->todoId = $todoId;
     }

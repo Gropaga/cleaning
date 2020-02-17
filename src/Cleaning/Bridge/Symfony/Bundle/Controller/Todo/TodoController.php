@@ -59,12 +59,12 @@ final class TodoController
     public function update(string $id, TodoDto $todo): Response
     {
         $this->handle(
-            new Update($id, $todo)
+            new Update(TodoId::fromString($id), $todo)
         );
 
         return Response::create(
             $this->serializer->serialize(
-                $id,
+                ['id' => $id],
                 'json'
             )
         );
@@ -84,7 +84,7 @@ final class TodoController
 
         return Response::create(
             $this->serializer->serialize(
-                $id,
+                ['id' => $id],
                 'json'
             )
         );

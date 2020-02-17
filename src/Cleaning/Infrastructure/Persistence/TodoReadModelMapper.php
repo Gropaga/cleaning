@@ -14,7 +14,7 @@ class TodoReadModelMapper
     public function map(array $data): TodoReadModel
     {
         return new TodoReadModel(
-            TodoId::fromString($data['id']),
+            $data['id'],
             $data['title'],
             $data['description'],
             Interval::create(

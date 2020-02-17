@@ -8,14 +8,14 @@ use CleaningCRM\Cleaning\Domain\Shared\Interval;
 
 class TodoReadModel
 {
-    private TodoId $id;
+    private string $id;
     private string $title;
     private string $description;
     private Interval $interval;
     private bool $completed;
 
     public function __construct(
-        TodoId $id,
+        string $id,
         string $title,
         string $description,
         Interval $interval,
@@ -30,7 +30,7 @@ class TodoReadModel
 
     public function getId(): string
     {
-        return (string) $this->id;
+        return $this->id;
     }
 
     public function getTitle(): string

@@ -1,0 +1,15 @@
+CleaningCRM\Cleaning\Application\Client\Command\Dto\AddressDto:
+  exclusion_policy: ALL
+
+  properties:
+    city:
+      type: string
+
+    country:
+      type: string
+
+    street:
+      type: string
+
+    postcode:
+      type: string

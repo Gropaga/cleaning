@@ -5,8 +5,17 @@ declare(strict_types=1);
 namespace CleaningCRM\Cleaning\Domain\Client;
 
 use Assert\AssertionFailedException;
+use CleaningCRM\Cleaning\Domain\Client\Event\AddressWasChanged;
+use CleaningCRM\Cleaning\Domain\Client\Event\BankAccountWasChanged;
 use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasCreated;
 use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasLiquidated;
+use CleaningCRM\Cleaning\Domain\Client\Event\CompanyNameWasChanged;
+use CleaningCRM\Cleaning\Domain\Client\Event\ContactPersonWasUpdated;
+use CleaningCRM\Cleaning\Domain\Client\Event\ContactTypeWasUpdated;
+use CleaningCRM\Cleaning\Domain\Client\Event\ContactWasAdded;
+use CleaningCRM\Cleaning\Domain\Client\Event\ContactWasRemoved;
+use CleaningCRM\Cleaning\Domain\Client\Event\RegNumberWasChanged;
+use CleaningCRM\Cleaning\Domain\Client\Event\VatNumberWasChanged;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
 use CleaningCRM\Cleaning\Domain\Shared\Address;
 use CleaningCRM\Cleaning\Domain\Shared\AggregateRoot;
@@ -322,7 +331,6 @@ final class Client extends AggregateRoot
         $this->vatNumber = $event->getVatNumber();
         $this->regNumber = $event->getRegNumber();
         $this->bankAccount = $event->getBankAccount();
-        $this->liquidatedAt = $event->getLiquidatedAt();
     }
 
     protected function applyClientWasLiquidated(ClientWasLiquidated $event): void
@@ -369,7 +377,7 @@ final class Client extends AggregateRoot
     {
         $this->contacts = array_map(
             fn (Contact $item) => $event->getPersonId()->equals($item->getPersonId())
-                ? $item->setType($event->getPersonId())
+                ? $item->setPersonId($event->getPersonId())
                 : $item,
             $this->contacts
         );

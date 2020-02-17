@@ -1,0 +1,21 @@
+CleaningCRM\Cleaning\Application\Client\Dto\ClientDto:
+  exclusion_policy: ALL
+
+  properties:
+    companyName:
+      type: string
+
+    contacts:
+      type: array<CleaningCRM\Cleaning\Application\Client\Dto\ContactDto>
+
+    address:
+      type: CleaningCRM\Cleaning\Application\Client\Dto\AddressDto
+
+    vatNumber:
+      type: string
+
+    regNumber:
+      type: string
+
+    bankAccount:
+      type: string

@@ -65,6 +65,7 @@ services:
               CleaningCRM\Cleaning\Domain\Person: '%mapping_dir%/Domain/Person'
               CleaningCRM\Cleaning\Domain\Shared: '%mapping_dir%/Domain/Shared'
               CleaningCRM\Cleaning\Application\Todo: '%mapping_dir%/Application/Todo'
+              CleaningCRM\Cleaning\Application\Client: '%mapping_dir%/Application/Client'
 
     JMS\Serializer\Serializer:
         factory: 'CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Serializer\SerializerFactory:create'

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CleaningCRM\Cleaning\Application\Client\Command\Dto;
+namespace CleaningCRM\Cleaning\Application\Client\Dto;
 
 use CleaningCRM\Cleaning\Application\Shared\AsArrayTrait;
 

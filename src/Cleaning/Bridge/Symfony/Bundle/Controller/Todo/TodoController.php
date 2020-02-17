@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/todo")
  */
-class TodoController
+final class TodoController
 {
     use HandleTrait;
 

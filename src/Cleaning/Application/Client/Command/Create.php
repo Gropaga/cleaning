@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Cleaning\Application\Client\Command;
 
-use CleaningCRM\Cleaning\Application\Client\Command\Dto\ClientDto;
+use CleaningCRM\Cleaning\Application\Client\Dto\ClientDto;
 use CleaningCRM\Cleaning\Application\Client\Command\Handler\CreateHandler;
 
 /** @see CreateHandler */

@@ -27,7 +27,7 @@ class LiquidateHandler
         /** @var $client Client */
         $client = $this->repository->get($command->getClientId());
 
-        $client->liquidate(DateTimeImmutable::createFromFormat(DateTimeImmutable::ATOM, $command->getLiquidatedAt()));
+        $client->liquidate($command->getLiquidatedAt());
 
         $this->repository->add($client);
         $this->publisher->add($client);

@@ -40,8 +40,8 @@ SQL
             ':id' => (string) $event->getAggregateId(),
             ':title' => $event->getTitle(),
             ':description' => $event->getDescription(),
-            ':start' => $event->getInterval()->start()->format('m-d-Y H:i:s'),
-            ':end' => $event->getInterval()->end()->format('m-d-Y H:i:s'),
+            ':start' => $event->getInterval()->start()->format('Y-m-d H:i:s'),
+            ':end' => $event->getInterval()->end()->format('Y-m-d H:i:s'),
             ':completed' => $event->getCompleted() ? 'TRUE' : 'FALSE',
         ]);
     }

@@ -6,4 +6,4 @@ CleaningCRM\Cleaning\Domain\Client\Event\BankAccountWasChanged:
       type: CleaningCRM\Cleaning\Domain\Client\ClientId
 
     bankAccount:
-      type: string;
+      type: string

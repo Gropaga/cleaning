@@ -1,9 +1,9 @@
-CleaningCRM\Cleaning\Domain\Client\Event\CompanyNameWasChanged:
+CleaningCRM\Cleaning\Domain\Client\Event\RegNumberWasChanged:
   exclusion_policy: ALL
 
   properties:
     clientId:
-      type: CleaningCRM\Cleaning\Domain\Client\Event\RegNumberWasChanged
+      type: CleaningCRM\Cleaning\Domain\Client\ClientId
 
-    companyName:
+    regNumber:
       type: string

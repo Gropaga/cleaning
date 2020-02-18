@@ -28,13 +28,14 @@ class UpdateHandler
         $client = $this->repository->get($command->getClientId());
 
         $client->changeCompanyName($command->getClient()->companyName);
-        $client->changeAddress(Address::create(
-            $command->getClient()->address->city,
-            $command->getClient()->address->country,
-            $command->getClient()->address->street,
-            $command->getClient()->address->postcode
-        ),
-            );
+        $client->changeAddress(
+            Address::create(
+                $command->getClient()->address->city,
+                $command->getClient()->address->country,
+                $command->getClient()->address->street,
+                $command->getClient()->address->postcode
+            ),
+        );
 
         $client->changeVatNumber($command->getClient()->vatNumber);
         $client->changeRegNumber($command->getClient()->regNumber);

@@ -45,8 +45,7 @@ final class ClientProjection extends AbstractProjection implements ClientProject
                                     address,
                                     "vatNumber",
                                     "regNumber",
-                                    "bankAccount",
-                                    "liquidatedAt"
+                                    "bankAccount"
                                     )
                 VALUES (
                         :id,
@@ -55,8 +54,7 @@ final class ClientProjection extends AbstractProjection implements ClientProject
                         :address,
                         :vatNumber,
                         :regNumber,
-                        :bankAccount,
-                        :liquidatedAt
+                        :bankAccount
                         )
 SQL
         );
@@ -64,16 +62,8 @@ SQL
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
             ':companyName' => $event->getCompanyName(),
-            ':contacts' => json_encode(
-                array_map(static function (string $key, Contact $value) {
-                    $array = (array) $value;
-
-                    return "{$key} => {$array}";
-                }, array_keys($event->getContacts()), $event->getContacts()),
-                JSON_THROW_ON_ERROR,
-                512
-            ),
-            ':address' => json_encode($event->getAddress(), JSON_THROW_ON_ERROR, 512),
+            ':contacts' => $this->serializer->serialize($event->getContacts(), 'json'),
+            ':address' => $this->serializer->serialize($event->getAddress(), 'json'),
             ':vatNumber' => $event->getVatNumber(),
             ':regNumber' => $event->getRegNumber(),
             ':bankAccount' => $event->getBankAccount(),
@@ -90,13 +80,13 @@ SQL
         $clientStmt->execute([':id' => $event->getAggregateId()]);
         $clientStmtResult = $clientStmt->fetch(PDO::FETCH_ASSOC);
 
-        $relatedContacts = $this->serializer->deserialize($clientStmtResult, Contact::class, 'JSON');
+        $relatedContacts = $this->serializer->deserialize($clientStmtResult, Contact::class, 'json');
 
         $relatedContacts->append($event->getContactId());
         $stmt = $this->connection->prepare('UPDATE client SET contacts = :contacts WHERE id = :id');
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':contacts' => $this->serializer->serialize($relatedContacts, 'JSON'),
+            ':contacts' => $this->serializer->serialize($relatedContacts, 'json'),
         ]);
     }
 
@@ -111,14 +101,14 @@ SQL
         $clientStmtResult = $clientStmt->fetch(PDO::FETCH_ASSOC);
 
         /** @var array $relatedContacts */
-        $relatedContacts = $this->serializer->deserialize($clientStmtResult, Contact::class, 'JSON');
+        $relatedContacts = $this->serializer->deserialize($clientStmtResult, Contact::class, 'json');
 
         // TODO need to implement this
 
         $stmt = $this->connection->prepare('UPDATE client SET contacts = :contacts WHERE id = :id');
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':contacts' => $this->serializer->serialize($relatedContacts, 'JSON'),
+            ':contacts' => $this->serializer->serialize($relatedContacts, 'json'),
         ]);
     }
 
@@ -131,7 +121,7 @@ SQL
 
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':address' => json_encode($event->getAddress(), JSON_THROW_ON_ERROR, 512),
+            ':address' => $this->serializer->serialize($event->getAddress(), 'json'),
         ]);
     }
 
@@ -157,7 +147,7 @@ SQL
 
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':liquidatedAt' => $event->getLiquidatedAt(),
+            ':liquidatedAt' => $event->getLiquidatedAt()->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -170,7 +160,7 @@ SQL
 
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':liquidatedAt' => $event->getCompanyName(),
+            ':companyName' => $event->getCompanyName(),
         ]);
     }
 

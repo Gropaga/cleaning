@@ -101,8 +101,7 @@ final class Client extends AggregateRoot
         Address $address,
         string $vatNumber,
         string $regNumber,
-        string $bankAccount,
-        DateTimeImmutable $liquidatedAt
+        string $bankAccount
     ): self {
         $newClient = new Client(
             $id,
@@ -111,8 +110,7 @@ final class Client extends AggregateRoot
             $address,
             $vatNumber,
             $regNumber,
-            $bankAccount,
-            $liquidatedAt
+            $bankAccount
         );
 
         $clientWasCreated = new ClientWasCreated(

@@ -48,7 +48,7 @@ SQL
 
     public function get(AggregateId $aggregateId): DomainEventsHistory
     {
-        $stmt = $this->connection->prepare('SELECT * FROM event_store WHERE aggregate_id=:aggregateId');
+        $stmt = $this->connection->prepare('SELECT * FROM event_store WHERE aggregate_id=:aggregateId ORDER BY created_at');
         $stmt->execute([':aggregateId' => (string) $aggregateId]);
 
         $events = [];

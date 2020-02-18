@@ -9,7 +9,7 @@ CleaningCRM\Cleaning\Domain\Client\Event\ContactWasAdded:
       type: CleaningCRM\Cleaning\Domain\Client\ContactId
 
     personId:
-      type: CleaningCRM\Cleaning\Domain\Client\Event\ContactPersonWasUpdated
+      type: CleaningCRM\Cleaning\Domain\Person\PersonId
 
     type:
       type: string

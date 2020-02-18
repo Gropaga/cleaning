@@ -9,7 +9,6 @@ use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
 use CleaningCRM\Cleaning\Domain\Shared\Address;
 use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
-use DateTimeImmutable;
 
 /** @see Create */
 class CreateHandler
@@ -37,8 +36,7 @@ class CreateHandler
             ),
             $command->getClient()->vatNumber,
             $command->getClient()->regNumber,
-            $command->getClient()->bankAccount,
-            DateTimeImmutable::createFromFormat(DateTimeImmutable::ATOM, $command->getClient()->liquidatedAt)
+            $command->getClient()->bankAccount
         );
 
         $this->repository->add($todo);

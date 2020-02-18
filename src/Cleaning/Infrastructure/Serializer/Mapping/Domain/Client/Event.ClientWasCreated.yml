@@ -9,10 +9,10 @@ CleaningCRM\Cleaning\Domain\Client\Event\ClientWasCreated:
       type: string
 
     contacts:
-      type: array<CleaningCRM\Cleaning\Domain\Client\Event\ClientWasCreated>
+      type: array<CleaningCRM\Cleaning\Application\Client\Dto\ContactDto>
 
     address:
-      type: namespace CleaningCRM\Cleaning\Domain\Shared;\Address
+      type: CleaningCRM\Cleaning\Domain\Shared\Address
 
     vatNumber:
       type: string
@@ -21,4 +21,4 @@ CleaningCRM\Cleaning\Domain\Client\Event\ClientWasCreated:
       type: string
 
     bankAccount:
-      type: string;
+      type: string

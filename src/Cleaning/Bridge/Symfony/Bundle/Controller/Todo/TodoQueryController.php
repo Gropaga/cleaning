@@ -12,7 +12,7 @@ use CleaningCRM\Cleaning\Domain\Todo\TodoReadModel;
 use DateTimeImmutable;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Swagger\Annotations as SWG;
+use Swagger\Annotations as OpenAPI;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\HandleTrait;
@@ -21,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/todo")
+ * @OpenAPI\Tag(name="Todo Query")
  */
 class TodoQueryController
 {
@@ -36,10 +37,10 @@ class TodoQueryController
 
     /**
      * @Route("/get/{id}", methods={"GET"})
-     * @SWG\Response(
+     * @OpenAPI\Response(
      *     response=200,
      *     description="Get todo",
-     *     @SWG\Schema(ref=@Model(type=TodoReadModel::class))
+     *     @OpenAPI\Schema(ref=@Model(type=TodoReadModel::class))
      * )
      */
     public function todo(string $id): Response
@@ -56,10 +57,10 @@ class TodoQueryController
 
     /**
      * @Route("/count", methods={"GET"})
-     * @SWG\Response(
+     * @OpenAPI\Response(
      *     response=200,
      *     description="Get todo count",
-     *     @SWG\Schema(ref=@Model(type=TodoCountReadModel::class))
+     *     @OpenAPI\Schema(ref=@Model(type=TodoCountReadModel::class))
      * )
      */
     public function count(): Response
@@ -74,28 +75,28 @@ class TodoQueryController
 
     /**
      * @Route("/by-date", methods={"GET"})
-     * @SWG\Get(
+     * @OpenAPI\Get(
      *     summary="Get todos by date.",
-     *     @SWG\Parameter(
+     *     @OpenAPI\Parameter(
      *         name="start",
      *         type="string",
      *         in="query",
      *         description="Start date",
      *         required=true
      *     ),
-     *     @SWG\Parameter(
+     *     @OpenAPI\Parameter(
      *         name="end",
      *         type="string",
      *         in="query",
      *         description="End date",
      *         required=true
      *     ),
-     *     @SWG\Response(
+     *     @OpenAPI\Response(
      *         response=200,
      *         description="Todos list.",
-     *         @SWG\Schema(type="array", @SWG\Items(ref=@Model(type=TodoReadModel::class)))
+     *         @OpenAPI\Schema(type="array", @OpenAPI\Items(ref=@Model(type=TodoReadModel::class)))
      *     ),
-     *     @SWG\Response(
+     *     @OpenAPI\Response(
      *         response=404,
      *         description="Invalid parameters."
      *     )

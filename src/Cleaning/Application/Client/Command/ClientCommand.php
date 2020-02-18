@@ -8,15 +8,15 @@ use CleaningCRM\Cleaning\Domain\Client\ClientId;
 
 class ClientCommand
 {
-    private string $clientId;
+    private ClientId $clientId;
 
-    public function __construct(string $clientId)
+    public function __construct(ClientId $clientId)
     {
         $this->clientId = $clientId;
     }
 
     public function getClientId(): ClientId
     {
-        return ClientId::fromString($this->clientId);
+        return $this->clientId;
     }
 }

@@ -1,4 +1,4 @@
-CleaningCRM\Cleaning\Application\Client\Command\Dto\ContactDto:
+CleaningCRM\Cleaning\Application\Client\Dto\ContactDto:
   exclusion_policy: ALL
 
   properties:

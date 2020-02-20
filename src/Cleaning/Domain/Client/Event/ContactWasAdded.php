@@ -26,8 +26,9 @@ final class ContactWasAdded implements DomainEvent
         PersonId $personId,
         string $type
     ) {
-        $this->eventId = $eventId;
         $this->aggregateId = $clientId;
+
+        $this->eventId = $eventId;
         $this->contactId = $contactId;
         $this->personId = $personId;
         $this->type = $type;

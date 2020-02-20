@@ -2,6 +2,5 @@ CleaningCRM\Cleaning\Domain\Person\PersonId:
   exclusion_policy: ALL
 
   properties:
-    clientId:
+    personId:
       type: string
-      serialized_name: id

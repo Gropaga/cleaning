@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
-use CleaningCRM\Cleaning\Domain\Todo\TodoId;
 use CleaningCRM\Cleaning\Domain\Todo\TodoReadModel;
 use CleaningCRM\Cleaning\Domain\Shared\Interval;
 use DateTimeImmutable;

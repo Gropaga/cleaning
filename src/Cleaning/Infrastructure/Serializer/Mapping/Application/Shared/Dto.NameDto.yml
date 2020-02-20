@@ -1,0 +1,9 @@
+CleaningCRM\Cleaning\Application\Shared\Dto\NameDto:
+  exclusion_policy: ALL
+
+  properties:
+    name:
+      type: string
+
+    surname:
+      type: string

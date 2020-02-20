@@ -8,9 +8,15 @@ jms_serializer:
             application-todo:
                 namespace_prefix: 'CleaningCRM\Cleaning\Application\Todo'
                 path: '%mapping_dir%/Application/Todo'
+            application-person:
+                namespace_prefix: 'CleaningCRM\Cleaning\Application\Person'
+                path: '%mapping_dir%/Application/Person'
             application-client:
                 namespace_prefix: 'CleaningCRM\Cleaning\Application\Client'
                 path: '%mapping_dir%/Application/Client'
+            application-shared:
+                namespace_prefix: 'CleaningCRM\Cleaning\Application\Shared'
+                path: '%mapping_dir%/Application/Shared'
             domain-client:
                 namespace_prefix: 'CleaningCRM\Cleaning\Domain\Client'
                 path: '%mapping_dir%/Domain/Client'

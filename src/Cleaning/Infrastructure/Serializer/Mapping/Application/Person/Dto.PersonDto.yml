@@ -1,0 +1,15 @@
+CleaningCRM\Cleaning\Application\Person\Dto\PersonDto:
+  exclusion_policy: ALL
+
+  properties:
+    name:
+      type: CleaningCRM\Cleaning\Application\Shared\Dto\NameDto
+
+    phone:
+      type: string
+
+    email:
+      type: string
+
+    address:
+      type: CleaningCRM\Cleaning\Application\Shared\Dto\AddressDto

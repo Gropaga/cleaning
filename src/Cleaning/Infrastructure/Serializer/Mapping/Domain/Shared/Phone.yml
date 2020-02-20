@@ -1,0 +1,6 @@
+CleaningCRM\Cleaning\Domain\Shared\Phone:
+  exclusion_policy: ALL
+
+  properties:
+    phone:
+      type: string

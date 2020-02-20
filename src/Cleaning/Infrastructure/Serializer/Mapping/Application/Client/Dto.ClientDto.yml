@@ -9,7 +9,7 @@ CleaningCRM\Cleaning\Application\Client\Dto\ClientDto:
       type: array<CleaningCRM\Cleaning\Application\Client\Dto\ContactDto>
 
     address:
-      type: CleaningCRM\Cleaning\Application\Client\Dto\AddressDto
+      type: CleaningCRM\Cleaning\Application\Shared\Dto\AddressDto
 
     vatNumber:
       type: string

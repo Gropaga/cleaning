@@ -12,6 +12,11 @@ services:
         resource: '%bundle_dir%/Bridge/Symfony/Bundle/Command/Client'
         tags: ['console.command']
 
+    CleaningCRM\Cleaning\Application\Person\Command\Handler\:
+        resource: '%bundle_dir%/Application/Person/Command/Handler'
+        tags:
+            - { name: messenger.message_handler, bus: command.bus }
+
     CleaningCRM\Cleaning\Application\Client\Command\Handler\:
         resource: '%bundle_dir%/Application/Client/Command/Handler'
         tags:
@@ -40,6 +45,10 @@ services:
         resource: '%bundle_dir%/Bridge/Symfony/Bundle/Controller/Todo'
         tags: ['controller.service_arguments']
 
+    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Person\:
+        resource: '%bundle_dir%/Bridge/Symfony/Bundle/Controller/Person'
+        tags: ['controller.service_arguments']
+
     CleaningCRM\Cleaning\Infrastructure\EventPublisher\AggregateEventPublisher: ~
     CleaningCRM\Cleaning\Domain\Shared\EventPublisher: '@CleaningCRM\Cleaning\Infrastructure\EventPublisher\AggregateEventPublisher'
 
@@ -48,9 +57,6 @@ services:
 
     CleaningCRM\Cleaning\Infrastructure\Persistence\ClientQueryRepository: ~
     CleaningCRM\Cleaning\Domain\Client\ClientQueryRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\ClientQueryRepository'
-
-    CleaningCRM\Cleaning\Infrastructure\Projection\ClientProjection: ~
-    CleaningCRM\Cleaning\Domain\Client\ClientProjection: '@CleaningCRM\Cleaning\Infrastructure\Projection\ClientProjection'
 
     CleaningCRM\Cleaning\Infrastructure\Persistence\ClientReadModelMapper: ~
     CleaningCRM\Cleaning\Infrastructure\Persistence\ContactReadModelMapper: ~
@@ -65,6 +71,9 @@ services:
         resource: '%bundle_dir%/Bridge/Symfony/Bundle/Command'
         tags: ['console.command']
 
+    CleaningCRM\Cleaning\Infrastructure\Persistence\PersonRepository: ~
+    CleaningCRM\Cleaning\Domain\Person\PersonRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\PersonRepository'
+
     CleaningCRM\Cleaning\Infrastructure\Persistence\TodoRepository: ~
     CleaningCRM\Cleaning\Domain\Todo\TodoRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\TodoRepository'
 
@@ -76,5 +85,11 @@ services:
 
     CleaningCRM\Cleaning\Infrastructure\Projection\TodoProjection: ~
     CleaningCRM\Cleaning\Domain\Todo\TodoProjection: '@CleaningCRM\Cleaning\Infrastructure\Projection\TodoProjection'
+
+    CleaningCRM\Cleaning\Infrastructure\Projection\ClientProjection: ~
+    CleaningCRM\Cleaning\Domain\Client\ClientProjection: '@CleaningCRM\Cleaning\Infrastructure\Projection\ClientProjection'
+
+    CleaningCRM\Cleaning\Infrastructure\Projection\PersonProjection: ~
+    CleaningCRM\Cleaning\Domain\Person\PersonProjection: '@CleaningCRM\Cleaning\Infrastructure\Projection\PersonProjection'
 
     CleaningCRM\Cleaning\Infrastructure\Persistence\TodoReadModelMapper: ~

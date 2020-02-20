@@ -20,7 +20,7 @@ final class PersonWasCreated implements DomainEvent
     use AsArrayTrait;
 
     private Name $name;
-    private string $phone;
+    private Phone $phone;
     private Email $email;
     private Address $address;
 

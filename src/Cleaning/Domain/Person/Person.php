@@ -24,7 +24,7 @@ final class Person extends AggregateRoot
 {
     private PersonId $id;
     private Name $name;
-    private string $phone;
+    private Phone $phone;
     private Email $email;
     private Address $address;
     private ?DateTimeImmutable $deletedAt;

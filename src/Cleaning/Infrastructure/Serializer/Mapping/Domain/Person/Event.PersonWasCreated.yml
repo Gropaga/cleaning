@@ -9,7 +9,7 @@ CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated:
       type: CleaningCRM\Cleaning\Domain\Shared\Name
 
     phone:
-      type: string
+      type: CleaningCRM\Cleaning\Domain\Shared\Phone
 
     email:
       type: CleaningCRM\Cleaning\Domain\Shared\Email

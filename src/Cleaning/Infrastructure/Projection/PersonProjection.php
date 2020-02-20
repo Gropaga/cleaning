@@ -12,15 +12,18 @@ use CleaningCRM\Cleaning\Domain\Person\PersonProjection as ContactProjectionPort
 use CleaningCRM\Cleaning\Domain\Shared\AbstractProjection;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
+use JMS\Serializer\SerializerInterface;
 use JsonException;
 
 class PersonProjection extends AbstractProjection implements ContactProjectionPort
 {
     protected Connection $connection;
+    private SerializerInterface $serializer;
 
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, SerializerInterface $serializer)
     {
         $this->connection = $connection;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -31,16 +34,17 @@ class PersonProjection extends AbstractProjection implements ContactProjectionPo
     {
         $stmt = $this->connection->prepare(
             <<<SQL
-INSERT INTO person (id, name, phone, email, address, "deletedAt")
-             VALUES (:id, :title, :description, :completed, :start, :end)
+INSERT INTO person (id, name, phone, email, address)
+             VALUES (:id, :name, :phone, :email, :address)
 SQL
         );
 
         $stmt->execute([
             ':id' => (string) $event->getAggregateId(),
-            ':name' => $event->getName(),
-            ':email' => $event->getEmail(),
-            ':address' => json_encode($event->getAddress(), JSON_THROW_ON_ERROR, 512),
+            ':name' => $this->serializer->serialize($event->getName(), 'json'),
+            ':phone' => $event->getPhone()->phone(),
+            ':email' => $event->getEmail()->email(),
+            ':address' => $this->serializer->serialize($event->getAddress(), 'json'),
         ]);
     }
 

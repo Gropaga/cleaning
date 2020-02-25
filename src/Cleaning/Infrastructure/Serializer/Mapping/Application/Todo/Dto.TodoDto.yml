@@ -8,11 +8,11 @@ CleaningCRM\Cleaning\Application\Todo\Dto\TodoDto:
     description:
       type: string
 
-    completed:
-      type: bool
-
     start:
       type: string
 
     end:
       type: string
+
+    completed:
+      type: boolean

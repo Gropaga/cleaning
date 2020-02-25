@@ -28,7 +28,7 @@ class DeleteHandlerTest extends TestCase
         );
 
         $command = new Delete(
-            (string) TodoId::generate(),
+            TodoId::generate(),
             new DateTimeImmutable()
         );
 

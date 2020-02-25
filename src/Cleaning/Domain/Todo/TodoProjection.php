@@ -14,7 +14,6 @@ use CleaningCRM\Cleaning\Domain\Todo\Event\TodoWasCreated;
 
 interface TodoProjection extends Projection
 {
-    public function projectWhenTodoWasCreated(TodoWasCreated $event): void;
 
     public function projectWhenTodoDescriptionWasChanged(TodoDescriptionWasChanged $event): void;
 

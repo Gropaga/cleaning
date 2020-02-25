@@ -2,11 +2,12 @@
 
 namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
+use Assert\AssertionFailedException;
+use CleaningCRM\Cleaning\Domain\Person\Person;
 use CleaningCRM\Cleaning\Domain\Shared\AggregateId;
-use CleaningCRM\Cleaning\Domain\Shared\EventStore as EventStorePort;
+use CleaningCRM\Cleaning\Domain\Shared\EventStore;
+use CleaningCRM\Cleaning\Domain\Shared\Projector;
 use CleaningCRM\Cleaning\Domain\Shared\RecordsEvents;
-use CleaningCRM\Cleaning\Domain\Todo\Todo;
-use CleaningCRM\Cleaning\Domain\Todo\TodoProjection as TodoProjectionPort;
 use CleaningCRM\Cleaning\Domain\Todo\TodoRepository as TodoRepositoryPort;
 use Doctrine\DBAL\Connection;
 use Throwable;
@@ -14,14 +15,14 @@ use Throwable;
 class TodoRepository implements TodoRepositoryPort
 {
     private Connection $connection;
-    private EventStorePort $eventStore;
-    private TodoProjectionPort $projection;
+    private EventStore $eventStore;
+    private Projector $projector;
 
-    public function __construct(Connection $connection, EventStorePort $eventStore, TodoProjectionPort $projection)
+    public function __construct(Connection $connection, EventStore $eventStore, Projector $projector)
     {
         $this->connection = $connection;
         $this->eventStore = $eventStore;
-        $this->projection = $projection;
+        $this->projector = $projector;
     }
 
     /**
@@ -33,16 +34,19 @@ class TodoRepository implements TodoRepositoryPort
 
         $this->connection->transactional(function () use ($recordedEvents) {
             $this->eventStore->append($recordedEvents);
-            $this->projection->project($recordedEvents);
+            $this->projector->project($recordedEvents);
         });
 
         $aggregate->clearRecordedEvents();
     }
 
+    /**
+     * @throws AssertionFailedException
+     */
     public function get(AggregateId $id): RecordsEvents
     {
         $events = $this->eventStore->get($id);
 
-        return Todo::reconstituteFromHistory($events);
+        return Person::reconstituteFromHistory($events);
     }
 }

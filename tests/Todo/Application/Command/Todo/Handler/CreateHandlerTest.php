@@ -34,7 +34,7 @@ class CreateHandlerTest extends TestCase
         $todoDto->description = 'Megadescription';
 
         $command = new Create(
-            (string) TodoId::generate(),
+            TodoId::generate(),
             $todoDto
         );
 

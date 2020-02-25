@@ -9,7 +9,7 @@ use CleaningCRM\Cleaning\Domain\Person\Event\AddressWasChanged;
 use CleaningCRM\Cleaning\Domain\Person\Event\EmailWasChanged;
 use CleaningCRM\Cleaning\Domain\Person\Event\NameWasChanged;
 use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated;
-use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted;
+use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasArchived;
 use CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged;
 use CleaningCRM\Cleaning\Domain\Shared\Address;
 use CleaningCRM\Cleaning\Domain\Shared\AggregateRoot;
@@ -27,7 +27,7 @@ final class Person extends AggregateRoot
     private Phone $phone;
     private Email $email;
     private Address $address;
-    private ?DateTimeImmutable $deletedAt;
+    private ?DateTimeImmutable $archivedAt;
 
     private function __construct(
         PersonId $id,
@@ -35,14 +35,14 @@ final class Person extends AggregateRoot
         Phone $phone,
         Email $email,
         Address $address,
-        ?DateTimeImmutable $deleteAt = null
+        ?DateTimeImmutable $archivedAt = null
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->phone = $phone;
         $this->email = $email;
         $this->address = $address;
-        $this->deletedAt = $deleteAt;
+        $this->archivedAt = $archivedAt;
     }
 
     public function getId(): PersonId
@@ -176,20 +176,20 @@ final class Person extends AggregateRoot
         $this->notifyThat($personAddressWasChanged);
     }
 
-    public function delete(DateTimeImmutable $deleteAt): void
+    public function archive(DateTimeImmutable $archivedAt): void
     {
-        if (null !== $this->deletedAt) {
+        if (null !== $this->archivedAt) {
             return;
         }
 
-        $personWasDeleted = new PersonWasDeleted(
+        $personWasArchived = new PersonWasArchived(
             EventId::generate(),
             $this->id,
-            $deleteAt
+            $archivedAt
         );
 
-        $this->applyAndRecordThat($personWasDeleted);
-        $this->notifyThat($personWasDeleted);
+        $this->applyAndRecordThat($personWasArchived);
+        $this->notifyThat($personWasArchived);
     }
 
     public function applyPersonWasCreated(PersonWasCreated $event): void
@@ -220,9 +220,9 @@ final class Person extends AggregateRoot
         $this->address = $event->getAddress();
     }
 
-    protected function applyPersonWasDeleted(PersonWasDeleted $event): void
+    protected function applyPersonWasArchived(PersonWasArchived $event): void
     {
-        $this->deletedAt = $event->getDeletedAt();
+        $this->archivedAt = $event->getArchivedAt();
     }
 
     /**

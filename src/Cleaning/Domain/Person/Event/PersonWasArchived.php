@@ -10,21 +10,21 @@ use CleaningCRM\Cleaning\Domain\Shared\DomainEventTrait;
 use CleaningCRM\Cleaning\Domain\Shared\EventId;
 use DateTimeImmutable;
 
-class PersonWasDeleted implements DomainEvent
+class PersonWasArchived implements DomainEvent
 {
     use DomainEventTrait;
 
-    private DateTimeImmutable $deletedAt;
+    private DateTimeImmutable $archivedAt;
 
-    public function __construct(EventId $eventId, PersonId $aggregateId, DateTimeImmutable $deletedAt)
+    public function __construct(EventId $eventId, PersonId $aggregateId, DateTimeImmutable $archivedAt)
     {
         $this->eventId = $eventId;
         $this->aggregateId = $aggregateId;
-        $this->deletedAt = $deletedAt;
+        $this->archivedAt = $archivedAt;
     }
 
-    public function getDeletedAt(): DateTimeImmutable
+    public function getArchivedAt(): DateTimeImmutable
     {
-        return $this->deletedAt;
+        return $this->archivedAt;
     }
 }

@@ -27,28 +27,6 @@ class TodoProjection extends AbstractProjection implements TodoProjectionPort
     /**
      * @throws DBALException
      */
-    public function projectWhenTodoWasCreated(TodoWasCreated $event): void
-    {
-        $stmt = $this->connection->prepare(
-            <<<SQL
-INSERT INTO todo (id, title, description, completed, start, "end")
-             VALUES (:id, :title, :description, :completed, :start, :end)
-SQL
-        );
-
-        $stmt->execute([
-            ':id' => (string) $event->getAggregateId(),
-            ':title' => $event->getTitle(),
-            ':description' => $event->getDescription(),
-            ':start' => $event->getInterval()->start()->format('Y-m-d H:i:s'),
-            ':end' => $event->getInterval()->end()->format('Y-m-d H:i:s'),
-            ':completed' => $event->getCompleted() ? 'TRUE' : 'FALSE',
-        ]);
-    }
-
-    /**
-     * @throws DBALException
-     */
     public function projectWhenTodoDescriptionWasChanged(TodoDescriptionWasChanged $event): void
     {
         $stmt = $this->connection->prepare('UPDATE todo SET description = :description WHERE id = :id');

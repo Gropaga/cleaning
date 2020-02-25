@@ -43,7 +43,7 @@ class UpdateHandlerTest extends TestCase
         );
 
         $command = new Update(
-            (string) TodoId::generate(),
+            TodoId::generate(),
             $todoDto
         );
 

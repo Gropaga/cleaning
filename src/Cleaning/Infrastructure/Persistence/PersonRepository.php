@@ -6,10 +6,10 @@ namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
 use Assert\AssertionFailedException;
 use CleaningCRM\Cleaning\Domain\Person\Person;
-use CleaningCRM\Cleaning\Domain\Person\PersonProjection as PersonProjectionPort;
 use CleaningCRM\Cleaning\Domain\Person\PersonRepository as PersonRepositoryPort;
 use CleaningCRM\Cleaning\Domain\Shared\AggregateId;
-use CleaningCRM\Cleaning\Domain\Shared\EventStore as EventStorePort;
+use CleaningCRM\Cleaning\Domain\Shared\EventStore;
+use CleaningCRM\Cleaning\Domain\Shared\Projector;
 use CleaningCRM\Cleaning\Domain\Shared\RecordsEvents;
 use Doctrine\DBAL\Connection;
 use Throwable;
@@ -17,14 +17,14 @@ use Throwable;
 class PersonRepository implements PersonRepositoryPort
 {
     private Connection $connection;
-    private EventStorePort $eventStore;
-    private PersonProjectionPort $projection;
+    private EventStore $eventStore;
+    private Projector $projector;
 
-    public function __construct(Connection $connection, EventStorePort $eventStore, PersonProjectionPort $projection)
+    public function __construct(Connection $connection, EventStore $eventStore, Projector $projector)
     {
         $this->connection = $connection;
         $this->eventStore = $eventStore;
-        $this->projection = $projection;
+        $this->projector = $projector;
     }
 
     /**
@@ -36,7 +36,7 @@ class PersonRepository implements PersonRepositoryPort
 
         $this->connection->transactional(function () use ($recordedEvents) {
             $this->eventStore->append($recordedEvents);
-            $this->projection->project($recordedEvents);
+            $this->projector->project($recordedEvents);
         });
 
         $aggregate->clearRecordedEvents();

@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace CleaningCRM\Cleaning\Application\Client\Command;
 
 use CleaningCRM\Cleaning\Application\Client\Command\Handler\RemoveContactHandler;
+use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Cleaning\Domain\Client\ContactId;
 
 /** @see RemoveContactHandler */
 final class RemoveContact extends ClientCommand
 {
-    private string $contactId;
+    private ContactId $contactId;
 
-    public function __construct(string $clientId, string $contactId)
+    public function __construct(ClientId $clientId, ContactId $contactId)
     {
         parent::__construct($clientId);
         $this->contactId = $contactId;
@@ -20,6 +21,6 @@ final class RemoveContact extends ClientCommand
 
     public function getContactId(): ContactId
     {
-        return ContactId::fromString($this->contactId);
+        return $this->contactId;
     }
 }

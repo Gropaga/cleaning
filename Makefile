@@ -77,3 +77,7 @@ db-gen:
 debug-autowiring:
 	$(RUN_PHP) bin/console debug:autowiring
 .PHONY: debug-autowiring
+
+debug-messenger:
+	$(RUN_PHP) bin/console debug:messenger
+.PHONY: debug-messenger

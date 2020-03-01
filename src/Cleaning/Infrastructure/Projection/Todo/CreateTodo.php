@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CleaningCRM\Cleaning\Infrastructure\ProjectionHandler;
+namespace CleaningCRM\Cleaning\Infrastructure\Projection\Todo;
 
 use CleaningCRM\Cleaning\Domain\Todo\Event\TodoWasCreated;
 use Doctrine\DBAL\Connection;

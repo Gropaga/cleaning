@@ -59,8 +59,6 @@ final class PersonController
             new Create($id, $person)
         );
 
-
-
         return Response::create(
             $this->serializer->serialize(
                 $id,

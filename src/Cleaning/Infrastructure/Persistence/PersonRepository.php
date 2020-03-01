@@ -20,8 +20,11 @@ class PersonRepository implements PersonRepositoryPort
     private EventStore $eventStore;
     private Projector $projector;
 
-    public function __construct(Connection $connection, EventStore $eventStore, Projector $projector)
-    {
+    public function __construct(
+        Connection $connection,
+        EventStore $eventStore,
+        Projector $projector
+    ) {
         $this->connection = $connection;
         $this->eventStore = $eventStore;
         $this->projector = $projector;

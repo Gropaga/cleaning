@@ -41,7 +41,7 @@ SQL
       "phone" text,
       "email" text,
       "address" text,
-      "deletedAt" timestamp,
+      "archivedAt" timestamp,
       PRIMARY KEY ("id")
      );
 SQL
@@ -56,7 +56,7 @@ SQL
         );
 
         $this->addSql(<<<SQL
-    DROP TABLE "public"."contact";
+    DROP TABLE "public"."person";
 SQL
         );
     }

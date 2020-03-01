@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Client;
 
+use CleaningCRM\Cleaning\Application\Client\Command\AddContact;
 use CleaningCRM\Cleaning\Application\Client\Command\Create;
 use CleaningCRM\Cleaning\Application\Client\Command\Liquidate;
 use CleaningCRM\Cleaning\Application\Client\Command\Update;
 use CleaningCRM\Cleaning\Application\Client\Dto\ClientDto;
+use CleaningCRM\Cleaning\Application\Client\Dto\ContactDto;
 use CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Converter\Deserialize;
 use CleaningCRM\Cleaning\Domain\Client\ClientId;
 use CleaningCRM\Cleaning\Domain\Todo\TodoId;
@@ -122,6 +124,39 @@ final class ClientController
             new Liquidate(
                 $clientId,
                 new DateTimeImmutable()
+            )
+        );
+
+        return Response::create(
+            $this->serializer->serialize(
+                $clientId,
+                'json'
+            )
+        );
+    }
+
+    /**
+     * @Route("/add-contact/{id}", methods={"PATCH"})
+     * @OpenAPI\Parameter(
+     *         name="body",
+     *         in="body",
+     *         required=true,
+     *         @OpenAPI\Schema(ref=@Model(type=ContactDto::class))
+     *     )
+     * @OpenAPI\Response(
+     *     response=200,
+     *     description="Liquidate client",
+     *     @OpenAPI\Schema(ref=@Model(type=TodoId::class))
+     * )
+     */
+    public function addContact(string $id, ContactDto $contactDto): Response
+    {
+        $clientId = ClientId::fromString($id);
+
+        $this->handle(
+            new AddContact(
+                $clientId,
+                $contactDto
             )
         );
 

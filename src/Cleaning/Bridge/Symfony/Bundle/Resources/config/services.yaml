@@ -37,8 +37,8 @@ services:
         tags:
             - { name: messenger.message_handler, bus: query.bus }
 
-    CleaningCRM\Cleaning\Infrastructure\ProjectionHandler\:
-        resource: '%bundle_dir%/Infrastructure/ProjectionHandler'
+    CleaningCRM\Cleaning\Infrastructure\Projection\:
+        resource: '%bundle_dir%/Infrastructure/Projection'
         tags:
             - { name: messenger.message_handler, bus: projector.bus }
 
@@ -87,15 +87,6 @@ services:
 
     CleaningCRM\Cleaning\Infrastructure\Persistence\SQLEventStore: ~
     CleaningCRM\Cleaning\Domain\Shared\EventStore: '@CleaningCRM\Cleaning\Infrastructure\Persistence\SQLEventStore'
-
-    CleaningCRM\Cleaning\Infrastructure\Projection\TodoProjection: ~
-    CleaningCRM\Cleaning\Domain\Todo\TodoProjection: '@CleaningCRM\Cleaning\Infrastructure\Projection\TodoProjection'
-
-    CleaningCRM\Cleaning\Infrastructure\Projection\ClientProjection: ~
-    CleaningCRM\Cleaning\Domain\Client\ClientProjection: '@CleaningCRM\Cleaning\Infrastructure\Projection\ClientProjection'
-
-    CleaningCRM\Cleaning\Infrastructure\Projection\PersonProjection: ~
-    CleaningCRM\Cleaning\Domain\Person\PersonProjection: '@CleaningCRM\Cleaning\Infrastructure\Projection\PersonProjection'
 
     CleaningCRM\Cleaning\Infrastructure\Persistence\MessageBusProjector: ~
     CleaningCRM\Cleaning\Domain\Shared\Projector: '@CleaningCRM\Cleaning\Infrastructure\Persistence\MessageBusProjector'

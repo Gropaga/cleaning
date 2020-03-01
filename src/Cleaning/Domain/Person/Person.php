@@ -225,6 +225,15 @@ final class Person extends AggregateRoot
         $this->archivedAt = $event->getArchivedAt();
     }
 
+    protected function applyTodoWasCreated(): void
+    {
+        ob_start();
+        debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+        $data = ob_get_clean();
+        dd($data);
+        die();
+    }
+
     /**
      * @throws AssertionFailedException
      */

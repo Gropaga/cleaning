@@ -3,11 +3,11 @@
 namespace CleaningCRM\Cleaning\Infrastructure\Persistence;
 
 use Assert\AssertionFailedException;
-use CleaningCRM\Cleaning\Domain\Person\Person;
 use CleaningCRM\Cleaning\Domain\Shared\AggregateId;
 use CleaningCRM\Cleaning\Domain\Shared\EventStore;
 use CleaningCRM\Cleaning\Domain\Shared\Projector;
 use CleaningCRM\Cleaning\Domain\Shared\RecordsEvents;
+use CleaningCRM\Cleaning\Domain\Todo\Todo;
 use CleaningCRM\Cleaning\Domain\Todo\TodoRepository as TodoRepositoryPort;
 use Doctrine\DBAL\Connection;
 use Throwable;
@@ -47,6 +47,6 @@ class TodoRepository implements TodoRepositoryPort
     {
         $events = $this->eventStore->get($id);
 
-        return Person::reconstituteFromHistory($events);
+        return Todo::reconstituteFromHistory($events);
     }
 }

@@ -8,15 +8,15 @@ use CleaningCRM\Cleaning\Application\Client\Command\Update;
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
 use CleaningCRM\Cleaning\Domain\Shared\Address;
-use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\IntegrationEvents;
 
 /** @see Update */
 class UpdateHandler
 {
     private ClientRepository $repository;
-    private EventPublisher $publisher;
+    private IntegrationEvents $publisher;
 
-    public function __construct(ClientRepository $repository, EventPublisher $publisher)
+    public function __construct(ClientRepository $repository, IntegrationEvents $publisher)
     {
         $this->repository = $repository;
         $this->publisher = $publisher;

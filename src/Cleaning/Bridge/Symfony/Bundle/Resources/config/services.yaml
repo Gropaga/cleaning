@@ -54,8 +54,8 @@ services:
         resource: '%bundle_dir%/Bridge/Symfony/Bundle/Controller/Person'
         tags: ['controller.service_arguments']
 
-    CleaningCRM\Cleaning\Infrastructure\EventPublisher\AggregateEventPublisher: ~
-    CleaningCRM\Cleaning\Domain\Shared\EventPublisher: '@CleaningCRM\Cleaning\Infrastructure\EventPublisher\AggregateEventPublisher'
+    CleaningCRM\Cleaning\Infrastructure\Publisher\IntegrationEvents: ~
+    CleaningCRM\Cleaning\Domain\Shared\IntegrationEvents: '@CleaningCRM\Cleaning\Infrastructure\Publisher\IntegrationEvents'
 
     CleaningCRM\Cleaning\Infrastructure\Persistence\ClientRepository: ~
     CleaningCRM\Cleaning\Domain\Client\ClientRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\ClientRepository'
@@ -69,7 +69,7 @@ services:
     CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Converter\DeserializeSubscriber:
         tags: ['kernel.event_subscriber']
 
-    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\IntegrationEvents\PublishEvents:
+    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\EventListener\PublishIntegrationEvents:
         tags: ['kernel.response', 'console.terminate']
 
     CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Command\:

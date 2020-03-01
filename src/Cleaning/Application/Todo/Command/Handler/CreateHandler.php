@@ -3,7 +3,7 @@
 namespace CleaningCRM\Cleaning\Application\Todo\Command\Handler;
 
 use CleaningCRM\Cleaning\Application\Todo\Command\Create;
-use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\IntegrationEvents;
 use CleaningCRM\Cleaning\Domain\Todo\Todo;
 use CleaningCRM\Cleaning\Domain\Todo\TodoRepository;
 use CleaningCRM\Cleaning\Domain\Shared\Interval;
@@ -12,9 +12,9 @@ use CleaningCRM\Cleaning\Domain\Shared\Interval;
 class CreateHandler
 {
     private TodoRepository $repository;
-    private EventPublisher $publisher;
+    private IntegrationEvents $publisher;
 
-    public function __construct(TodoRepository $repository, EventPublisher $publisher)
+    public function __construct(TodoRepository $repository, IntegrationEvents $publisher)
     {
         $this->repository = $repository;
         $this->publisher = $publisher;

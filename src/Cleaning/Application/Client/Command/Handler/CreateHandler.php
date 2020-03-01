@@ -7,19 +7,25 @@ namespace CleaningCRM\Cleaning\Application\Client\Command\Handler;
 use CleaningCRM\Cleaning\Application\Client\Command\Create;
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
+use CleaningCRM\Cleaning\Domain\Person\PersonRepository;
 use CleaningCRM\Cleaning\Domain\Shared\Address;
-use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\IntegrationEvents;
 
 /** @see Create */
 class CreateHandler
 {
-    private ClientRepository $repository;
-    private EventPublisher $publisher;
+    private ClientRepository $clientRepository;
+    private IntegrationEvents $integrationEvents;
+    private PersonRepository $personRepository;
 
-    public function __construct(ClientRepository $repository, EventPublisher $publisher)
-    {
-        $this->repository = $repository;
-        $this->publisher = $publisher;
+    public function __construct(
+        ClientRepository $clientRepository,
+        PersonRepository $personRepository,
+        IntegrationEvents $integrationEvents
+    ) {
+        $this->clientRepository = $clientRepository;
+        $this->integrationEvents = $integrationEvents;
+        $this->personRepository = $personRepository;
     }
 
     public function __invoke(Create $command)
@@ -39,7 +45,7 @@ class CreateHandler
             $command->getClient()->bankAccount
         );
 
-        $this->repository->add($todo);
-        $this->publisher->add($todo);
+        $this->clientRepository->add($todo);
+        $this->integrationEvents->add($todo);
     }
 }

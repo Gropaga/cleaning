@@ -10,7 +10,7 @@ use CleaningCRM\Cleaning\Domain\Person\Person;
 use CleaningCRM\Cleaning\Domain\Person\PersonRepository;
 use CleaningCRM\Cleaning\Domain\Shared\Address;
 use CleaningCRM\Cleaning\Domain\Shared\Email;
-use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\IntegrationEvents;
 use CleaningCRM\Cleaning\Domain\Shared\Name;
 use CleaningCRM\Cleaning\Domain\Shared\Phone;
 
@@ -18,9 +18,9 @@ use CleaningCRM\Cleaning\Domain\Shared\Phone;
 final class CreateHandler
 {
     private PersonRepository $repository;
-    private EventPublisher $publisher;
+    private IntegrationEvents $publisher;
 
-    public function __construct(PersonRepository $repository, EventPublisher $publisher)
+    public function __construct(PersonRepository $repository, IntegrationEvents $publisher)
     {
         $this->repository = $repository;
         $this->publisher = $publisher;

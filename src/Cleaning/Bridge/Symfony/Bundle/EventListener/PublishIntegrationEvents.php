@@ -1,24 +1,24 @@
 <?php
 
-namespace CleaningCRM\Cleaning\Bridge\Symfony\Bundle\IntegrationEvents;
+namespace CleaningCRM\Cleaning\Bridge\Symfony\Bundle\EventListener;
 
-use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\IntegrationEvents;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class PublishEvents implements EventSubscriberInterface
+class PublishIntegrationEvents implements EventSubscriberInterface
 {
-    private EventPublisher $eventPublisher;
+    private IntegrationEvents $integrationEvents;
 
-    public function __construct(EventPublisher $eventPublisher)
+    public function __construct(IntegrationEvents $integrationEvents)
     {
-        $this->eventPublisher = $eventPublisher;
+        $this->integrationEvents = $integrationEvents;
     }
 
     public function publishEvents(): void
     {
-        $this->eventPublisher->publish();
+        $this->integrationEvents->publish();
     }
 
     public static function getSubscribedEvents(): array

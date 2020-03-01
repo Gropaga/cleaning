@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace CleaningCRM\Cleaning\Infrastructure\EventPublisher;
+namespace CleaningCRM\Cleaning\Infrastructure\Publisher;
 
 use CleaningCRM\Cleaning\Domain\Shared\DomainEvents;
-use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\IntegrationEvents as IntegrationEventsPublisherPort;
 use CleaningCRM\Cleaning\Domain\Shared\NotifyEvents;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class AggregateEventPublisher implements EventPublisher
+class IntegrationEvents implements IntegrationEventsPublisherPort
 {
     private MessageBusInterface $eventBus;
     private DomainEvents $events;

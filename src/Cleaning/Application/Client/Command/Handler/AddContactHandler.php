@@ -9,15 +9,15 @@ use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
 use CleaningCRM\Cleaning\Domain\Client\ContactId;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
-use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\IntegrationEvents;
 
 /** @see AddContact */
 final class AddContactHandler
 {
     private ClientRepository $repository;
-    private EventPublisher $publisher;
+    private IntegrationEvents $publisher;
 
-    public function __construct(ClientRepository $repository, EventPublisher $publisher)
+    public function __construct(ClientRepository $repository, IntegrationEvents $publisher)
     {
         $this->repository = $repository;
         $this->publisher = $publisher;

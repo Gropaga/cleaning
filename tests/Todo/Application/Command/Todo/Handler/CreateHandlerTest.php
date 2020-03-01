@@ -5,7 +5,7 @@ namespace CleaningCRM\Tests\Todo\Application\Command\Todo\Handler;
 use CleaningCRM\Cleaning\Application\Todo\Command\Create;
 use CleaningCRM\Cleaning\Application\Todo\Command\Handler\CreateHandler;
 use CleaningCRM\Cleaning\Application\Todo\Dto\TodoDto;
-use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\IntegrationEvents;
 use CleaningCRM\Cleaning\Domain\Shared\Interval;
 use CleaningCRM\Cleaning\Domain\Todo\TodoId;
 use CleaningCRM\Cleaning\Domain\Todo\TodoRepository;
@@ -23,7 +23,7 @@ class CreateHandlerTest extends TestCase
         $repo = $this->getMockBuilder(TodoRepository::class)->getMock();
         $repo->expects($this->once())->method('add');
 
-        $publisher = $this->getMockBuilder(EventPublisher::class)->getMock();
+        $publisher = $this->getMockBuilder(IntegrationEvents::class)->getMock();
         $publisher->expects($this->once())->method('add');
 
         $todoDto = new TodoDto();

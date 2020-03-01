@@ -7,16 +7,16 @@ namespace CleaningCRM\Cleaning\Application\Client\Command\Handler;
 use CleaningCRM\Cleaning\Application\Client\Command\Liquidate;
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
-use CleaningCRM\Cleaning\Domain\Shared\EventPublisher;
+use CleaningCRM\Cleaning\Domain\Shared\IntegrationEvents;
 use DateTimeImmutable;
 
 /** @see Liquidate */
 class LiquidateHandler
 {
     private ClientRepository $repository;
-    private EventPublisher $publisher;
+    private IntegrationEvents $publisher;
 
-    public function __construct(ClientRepository $repository, EventPublisher $publisher)
+    public function __construct(ClientRepository $repository, IntegrationEvents $publisher)
     {
         $this->repository = $repository;
         $this->publisher = $publisher;

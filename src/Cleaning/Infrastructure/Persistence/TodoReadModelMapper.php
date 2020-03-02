@@ -13,12 +13,12 @@ class TodoReadModelMapper
     public function map(array $data): TodoReadModel
     {
         return new TodoReadModel(
-            $data['id'],
+            $data['_id'],
             $data['title'],
             $data['description'],
             Interval::create(
-                DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $data['start']),
-                DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $data['end'])
+                DateTimeImmutable::createFromMutable($data['start']->toDateTime()),
+                DateTimeImmutable::createFromMutable($data['end']->toDateTime())
             ),
             $data['completed']
         );

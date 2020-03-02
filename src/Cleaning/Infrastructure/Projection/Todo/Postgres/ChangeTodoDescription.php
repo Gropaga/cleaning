@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CleaningCRM\Cleaning\Infrastructure\Projection\Todo;
+namespace CleaningCRM\Cleaning\Infrastructure\Projection\Todo\Postgres;
 
-use CleaningCRM\Cleaning\Domain\Todo\Event\TodoCompletedWasChanged;
+use CleaningCRM\Cleaning\Domain\Todo\Event\TodoDescriptionWasChanged;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 
-final class ChangeTodoCompleted
+final class ChangeTodoDescription
 {
     protected Connection $connection;
 
@@ -20,14 +20,14 @@ final class ChangeTodoCompleted
     /**
      * @throws DBALException
      */
-    public function __invoke(TodoCompletedWasChanged $event): void
+    public function __invoke(TodoDescriptionWasChanged $event): void
     {
         $this
             ->connection
-            ->prepare('UPDATE todo SET completed = :completed WHERE id = :id')
+            ->prepare('UPDATE todo SET description = :description WHERE id = :id')
             ->execute([
                 ':id' => (string) $event->getAggregateId(),
-                ':completed' => $event->getCompleted() ? 'TRUE' : 'FALSE',
+                ':description' => $event->getDescription(),
             ]);
     }
 }

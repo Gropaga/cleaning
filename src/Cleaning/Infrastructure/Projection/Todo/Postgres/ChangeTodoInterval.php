@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CleaningCRM\Cleaning\Infrastructure\Projection\Todo;
+namespace CleaningCRM\Cleaning\Infrastructure\Projection\Todo\Postgres;
 
 use CleaningCRM\Cleaning\Domain\Todo\Event\TodoIntervalWasChanged;
 use Doctrine\DBAL\Connection;

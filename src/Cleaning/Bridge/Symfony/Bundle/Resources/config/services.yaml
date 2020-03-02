@@ -82,8 +82,8 @@ services:
     CleaningCRM\Cleaning\Infrastructure\Persistence\TodoRepository: ~
     CleaningCRM\Cleaning\Domain\Todo\TodoRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\TodoRepository'
 
-    CleaningCRM\Cleaning\Infrastructure\Persistence\TodoQueryRepository: ~
-    CleaningCRM\Cleaning\Domain\Todo\TodoQueryRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\TodoQueryRepository'
+    CleaningCRM\Cleaning\Infrastructure\Persistence\TodoQueryMongoRepository: ~
+    CleaningCRM\Cleaning\Domain\Todo\TodoQueryRepository: '@CleaningCRM\Cleaning\Infrastructure\Persistence\TodoQueryMongoRepository'
 
     CleaningCRM\Cleaning\Infrastructure\Persistence\SQLEventStore: ~
     CleaningCRM\Cleaning\Domain\Shared\EventStore: '@CleaningCRM\Cleaning\Infrastructure\Persistence\SQLEventStore'
@@ -92,3 +92,10 @@ services:
     CleaningCRM\Cleaning\Domain\Shared\Projector: '@CleaningCRM\Cleaning\Infrastructure\Persistence\MessageBusProjector'
 
     CleaningCRM\Cleaning\Infrastructure\Persistence\TodoReadModelMapper: ~
+
+    CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Mongo\DatabaseFactory: ~
+
+    MongoDB\Database:
+        factory: ['@CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Mongo\DatabaseFactory', 'create']
+        arguments: ['%env(resolve:MONGO_URL)%','%env(resolve:MONGO_DB)%']
+

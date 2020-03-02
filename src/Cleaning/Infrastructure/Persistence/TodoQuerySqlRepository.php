@@ -12,7 +12,7 @@ use Doctrine\DBAL\Driver\Connection;
 use Doctrine\DBAL\ParameterType;
 use PDO;
 
-class TodoQueryRepository implements TodoQueryRepositoryPort
+class TodoQuerySqlRepository implements TodoQueryRepositoryPort
 {
     private Connection $connection;
     private TodoReadModelMapper $mapper;

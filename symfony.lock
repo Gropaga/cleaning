@@ -164,6 +164,9 @@
             "config/packages/prod/jms_serializer.yaml"
         ]
     },
+    "mongodb/mongodb": {
+        "version": "1.6.0"
+    },
     "myclabs/deep-copy": {
         "version": "1.9.3"
     },

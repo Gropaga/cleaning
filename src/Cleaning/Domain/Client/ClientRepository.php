@@ -12,5 +12,5 @@ interface ClientRepository extends AggregateRepository
 {
     public function add(RecordsEvents $aggregate): void;
 
-    public function get(AggregateId $id): RecordsEvents;
+    public function get(AggregateId $id): ?RecordsEvents;
 }

@@ -19,6 +19,11 @@ class DomainEvents implements IteratorAggregate
         return new DomainEvents([]);
     }
 
+    public function isEmpty(): bool
+    {
+        return empty($this->events);
+    }
+
     public function getIterator()
     {
         return new ArrayIterator($this->events);

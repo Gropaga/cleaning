@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CleaningCRM\Cleaning\Domain\Client;
 
 use ArrayIterator;
+use CleaningCRM\Cleaning\Application\Client\Dto\ContactDto;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
 use IteratorAggregate;
 use Traversable;
@@ -70,5 +71,22 @@ final class Contact implements Traversable, IteratorAggregate
                 'type' => $this->type,
             ]
         );
+    }
+
+    public static function fromDto(ContactDto $contactDto): self
+    {
+        return new self(
+            ContactId::generate(),
+            PersonId::fromString($contactDto->personId),
+            $contactDto->type
+        );
+    }
+
+    public static function create(
+        ContactId $contactId,
+        PersonId $personId,
+        string $type
+    ): self {
+        return new self($contactId, $personId, $type);
     }
 }

@@ -9,7 +9,7 @@ use CleaningCRM\Cleaning\Domain\Shared\UuidGenerator;
 
 class ContactId implements AggregateId
 {
-    private string $relatedContactId;
+    private string $contactId;
 
     public static function generate(): ContactId
     {
@@ -23,16 +23,16 @@ class ContactId implements AggregateId
 
     public function __toString(): string
     {
-        return $this->relatedContactId;
+        return $this->contactId;
     }
 
     public function equals(AggregateId $other): bool
     {
-        return $other instanceof self && $other->relatedContactId === $this->relatedContactId;
+        return $other instanceof self && $other->contactId === $this->contactId;
     }
 
-    public function __construct(string $relatedContactId)
+    public function __construct(string $contactId)
     {
-        $this->relatedContactId = $relatedContactId;
+        $this->contactId = $contactId;
     }
 }

@@ -9,7 +9,7 @@ CleaningCRM\Cleaning\Domain\Client\Event\ClientWasCreated:
       type: string
 
     contacts:
-      type: array<CleaningCRM\Cleaning\Application\Client\Dto\ContactDto>
+      type: array<CleaningCRM\Cleaning\Domain\Client\Contact>
 
     address:
       type: CleaningCRM\Cleaning\Domain\Shared\Address

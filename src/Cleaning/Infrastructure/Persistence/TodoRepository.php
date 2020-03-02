@@ -43,7 +43,7 @@ class TodoRepository implements TodoRepositoryPort
     /**
      * @throws AssertionFailedException
      */
-    public function get(AggregateId $id): RecordsEvents
+    public function get(AggregateId $id): ?RecordsEvents
     {
         $events = $this->eventStore->get($id);
 

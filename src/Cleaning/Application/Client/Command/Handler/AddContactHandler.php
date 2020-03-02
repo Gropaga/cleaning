@@ -27,7 +27,6 @@ final class AddContactHandler
     {
         /** @var Client $client */
         $client = $this->repository->get($command->getClientId());
-
         $client->addContact(
             ContactId::generate(),
             PersonId::fromString($command->getContact()->personId),

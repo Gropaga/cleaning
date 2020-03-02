@@ -4,4 +4,3 @@ CleaningCRM\Cleaning\Domain\Client\ContactId:
   properties:
     contactId:
       type: string
-      serialized_name: id

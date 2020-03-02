@@ -6,6 +6,7 @@ namespace CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Client;
 
 use CleaningCRM\Cleaning\Application\Client\Command\AddContact;
 use CleaningCRM\Cleaning\Application\Client\Command\Create;
+use CleaningCRM\Cleaning\Application\Client\Command\Handler\CreateHandler;
 use CleaningCRM\Cleaning\Application\Client\Command\Liquidate;
 use CleaningCRM\Cleaning\Application\Client\Command\Update;
 use CleaningCRM\Cleaning\Application\Client\Dto\ClientDto;
@@ -62,6 +63,7 @@ final class ClientController
         $id = ClientId::generate();
 
         $this->handle(
+            /* @see CreateHandler */
             new Create($id, $client)
         );
 
@@ -145,18 +147,19 @@ final class ClientController
      *     )
      * @OpenAPI\Response(
      *     response=200,
-     *     description="Liquidate client",
-     *     @OpenAPI\Schema(ref=@Model(type=TodoId::class))
+     *     description="Add contact to client",
+     *     @OpenAPI\Schema(ref=@Model(type=ClientId::class))
      * )
+     * @Deserialize(ContactDto::class, validate=true, param="contact")
      */
-    public function addContact(string $id, ContactDto $contactDto): Response
+    public function addContact(string $id, ContactDto $contact): Response
     {
         $clientId = ClientId::fromString($id);
 
         $this->handle(
             new AddContact(
                 $clientId,
-                $contactDto
+                $contact
             )
         );
 

@@ -48,13 +48,17 @@ SQL
 
     public function get(AggregateId $aggregateId): DomainEventsHistory
     {
+
         $stmt = $this->connection->prepare('SELECT * FROM event_store WHERE aggregate_id=:aggregateId ORDER BY created_at');
         $stmt->execute([':aggregateId' => (string) $aggregateId]);
 
         $events = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//            dump($row['event_name']);
+//            dump($row['payload']);
             $events[] = $this->serializer->deserialize($row['payload'], $row['event_name'], 'json');
+//            dd($events);
         }
 
         $stmt->closeCursor();

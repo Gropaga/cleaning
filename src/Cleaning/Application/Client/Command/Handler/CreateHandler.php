@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Cleaning\Application\Client\Command\Handler;
 
+use Assert\Assertion;
+use Assert\AssertionFailedException;
 use CleaningCRM\Cleaning\Application\Client\Command\Create;
+use CleaningCRM\Cleaning\Application\Client\Dto\ContactDto;
 use CleaningCRM\Cleaning\Domain\Client\Client;
 use CleaningCRM\Cleaning\Domain\Client\ClientRepository;
+use CleaningCRM\Cleaning\Domain\Client\Contact;
+use CleaningCRM\Cleaning\Domain\Client\ContactId;
+use CleaningCRM\Cleaning\Domain\Person\PersonId;
 use CleaningCRM\Cleaning\Domain\Person\PersonRepository;
 use CleaningCRM\Cleaning\Domain\Shared\Address;
 use CleaningCRM\Cleaning\Domain\Shared\IntegrationEvents;
@@ -28,12 +34,23 @@ class CreateHandler
         $this->personRepository = $personRepository;
     }
 
+    /**
+     * @throws AssertionFailedException
+     */
     public function __invoke(Create $command)
     {
-        $todo = Client::create(
+        $contacts = [];
+        /** @var ContactDto $contact */
+        foreach ($command->getClient()->contacts as $contact) {
+            Assertion::notNull($this->personRepository->get(PersonId::fromString($contact->personId)));
+
+            $contacts[] = Contact::fromDto($contact);
+        }
+
+        $client = Client::create(
             $command->getClientId(),
             $command->getClient()->companyName,
-            $command->getClient()->contacts,
+            $contacts,
             Address::create(
                 $command->getClient()->address->city,
                 $command->getClient()->address->country,
@@ -45,7 +62,7 @@ class CreateHandler
             $command->getClient()->bankAccount
         );
 
-        $this->clientRepository->add($todo);
-        $this->integrationEvents->add($todo);
+        $this->clientRepository->add($client);
+        $this->integrationEvents->add($client);
     }
 }

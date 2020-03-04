@@ -14,20 +14,20 @@ use DomainException;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Database;
 
-class TodoQueryMongoRepository implements TodoQueryRepositoryPort
+class TodoQueryRepository implements TodoQueryRepositoryPort
 {
-    private TodoReadModelMapper $mapper;
+    public const COLLECTION_NAME = 'todo';
+
     private Database $db;
 
-    public function __construct(Database $db, TodoReadModelMapper $mapper)
+    public function __construct(Database $db)
     {
-        $this->mapper = $mapper;
         $this->db = $db;
     }
 
     public function byId(string $id): TodoReadModel
     {
-        $todo = $this->db->selectCollection('todo')->findOne(['_id' => $id]);
+        $todo = $this->db->selectCollection(self::COLLECTION_NAME)->findOne(['_id' => $id]);
 
         try {
             Assertion::notNull($todo);
@@ -35,12 +35,12 @@ class TodoQueryMongoRepository implements TodoQueryRepositoryPort
             throw new DomainException(sprintf('Todo not found %s', $id));
         }
 
-        return $this->mapper->map($todo);
+        return TodoReadModelMapper::map($todo);
     }
 
     public function all(int $page, int $perPage): array
     {
-        $todos = $this->db->selectCollection('todo')->find(
+        $todoCursor = $this->db->selectCollection(self::COLLECTION_NAME)->find(
             [],
             [
                 'limit' => $perPage,
@@ -49,14 +49,19 @@ class TodoQueryMongoRepository implements TodoQueryRepositoryPort
                     'start' => -1,
                 ],
             ]
-        )->toArray();
+        );
 
-        return array_map(fn (array $todo) => $this->mapper->map($todo), $todos);
+        $todos = [];
+        foreach ($todoCursor as $todo) {
+            $todos[] = TodoReadModelMapper::map((array) $todo);
+        }
+
+        return $todos;
     }
 
     public function byDate(DateTimeImmutable $startDate, DateTimeImmutable $endDate): array
     {
-        $todoCursor = $this->db->selectCollection('todo')->find(
+        $todoCursor = $this->db->selectCollection(self::COLLECTION_NAME)->find(
             [
                 'start' => [
                     '$gt' => new UTCDateTime($startDate->getTimestamp() * 1000),
@@ -69,7 +74,7 @@ class TodoQueryMongoRepository implements TodoQueryRepositoryPort
 
         $todos = [];
         foreach ($todoCursor as $todo) {
-            $todos[] = $this->mapper->map((array) $todo);
+            $todos[] = TodoReadModelMapper::map((array) $todo);
         }
 
         return $todos;
@@ -80,7 +85,7 @@ class TodoQueryMongoRepository implements TodoQueryRepositoryPort
         return new TodoCountReadModel(
             $this
                 ->db
-                ->selectCollection('todo')
+                ->selectCollection(self::COLLECTION_NAME)
                 ->countDocuments()
         );
     }

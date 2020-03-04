@@ -10,7 +10,7 @@ use DateTimeImmutable;
 
 class TodoReadModelMapper
 {
-    public function map(array $data): TodoReadModel
+    public static function map(array $data): TodoReadModel
     {
         return new TodoReadModel(
             $data['_id'],

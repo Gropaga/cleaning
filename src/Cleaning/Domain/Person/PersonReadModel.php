@@ -18,7 +18,7 @@ class PersonReadModel
     private Phone $phone;
     private Email $email;
     private Address $address;
-    private ?DateTimeImmutable $deletedAt;
+    private ?DateTimeImmutable $archivedAt;
 
     public function __construct(
         ClientId $id,
@@ -26,14 +26,14 @@ class PersonReadModel
         Phone $phone,
         Email $email,
         Address $address,
-        ?DateTimeImmutable $deletedAt
+        ?DateTimeImmutable $archivedAt
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->phone = $phone;
         $this->email = $email;
         $this->address = $address;
-        $this->deletedAt = $deletedAt;
+        $this->archivedAt = $archivedAt;
     }
 
     public function getId(): ClientId
@@ -61,8 +61,8 @@ class PersonReadModel
         return $this->address;
     }
 
-    public function getDeletedAt(): ?DateTimeImmutable
+    public function getArchivedAt(): ?DateTimeImmutable
     {
-        return $this->deletedAt;
+        return $this->archivedAt;
     }
 }

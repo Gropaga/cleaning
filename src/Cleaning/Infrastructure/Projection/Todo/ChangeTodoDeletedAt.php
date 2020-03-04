@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace CleaningCRM\Cleaning\Infrastructure\Projection\Person;
+namespace CleaningCRM\Cleaning\Infrastructure\Projection\Todo;
 
-use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasArchived;
 use CleaningCRM\Cleaning\Domain\Shared\UTCDateTimeFactory;
-use CleaningCRM\Cleaning\Infrastructure\Persistence\PersonRepository;
+use CleaningCRM\Cleaning\Domain\Todo\Event\TodoDeletedAtWasChanged;
+use CleaningCRM\Cleaning\Infrastructure\Persistence\TodoQueryRepository;
 use MongoDB\Database;
 
-final class ArchivePerson
+final class ChangeTodoDeletedAt
 {
     private Database $db;
 
@@ -18,18 +18,18 @@ final class ArchivePerson
         $this->db = $db;
     }
 
-    public function __invoke(PersonWasArchived $event)
+    public function __invoke(TodoDeletedAtWasChanged $event): void
     {
         $this
             ->db
-            ->selectCollection(PersonRepository::COLLECTION_NAME)
+            ->selectCollection(TodoQueryRepository::COLLECTION_NAME)
             ->updateOne(
                 [
                     '_id' => (string) $event->getAggregateId(),
                 ],
                 [
                     '$set' => [
-                        'archivedAt' => UTCDateTimeFactory::fromDateTimeImmutable($event->getArchivedAt()),
+                        'deletedAt' => UTCDateTimeFactory::fromDateTimeImmutable($event->getDeletedAt()),
                     ],
                 ],
             );

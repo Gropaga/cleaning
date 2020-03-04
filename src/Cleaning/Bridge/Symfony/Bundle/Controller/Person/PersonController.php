@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Person;
 
 use CleaningCRM\Cleaning\Application\Person\Command\Create;
+use CleaningCRM\Cleaning\Application\Person\Command\Update;
 use CleaningCRM\Cleaning\Application\Person\Dto\PersonDto;
 use CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Converter\Deserialize;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
@@ -62,6 +63,41 @@ final class PersonController
         return Response::create(
             $this->serializer->serialize(
                 $id,
+                'json'
+            )
+        );
+    }
+
+    /**
+     * @Route("/update/{id}", methods={"PATCH"})
+     * @OpenAPI\Parameter(
+     *         name="body",
+     *         in="body",
+     *         required=true,
+     *         @OpenAPI\Schema(ref=@Model(type=PersonDto::class))
+     *     )
+     * @OpenAPI\Response(
+     *         response=200,
+     *         description="Request accepted.",
+     *         @OpenAPI\Header(
+     *             header="Person",
+     *             type="string",
+     *             description="Update person."
+     *         )
+     *     )
+     * @Deserialize(PersonDto::class, validate=true, param="person")
+     */
+    public function update(string $id, PersonDto $person): Response
+    {
+        $personId = PersonId::fromString($id);
+
+        $this->handle(
+            new Update($personId, $person)
+        );
+
+        return Response::create(
+            $this->serializer->serialize(
+                $personId,
                 'json'
             )
         );

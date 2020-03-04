@@ -16,6 +16,8 @@ use Throwable;
 
 class PersonRepository implements PersonRepositoryPort
 {
+    public const COLLECTION_NAME = 'person';
+
     private Connection $connection;
     private EventStore $eventStore;
     private Projector $projector;

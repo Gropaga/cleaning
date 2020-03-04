@@ -60,6 +60,8 @@ services:
     image: mongo:4
     networks:
       default:
+    ports:
+      - 27017:27017
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: dev

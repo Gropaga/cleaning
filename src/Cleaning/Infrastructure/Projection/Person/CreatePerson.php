@@ -5,40 +5,36 @@ declare(strict_types=1);
 namespace CleaningCRM\Cleaning\Infrastructure\Projection\Person;
 
 use CleaningCRM\Cleaning\Domain\Person\Event\PersonWasCreated;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
-use JMS\Serializer\SerializerInterface;
+use CleaningCRM\Cleaning\Infrastructure\Persistence\PersonRepository;
+use MongoDB\Database;
 
 final class CreatePerson
 {
-    protected Connection $connection;
-    private SerializerInterface $serializer;
+    private Database $db;
 
-    public function __construct(Connection $connection, SerializerInterface $serializer)
+    public function __construct(Database $db)
     {
-        $this->connection = $connection;
-        $this->serializer = $serializer;
+        $this->db = $db;
     }
 
-    /**
-     * @throws DBALException
-     */
     public function __invoke(PersonWasCreated $event)
     {
         $this
-            ->connection
-            ->prepare(
-                <<<SQL
-INSERT INTO person (id, name, phone, email, address)
-VALUES (:id, :name, :phone, :email, :address)
-SQL
-            )->execute(
+            ->db
+            ->selectCollection(PersonRepository::COLLECTION_NAME)
+            ->insertOne(
                 [
-                    ':id' => (string) $event->getAggregateId(),
-                    ':name' => $this->serializer->serialize($event->getName(), 'json'),
-                    ':phone' => $event->getPhone()->phone(),
-                    ':email' => $event->getEmail()->email(),
-                    ':address' => $this->serializer->serialize($event->getAddress(), 'json'),
+                    '_id' => (string) $event->getAggregateId(),
+                    'name' => $event->getName()->name(),
+                    'surname' => $event->getName()->surname(),
+                    'phone' => $event->getPhone()->phone(),
+                    'email' => $event->getEmail()->email(),
+                    'address' => [
+                        'city' => $event->getAddress()->city(),
+                        'street' => $event->getAddress()->street(),
+                        'country' => $event->getAddress()->country(),
+                        'postcode' => $event->getAddress()->postcode(),
+                    ],
                 ]
             );
     }

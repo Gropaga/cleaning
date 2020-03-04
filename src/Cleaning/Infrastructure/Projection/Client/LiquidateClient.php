@@ -5,29 +5,31 @@ declare(strict_types=1);
 namespace CleaningCRM\Cleaning\Infrastructure\Projection\Client;
 
 use CleaningCRM\Cleaning\Domain\Client\Event\ClientWasLiquidated;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use MongoDB\Database;
 
 final class LiquidateClient
 {
-    protected Connection $connection;
+    private Database $db;
 
-    public function __construct(Connection $connection)
+    public function __construct(Database $db)
     {
-        $this->connection = $connection;
+        $this->db = $db;
     }
 
-    /**
-     * @throws DBALException
-     */
     public function __invoke(ClientWasLiquidated $event)
     {
         $this
-            ->connection
-            ->prepare('UPDATE client SET "liquidatedAt" = :liquidatedAt WHERE id = :id')
-            ->execute([
-                ':id' => (string) $event->getAggregateId(),
-                ':liquidatedAt' => $event->getLiquidatedAt()->format('Y-m-d H:i:s'),
-            ]);
+            ->db
+            ->selectCollection('client')
+            ->updateOne(
+                [
+                    '_id' => (string) $event->getAggregateId(),
+                ],
+                [
+                    '$set' => [
+                        'liquidatedAt' => $event->getLiquidatedAt(),
+                    ],
+                ],
+            );
     }
 }

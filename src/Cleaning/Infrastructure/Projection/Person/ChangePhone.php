@@ -5,30 +5,32 @@ declare(strict_types=1);
 namespace CleaningCRM\Cleaning\Infrastructure\Projection\Person;
 
 use CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use CleaningCRM\Cleaning\Infrastructure\Persistence\PersonRepository;
+use MongoDB\Database;
 
 final class ChangePhone
 {
-    private Connection $connection;
+    private Database $db;
 
-    public function __construct(
-        Connection $connection
-    ) {
-        $this->connection = $connection;
+    public function __construct(Database $db)
+    {
+        $this->db = $db;
     }
 
-    /**
-     * @throws DBALException
-     */
     public function __invoke(PhoneWasChanged $event): void
     {
         $this
-            ->connection
-            ->prepare('UPDATE person SET phone = :phone WHERE id = :id')
-            ->execute([
-                ':id' => (string) $event->getAggregateId(),
-                ':phone' => $event->getPhone(),
-            ]);
+            ->db
+            ->selectCollection(PersonRepository::COLLECTION_NAME)
+            ->updateOne(
+                [
+                    '_id' => (string) $event->getAggregateId(),
+                ],
+                [
+                    '$set' => [
+                        'phone' => $event->getPhone()->phone(),
+                    ],
+                ],
+            );
     }
 }

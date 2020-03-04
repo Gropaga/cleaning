@@ -5,29 +5,31 @@ declare(strict_types=1);
 namespace CleaningCRM\Cleaning\Infrastructure\Projection\Client;
 
 use CleaningCRM\Cleaning\Domain\Client\Event\VatNumberWasChanged;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use MongoDB\Database;
 
 final class ChangeClientVatNumber
 {
-    private Connection $connection;
+    private Database $db;
 
-    public function __construct(Connection $connection)
+    public function __construct(Database $db)
     {
-        $this->connection = $connection;
+        $this->db = $db;
     }
 
-    /**
-     * @throws DBALException
-     */
     public function __invoke(VatNumberWasChanged $event)
     {
         $this
-            ->connection
-            ->prepare('UPDATE client SET "vatNumber" = :vatNumber WHERE id = :id')
-            ->execute([
-                ':id' => (string) $event->getAggregateId(),
-                ':vatNumber' => $event->getVatNumber(),
-            ]);
+            ->db
+            ->selectCollection('client')
+            ->updateOne(
+                [
+                    '_id' => (string) $event->getAggregateId(),
+                ],
+                [
+                    '$set' => [
+                        'vatNumber' => $event->getVatNumber(),
+                    ],
+                ],
+            );
     }
 }

@@ -5,32 +5,37 @@ declare(strict_types=1);
 namespace CleaningCRM\Cleaning\Infrastructure\Projection\Person;
 
 use CleaningCRM\Cleaning\Domain\Person\Event\AddressWasChanged;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
-use JMS\Serializer\SerializerInterface;
+use CleaningCRM\Cleaning\Infrastructure\Persistence\PersonRepository;
+use MongoDB\Database;
 
 final class ChangeAddress
 {
-    protected Connection $connection;
-    private SerializerInterface $serializer;
+    private Database $db;
 
-    public function __construct(Connection $connection, SerializerInterface $serializer)
+    public function __construct(Database $db)
     {
-        $this->connection = $connection;
-        $this->serializer = $serializer;
+        $this->db = $db;
     }
 
-    /**
-     * @throws DBALException
-     */
     public function __invoke(AddressWasChanged $event)
     {
         $this
-            ->connection
-            ->prepare('UPDATE person SET address = :address WHERE id = :id')
-            ->execute([
-                ':id' => (string) $event->getAggregateId(),
-                ':address' => $this->serializer->serialize($event->getAddress(), 'json'),
-            ]);
+            ->db
+            ->selectCollection(PersonRepository::COLLECTION_NAME)
+            ->updateOne(
+                [
+                    '_id' => (string) $event->getAggregateId(),
+                ],
+                [
+                    '$set' => [
+                        'address' => [
+                            'city' => $event->getAddress()->city(),
+                            'street' => $event->getAddress()->street(),
+                            'country' => $event->getAddress()->country(),
+                            'postcode' => $event->getAddress()->postcode(),
+                        ],
+                    ],
+                ],
+            );
     }
 }

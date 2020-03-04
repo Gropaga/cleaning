@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CleaningCRM\Cleaning\Infrastructure\Projection\Person;
+namespace CleaningCRM\Cleaning\Infrastructure\Projection\Todo;
 
-use CleaningCRM\Cleaning\Domain\Person\Event\EmailWasChanged;
-use CleaningCRM\Cleaning\Infrastructure\Persistence\PersonRepository;
+use CleaningCRM\Cleaning\Domain\Todo\Event\TodoDescriptionWasChanged;
+use CleaningCRM\Cleaning\Infrastructure\Persistence\TodoQueryRepository;
 use MongoDB\Database;
 
-final class ChangeEmail
+final class ChangeTodoDescription
 {
     private Database $db;
 
@@ -17,18 +17,18 @@ final class ChangeEmail
         $this->db = $db;
     }
 
-    public function __invoke(EmailWasChanged $event): void
+    public function __invoke(TodoDescriptionWasChanged $event): void
     {
         $this
             ->db
-            ->selectCollection(PersonRepository::COLLECTION_NAME)
+            ->selectCollection(TodoQueryRepository::COLLECTION_NAME)
             ->updateOne(
                 [
                     '_id' => (string) $event->getAggregateId(),
                 ],
                 [
                     '$set' => [
-                        'email' => $event->getEmail()->email(),
+                        'description' => $event->getDescription(),
                     ],
                 ],
             );

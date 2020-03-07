@@ -1,4 +1,4 @@
-CleaningCRM\Cleaning\Domain\Person\Event\AddressWasChanged:
+CleaningCRM\Cleaning\Domain\Person\Event\EmailWasChanged:
   exclusion_policy: ALL
 
   properties:
@@ -6,4 +6,4 @@ CleaningCRM\Cleaning\Domain\Person\Event\AddressWasChanged:
       type: CleaningCRM\Cleaning\Domain\Person\PersonId
 
     email:
-      type: CleaningCRM\Cleaning\Domain\Shared\Address
+      type: CleaningCRM\Cleaning\Domain\Shared\Email

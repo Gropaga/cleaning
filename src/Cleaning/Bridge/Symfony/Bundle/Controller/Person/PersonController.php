@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Controller\Person;
 
+use CleaningCRM\Cleaning\Application\Person\Command\Archive;
 use CleaningCRM\Cleaning\Application\Person\Command\Create;
 use CleaningCRM\Cleaning\Application\Person\Command\Update;
 use CleaningCRM\Cleaning\Application\Person\Dto\PersonDto;
 use CleaningCRM\Cleaning\Bridge\Symfony\Bundle\Converter\Deserialize;
 use CleaningCRM\Cleaning\Domain\Person\PersonId;
+use DateTimeImmutable;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as OpenAPI;
@@ -93,6 +95,33 @@ final class PersonController
 
         $this->handle(
             new Update($personId, $person)
+        );
+
+        return Response::create(
+            $this->serializer->serialize(
+                $personId,
+                'json'
+            )
+        );
+    }
+
+    /**
+     * @Route("/archive/{id}", methods={"DELETE"})
+     * @OpenAPI\Response(
+     *     response=200,
+     *     description="Archive person (also related contact is removed from client)",
+     *     @OpenAPI\Schema(ref=@Model(type=PersonId::class))
+     * )
+     */
+    public function delete(string $id): Response
+    {
+        $personId = PersonId::fromString($id);
+
+        $this->handle(
+            new Archive(
+                $personId,
+                new DateTimeImmutable()
+            )
         );
 
         return Response::create(

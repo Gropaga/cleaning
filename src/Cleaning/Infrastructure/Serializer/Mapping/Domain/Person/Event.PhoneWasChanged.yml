@@ -1,10 +1,9 @@
 CleaningCRM\Cleaning\Domain\Person\Event\PhoneWasChanged:
-  CleaningCRM\Cleaning\Domain\Person\Event\PersonWasDeleted:
-    exclusion_policy: ALL
+  exclusion_policy: ALL
 
-    properties:
-      personId:
-        type: CleaningCRM\Cleaning\Domain\Person\PersonId
+  properties:
+    personId:
+      type: CleaningCRM\Cleaning\Domain\Person\PersonId
 
-      phone:
-        type: string
+    phone:
+      type: CleaningCRM\Cleaning\Domain\Shared\Phone

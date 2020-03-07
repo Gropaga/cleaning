@@ -35,6 +35,7 @@ class UpdateHandler
                 $command->person()->name->surname,
             )
         );
+
         $person->changePhone(Phone::create($command->person()->phone));
         $person->changeEmail(Email::create($command->person()->email));
         $person->changeAddress(

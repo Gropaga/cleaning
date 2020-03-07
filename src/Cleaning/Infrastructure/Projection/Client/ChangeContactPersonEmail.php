@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace CleaningCRM\Cleaning\Infrastructure\Projection\Client;
 
-use CleaningCRM\Cleaning\Domain\Person\Event\NameWasChanged;
+use CleaningCRM\Cleaning\Domain\Person\Event\EmailWasChanged;
 use MongoDB\Database;
 
-final class ChangeContactPersonName
+final class ChangeContactPersonEmail
 {
     private Database $db;
 
@@ -16,7 +16,7 @@ final class ChangeContactPersonName
         $this->db = $db;
     }
 
-    public function __invoke(NameWasChanged $event)
+    public function __invoke(EmailWasChanged $event)
     {
         $this
             ->db
@@ -27,8 +27,7 @@ final class ChangeContactPersonName
                 ],
                 [
                     '$set' => [
-                        'contacts.$[personIdentifier].person.name' => $event->getName()->name(),
-                        'contacts.$[personIdentifier].person.surname' => $event->getName()->surname(),
+                        'contacts.$[personIdentifier].person.email' => $event->getEmail()->email(),
                     ],
                 ],
                 [

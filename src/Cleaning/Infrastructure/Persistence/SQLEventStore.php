@@ -9,8 +9,10 @@ use CleaningCRM\Cleaning\Domain\Shared\DomainEvent;
 use CleaningCRM\Cleaning\Domain\Shared\DomainEvents;
 use CleaningCRM\Cleaning\Domain\Shared\DomainEventsHistory;
 use CleaningCRM\Cleaning\Domain\Shared\EventStore;
+use CleaningCRM\Cleaning\Infrastructure\Persistence\Exceptions\DeserializeException;
 use DateTimeImmutable;
 use Doctrine\DBAL\Driver\Connection;
+use Exception;
 use JMS\Serializer\SerializerInterface;
 use PDO;
 
@@ -28,7 +30,7 @@ class SQLEventStore implements EventStore
     public function append(DomainEvents $events): void
     {
         $stmt = $this->connection->prepare(
-                <<<SQL
+            <<<SQL
 INSERT INTO event_store (id, aggregate_id, event_name, created_at, payload)
 VALUES (:id, :aggregateId, :eventName, :createdAt, :payload)
 SQL
@@ -48,17 +50,17 @@ SQL
 
     public function get(AggregateId $aggregateId): DomainEventsHistory
     {
-
         $stmt = $this->connection->prepare('SELECT * FROM event_store WHERE aggregate_id=:aggregateId ORDER BY created_at');
         $stmt->execute([':aggregateId' => (string) $aggregateId]);
 
         $events = [];
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-//            dump($row['event_name']);
-//            dump($row['payload']);
-            $events[] = $this->serializer->deserialize($row['payload'], $row['event_name'], 'json');
-//            dd($events);
+        try {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $events[] = $this->serializer->deserialize($row['payload'], $row['event_name'], 'json');
+            }
+        } catch (Exception $e) {
+            throw new DeserializeException($e->getMessage());
         }
 
         $stmt->closeCursor();
